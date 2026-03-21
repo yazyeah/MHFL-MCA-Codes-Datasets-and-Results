@@ -1,10 +1,10 @@
-# 📌 MHCNN Codes, Datasets and Results
+# 📌 MHFL-MCA Codes, Datasets and Results
 
 This repository provides a **TensorFlow/Keras** implementation of the paper:
 
-> **MHCNN: Multimodal heterogeneous CNN with modality-cross-attention for robust fault diagnosis with limited samples**
+> **MHFL-MCA: Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis with limited samples**
 
-MHCNN targets **intelligent fault diagnosis (IFD)** under two practical constraints:
+MHFL-MCA targets **intelligent fault diagnosis (IFD)** under two practical constraints:
 
 - **Limited labeled samples** (few-shot regime)
 - **Strong measurement noise / unreliable sensors**
