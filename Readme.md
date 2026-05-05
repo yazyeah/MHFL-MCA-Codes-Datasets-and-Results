@@ -13,6 +13,7 @@ It addresses these challenges by combining (i) **heterogeneous modality-specific
 
 <img width="8192" height="3494" alt="MHCNN architecture overview 1" src="https://github.com/user-attachments/assets/f2ce527e-4066-428e-b555-3d3668d9b795" />
 <img width="8192" height="3724" alt="MHCNN architecture overview 2" src="https://github.com/user-attachments/assets/7de70f63-616d-4d74-88f3-510714ec3e52" />
+
 ---
 
 ## 🏗️ 1. Model Explanation
