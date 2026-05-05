@@ -23,7 +23,7 @@ For each sample $i$, MHCNN takes **two synchronized 1-D time-domain segments**:
 - **Acoustic** (paper) / **Current** (KAIST scripts in this repo): $x_i^{(a)} \in \mathbb{R}^{L}$
 
 In the paper, the segment length is **$L=2048$** and the classification is over **$K$** health states (Case 1 $K=7$ and Case 2 $K=5$).  
-In this repository’s **KAIST Load-Shift** scripts, the **second modality is motor current (.tdms)**, but the network design and training protocol follow the same MHCNN pipeline.
+In this repository’s **KAIST Load-Shift** scripts, the **second modality is motor current (.tdms)**, but the network design and training protocol follow the same MHFL-MCA pipeline.
 
 ---
 
