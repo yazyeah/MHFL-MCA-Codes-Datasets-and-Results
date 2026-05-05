@@ -29,7 +29,7 @@ In this repository’s **KAIST Load-Shift** scripts, the **second modality is mo
 
 ### 1.2 High-level architecture (MSHEM → CAIM → AMRM → FCB)
 
-MHCNN consists of four coupled modules:
+MHFL-MCA consists of four coupled modules:
 
 1. **MSHEM — Modality-Specific Heterogeneous Encoder Module**  
    Two 1-D CNN branches designed with **different kernel sizes, activations, and pooling** to match the statistical characteristics of each modality.
@@ -165,7 +165,7 @@ A common on-disk structure is:
 The KAIST scripts assume the following file naming convention (per load and fault):
 
 - Vibration: `{LOAD}_{FAULT}.mat`  
-- Current: `{LOAD}_{FAULT}.tdms` (or `.TDMS`)
+- Current: `{LOAD}_{FAULT}.tdms`
 
 Example (0 Nm, Normal):
 
