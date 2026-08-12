@@ -1,0 +1,53 @@
+{
+  "suite_version": "3.2.0",
+  "checkpoint_signature": "55f074fc6117793ad7932dffd7f2322d7536629e9225dbbf7b8f942d923042b0",
+  "model_spec": {
+    "num_classes": 5,
+    "segment_length": 2048,
+    "vib_layers": 5,
+    "other_layers": 3,
+    "vib_dropout": 0.2905585371157774,
+    "other_dropout": 0.39293093464896633,
+    "attention_dim": 256,
+    "fcb_units": 256,
+    "encoder_mode": "heterogeneous",
+    "use_caim": true,
+    "gate_mode": "two_stage",
+    "attention_initializer": "uniform",
+    "cross_feature_order": "value_source",
+    "expected_params_m": 7.38,
+    "spec_status": "confirmed_from_original_optuna_artifact",
+    "source_note": "Confirmed from the original KAIST Optuna run artifact ${MHFL_PROJECT_ROOT}/KAIST/1. MHCNN_Optuna_KAIST_Advanced_4/log_MHCNN.txt (LastWriteTime=2026-02-17T18:32:51.3579104+08:00; SHA-256=B8809916148227949FF7389CBD1646CA4443A049AD39CC27626FFFD1D88CA555). Line 15 records all seven best parameters; lines 20-132 record the corresponding model.summary with 7,380,173 parameters."
+  },
+  "model_spec_fingerprint": "8294192c1b5ff1833b10232ab82adb6dac8dfcae2c7b21d816eddb11f07ef08d",
+  "training_spec": {
+    "protocol": "stage2",
+    "epochs": 80,
+    "batch_size": 16,
+    "learning_rate": 0.0004156294449523281,
+    "seed": 20260806,
+    "gradient_clip_norm": 1.0,
+    "base_snr_db": 0.0
+  },
+  "split_signature": "f70a36974c04399864b99ea20b6c2954c79d6068da5ad87f1bf3e80c0eddb539",
+  "data_signature": "5f9da3db107a327dfd692a95e74f44267e2e0b82ab9e68e04456efc8fa4f93a1",
+  "weights_path": "${MHFL_SUITE_ROOT}/checkpoints/full_20260807_r1/kaist_stage2_full_seed20260806.weights.h5",
+  "weights_sha256": "e5a0fc8a3b8fc07a79300a65599bcc074dd0a56123b22b9153c68f58862e266e",
+  "history_path": "${MHFL_SUITE_ROOT}/checkpoints/full_20260807_r1/train_stage2_full_seed20260806/kaist_stage2.history.csv",
+  "created_unix": 1786085279.283491,
+  "environment": {
+    "python": "3.9.20 (main, Oct  3 2024, 07:38:01) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "${PYTHON_EXECUTABLE}",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "cwd": "${MHFL_SUITE_ROOT}",
+    "numpy": "1.21.0",
+    "pandas": "1.4.4",
+    "scipy": "1.8.1",
+    "sklearn": "1.1.3",
+    "matplotlib": "3.5.3",
+    "tensorflow": "2.7.0",
+    "nptdms": "1.10.0",
+    "project_root": "${MHFL_PROJECT_ROOT}",
+    "git_commit": "da879af0acc2fcafda1023600123223b3925cb69"
+  }
+}

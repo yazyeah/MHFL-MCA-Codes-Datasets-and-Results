@@ -1,0 +1,319 @@
+{
+  "status": "PASS",
+  "mode": "full",
+  "run_tag": "full_20260807_r1",
+  "target_seeds": [
+    20260806,
+    20260807,
+    20260808,
+    20260809,
+    20260810,
+    20260811,
+    20260812,
+    20260813,
+    20260814,
+    20260815
+  ],
+  "expected_raw_rows": {
+    "UO": 120,
+    "KAIST": 240,
+    "KAIST-noise": 120,
+    "total": 480
+  },
+  "raw_gate": {
+    "rows": 480,
+    "component_rows": {
+      "UO": 120,
+      "KAIST": 240,
+      "KAIST-noise": 120
+    },
+    "groups": 48,
+    "seeds": [
+      20260806,
+      20260807,
+      20260808,
+      20260809,
+      20260810,
+      20260811,
+      20260812,
+      20260813,
+      20260814,
+      20260815
+    ],
+    "duplicate_rows": 0,
+    "nan_metric_values": 0,
+    "infinite_values": 0,
+    "failed_seeds": [],
+    "uo_snr_structural_na_only": true
+  },
+  "aggregation": "trimmed_mean_sd_drop_one_high_one_low",
+  "retained_after_trim": 8,
+  "metrics_trimmed_independently": true,
+  "failed_seeds": [],
+  "failed_groups": [],
+  "channel_gate": {
+    "current_group": "Log",
+    "current_channel": "cDAQ9185-1F486B5Mod2/ai0",
+    "current_physical_meaning": "U-phase motor current",
+    "vibration_column": 0,
+    "vibration_physical_meaning": "bearing housing A x-direction vibration",
+    "current_fallback": false
+  },
+  "benchmark_scope": "interpretable time/frequency-feature SVM reference baselines",
+  "deep_model_training_performed": false,
+  "candidate_scope": {
+    "included_cases": [
+      "UO",
+      "KAIST"
+    ],
+    "excluded_cases": [
+      "KAIST-noise"
+    ],
+    "n_values": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "expected_rows": 144,
+    "deep_reference_rows": 108,
+    "traditional_rows": 36,
+    "deep_models": [
+      "MRCFN",
+      "CFFN",
+      "CDTFAFN",
+      "MSF-DFormer",
+      "KDCNN-DF",
+      "Full MHFL-MCA"
+    ],
+    "traditional_methods": [
+      "TF-SVM early fusion",
+      "TF-SVM late fusion"
+    ],
+    "noise_source_data_retained_outside_candidate": true
+  },
+  "deep_reference": {
+    "path": "${MHFL_SUITE_ROOT}/configs/main_manuscript_deep_reference.json",
+    "size_bytes": 116373,
+    "sha256": "b9e7e594029f2c0178f52789cffa80ae2367db63bd8fe11b1c0b354a61993c5b"
+  },
+  "deep_reference_gate": {
+    "status": "PASS",
+    "reference_type": "main_manuscript_aggregated_reference",
+    "tables": [
+      "KAIST_Table_10",
+      "KAIST_Table_9",
+      "UO_Table_5"
+    ],
+    "rows": 108,
+    "models": [
+      "MRCFN",
+      "CFFN",
+      "CDTFAFN",
+      "MSF-DFormer",
+      "KDCNN-DF",
+      "Full MHFL-MCA"
+    ],
+    "n_values": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "runs": 10,
+    "retained_after_trim": 8,
+    "aggregation": "trimmed_mean_sd_drop_one_high_one_low",
+    "source_records": 14,
+    "source_records_referenced": 14,
+    "source_files_present_and_hash_verified": 14,
+    "source_metric_values_verified": 864,
+    "current_manuscript_source_tex_path": "${MHFL_MANUSCRIPT_SOURCE_DIR}/MHFL-MCA 一审修改.zip::els-cas-templates/MHFL-MCA.tex",
+    "current_manuscript_source_sha256": "cd6bc52feb997a7cdc3b56d9e951ed212f15019c25a88ab21edd3b3db4ad83ce",
+    "current_manuscript_archive_or_file": "${MHFL_MANUSCRIPT_SOURCE_DIR}/MHFL-MCA 一审修改.zip",
+    "current_manuscript_archive_member": "els-cas-templates/MHFL-MCA.tex",
+    "current_manuscript_metric_values_verified": 648,
+    "legacy_recall_values_verified": 216,
+    "extraction_method": "current_manuscript_table_source",
+    "reference_version": "current_submission_2026-08-10",
+    "paired_comparison_permitted": false,
+    "statistical_significance_claim_permitted": false
+  },
+  "post_gate": {
+    "status": "PASS",
+    "raw_rows": 480,
+    "summary_rows": 48,
+    "candidate_rows": 144,
+    "methods": [
+      "TF-SVM early fusion",
+      "TF-SVM late fusion"
+    ],
+    "seeds_per_group": 10,
+    "retained_after_trim": 8,
+    "duplicates": 0,
+    "nan_or_inf": 0,
+    "failed_groups": [],
+    "metrics_trimmed_independently": true,
+    "summary_recomputed_from_raw": true,
+    "candidate_recomputed_from_validated_sources": true,
+    "channel_gate": {
+      "current_group": "Log",
+      "current_channel": "cDAQ9185-1F486B5Mod2/ai0",
+      "current_physical_meaning": "U-phase motor current",
+      "vibration_column": 0,
+      "vibration_physical_meaning": "bearing housing A x-direction vibration",
+      "current_fallback": false
+    },
+    "deep_reference_gate": {
+      "status": "PASS",
+      "reference_type": "main_manuscript_aggregated_reference",
+      "tables": [
+        "KAIST_Table_10",
+        "KAIST_Table_9",
+        "UO_Table_5"
+      ],
+      "rows": 108,
+      "models": [
+        "MRCFN",
+        "CFFN",
+        "CDTFAFN",
+        "MSF-DFormer",
+        "KDCNN-DF",
+        "Full MHFL-MCA"
+      ],
+      "n_values": [
+        5,
+        10,
+        15,
+        20,
+        25,
+        30
+      ],
+      "runs": 10,
+      "retained_after_trim": 8,
+      "aggregation": "trimmed_mean_sd_drop_one_high_one_low",
+      "source_records": 14,
+      "source_records_referenced": 14,
+      "source_files_present_and_hash_verified": 14,
+      "source_metric_values_verified": 864,
+      "current_manuscript_source_tex_path": "${MHFL_MANUSCRIPT_SOURCE_DIR}/MHFL-MCA 一审修改.zip::els-cas-templates/MHFL-MCA.tex",
+      "current_manuscript_source_sha256": "cd6bc52feb997a7cdc3b56d9e951ed212f15019c25a88ab21edd3b3db4ad83ce",
+      "current_manuscript_archive_or_file": "${MHFL_MANUSCRIPT_SOURCE_DIR}/MHFL-MCA 一审修改.zip",
+      "current_manuscript_archive_member": "els-cas-templates/MHFL-MCA.tex",
+      "current_manuscript_metric_values_verified": 648,
+      "legacy_recall_values_verified": 216,
+      "extraction_method": "current_manuscript_table_source",
+      "reference_version": "current_submission_2026-08-10",
+      "paired_comparison_permitted": false,
+      "statistical_significance_claim_permitted": false
+    },
+    "candidate_scope": {
+      "included_cases": [
+        "UO",
+        "KAIST"
+      ],
+      "excluded_cases": [
+        "KAIST-noise"
+      ],
+      "n_values": [
+        5,
+        10,
+        15,
+        20,
+        25,
+        30
+      ],
+      "expected_rows": 144,
+      "deep_reference_rows": 108,
+      "traditional_rows": 36,
+      "deep_models": [
+        "MRCFN",
+        "CFFN",
+        "CDTFAFN",
+        "MSF-DFormer",
+        "KDCNN-DF",
+        "Full MHFL-MCA"
+      ],
+      "traditional_methods": [
+        "TF-SVM early fusion",
+        "TF-SVM late fusion"
+      ],
+      "noise_source_data_retained_outside_candidate": true
+    },
+    "deep_model_training_performed": false,
+    "raw_gate": {
+      "rows": 480,
+      "component_rows": {
+        "UO": 120,
+        "KAIST": 240,
+        "KAIST-noise": 120
+      },
+      "groups": 48,
+      "seeds": [
+        20260806,
+        20260807,
+        20260808,
+        20260809,
+        20260810,
+        20260811,
+        20260812,
+        20260813,
+        20260814,
+        20260815
+      ],
+      "duplicate_rows": 0,
+      "nan_metric_values": 0,
+      "infinite_values": 0,
+      "failed_seeds": [],
+      "uo_snr_structural_na_only": true
+    }
+  },
+  "raw": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/traditional_baselines_raw.csv",
+    "size_bytes": 50480,
+    "sha256": "31fdef7a22baddfb69ddd70a391424eef688d6c7b72afd39a0e2dbfbea393fb2"
+  },
+  "summary": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/traditional_baselines_summary.csv",
+    "size_bytes": 17322,
+    "sha256": "7a587d4a7d0423fb894a6e3a1801a7504588b5b86af4e744e0144bcbdf20bb85"
+  },
+  "manuscript_candidate": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/manuscript_candidate_rows.csv",
+    "size_bytes": 52777,
+    "sha256": "64dd7262bb2a74f92f8267902c696466836f83fd4b8be22c52f5a248c2d884d4"
+  },
+  "fast_summary_preview": null,
+  "benchmark_scope_file": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/benchmark_scope.txt",
+    "size_bytes": 404,
+    "sha256": "fa1746630e3088c660f9dac82c883a94dcbf9cdc35d659046a8d33ce1cd4a286"
+  },
+  "svm_hyperparameter_protocol": {
+    "selection": "single predeclared development tuning",
+    "tuning_n": 15,
+    "tuning_seed": 20260805,
+    "evaluation_seeds": [
+      20260806,
+      20260807,
+      20260808,
+      20260809,
+      20260810,
+      20260811,
+      20260812,
+      20260813,
+      20260814,
+      20260815
+    ],
+    "frozen_across_all_reported_points": true,
+    "test_or_target_data_used_for_selection": false
+  },
+  "tuning_audit": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/traditional_baseline_tuning_audit.json",
+    "size_bytes": 140318,
+    "sha256": "7409ae2f40941c0b2793b2a55a7532a3a07eee4b81e1715580b91ce67cbd5a29"
+  }
+}

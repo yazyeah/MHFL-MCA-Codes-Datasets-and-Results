@@ -11,8 +11,11 @@ MHFL-MCA targets **intelligent fault diagnosis (IFD)** under two practical const
 
 It addresses these challenges by combining (i) **heterogeneous modality-specific encoders**, (ii) **bidirectional cross-attention**, and (iii) **sample-wise adaptive modality re-weighting** to produce robust fused representations.
 
-<img width="8192" height="3494" alt="MHCNN architecture overview 1" src="https://github.com/user-attachments/assets/f2ce527e-4066-428e-b555-3d3668d9b795" />
-<img width="8192" height="3724" alt="MHCNN architecture overview 2" src="https://github.com/user-attachments/assets/7de70f63-616d-4d74-88f3-510714ec3e52" />
+<p align="center">
+  <img width="900" alt="Overall workflow of MHFL-MCA" src="MHFL-MCA%20Supplementary%20Experiments/figures/MHFL-MCA_architecture.jpeg" />
+</p>
+
+*Overall workflow used in the revised manuscript (Figure 1).*
 
 ---
 
@@ -799,6 +802,123 @@ YOUR_UO_OUTPUT_DIR/
 
 * `NoiseStudy_LoadShift_FAIR_SameModel/` (KAIST only)  
   Noise robustness results under the FAIR “SameModel” protocol.
+
+---
+
+## 🧪 6. MHFL-MCA Supplementary Experiments
+
+The [`MHFL-MCA Supplementary Experiments`](MHFL-MCA%20Supplementary%20Experiments/README.md)
+folder contains the code, confirmed configurations, tests, provenance records,
+compact source data, and figure-generation utilities for the experiments added
+during revision. Raw datasets, model weights, caches, and temporary files are
+not duplicated in this folder.
+
+### 6.1 Included experiment scopes
+
+| Experiment | Reproducibility scope |
+|---|---|
+| 02 | Modality-weight and missing-modality analysis: 540/36 weight raw/summary rows and 132/12 missing-modality raw/summary rows. |
+| 03 | Isolated CPU FLOPs/storage and GPU runtime profiling for the confirmed 7,380,173-parameter KAIST model. |
+| 04 | Five controlled variants, three conditions, and ten seeds: 150 raw rows and 15 summary groups. The compact paper table is a separately documented display derived from this full source evidence. |
+| 05 | Controlled UO low-shot extension: 140 raw rows, 14 summary groups, and seven paired-gain rows. The paper-facing hybrid display uses the original Table-5 Full values at N=5 and N=10; all other Full points, no-CAIM results, gaps, and paired gains come from the controlled extension. |
+| 06 | Fixed-tuning TF-SVM reference baselines: 480 raw rows, 48 summary groups, and 144 clean candidate rows. Hyperparameters are selected once at N=15 with seed 20260805 and then frozen. |
+
+Large checkpoints are intentionally excluded. Their manifests and SHA-256
+records are retained so separately released weights can be verified.
+
+### 6.2 Environment and data configuration
+
+The recorded environment uses Python 3.9 and TensorFlow/Keras 2.7. From the
+repository root, open PowerShell and run:
+
+```powershell
+conda activate tensorflow
+Set-Location '.\MHFL-MCA Supplementary Experiments\Codes\Revision Experiments'
+
+$env:PYTHONDONTWRITEBYTECODE = '1'
+$env:MHFL_SUITE_ROOT = (Get-Location).Path
+$env:MHFL_RUN_TAG = 'full_<date>_r1'
+
+$env:MHFL_UO_DATA_ROOT = '<UO 3_MatLab_Raw_Data>'
+$env:MHFL_KAIST_VIB_DIR = '<KAIST vibration directory>'
+$env:MHFL_KAIST_CURRENT_DIR = '<KAIST TDMS current directory>'
+
+$env:MHFL_TEMP_ROOT = '<large_disk>\mhfl_temp'
+$env:TEMP = $env:MHFL_TEMP_ROOT
+$env:TMP = $env:MHFL_TEMP_ROOT
+$env:TMPDIR = $env:MHFL_TEMP_ROOT
+
+$env:MHFL_CURRENT_CHANNEL_NAME = 'cDAQ9185-1F486B5Mod2/ai0'
+$env:MHFL_KAIST_VIB_COLUMN = '0'
+Remove-Item Env:MHFL_ALLOW_CURRENT_FALLBACK -ErrorAction SilentlyContinue
+Remove-Item Env:MHFL_CURRENT_CHANNEL_REGEX -ErrorAction SilentlyContinue
+```
+
+Review the confirmed UO/KAIST configuration files and their evidence hashes
+before explicitly accepting the KAIST specification:
+
+```powershell
+$env:MHFL_ACCEPT_KAIST_SPEC = '1'
+python 00_check_environment.py --strict
+python 09_model_spec_audit.py
+```
+
+The full KAIST reruns are then invoked explicitly:
+
+```powershell
+python 01_prepare_kaist_checkpoint.py --mode full --protocol both --accept-kaist-spec
+python 02_modality_weights_and_missing.py --mode full --protocol stage3 --accept-kaist-spec
+python 03_profile_efficiency.py --mode full --protocol stage2 --device gpu --warmup 100 --repeats 1000 --accept-kaist-spec
+python 04_additional_ablation.py --mode full --accept-kaist-spec
+python tools/prepare_ablation_main_without_equal_weights.py --suite-root . --run-tag $env:MHFL_RUN_TAG
+python 06_traditional_baselines.py --mode full
+```
+
+Experiment 05 is intentionally documented separately. Its controlled run is:
+
+```powershell
+python 05_lowshot_threshold.py --mode full --run-tag $env:MHFL_RUN_TAG
+```
+
+This command generates the 140/14/7 controlled-extension data contract, but
+its final Table-5 replay gate may exit nonzero because the historical
+TensorFlow initializer and batch-shuffling state was not retained. Do not
+selectively rerun seeds to force the historical aggregates. To reproduce the
+paper-facing protocol-aware figure from the published source data, run:
+
+```powershell
+$published = '..\..\Results\Revision Experiments\full_20260807_r1\05_Extreme_Lowshot_CAIM'
+python .\figures\build_lowshot_protocol_aware_figure.py `
+  --summary "$published\controlled_extension\lowshot_summary.csv" `
+  --paired "$published\controlled_extension\caim_paired_summary.csv" `
+  --output-dir "$published\paper_protocol_aware_bundle" `
+  --stem 'lowshot_sensitivity_protocol_aware_reproduced'
+```
+
+The current `07_build_manuscript_assets.py` remains an internal strict gate
+for its recorded artifact contract; it is not advertised as a one-command
+rebuild of the current manuscript's hybrid low-shot display. Likewise, do not
+use `run_pipeline.py full` as the public revision workflow.
+
+### 6.3 No-training validation
+
+```powershell
+python -m pytest -q -p no:cacheprovider
+python tools/static_audit.py .
+python tools/audit_additional_ablation_extension.py --run-tag $env:MHFL_RUN_TAG --phase pre
+python tools/audit_lowshot_final.py --phase pre
+python tools/audit_traditional_baselines_final.py --phase pre
+```
+
+To validate only the portable publication package from the repository root:
+
+```powershell
+python '.\MHFL-MCA Supplementary Experiments\Codes\Revision Experiments\tools\validate_publication_package.py' `
+  --package-root '.\MHFL-MCA Supplementary Experiments'
+```
+
+See the supplementary folder's README and the per-experiment README files for
+the evidence boundaries and exact output locations.
 
 ---
 

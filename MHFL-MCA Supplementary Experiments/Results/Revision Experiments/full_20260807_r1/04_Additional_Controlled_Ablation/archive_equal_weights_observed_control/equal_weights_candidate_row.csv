@@ -1,0 +1,2 @@
+Method,Params (M),2 Nm Accuracy,2 Nm Macro-F1,4 Nm Accuracy,4 Nm Macro-F1,source,comparison_type
+Equal weights,7.359685,1.0000 ± 0.0000,1.0000 ± 0.0000,0.9958 ± 0.0056,0.9958 ± 0.0056,new_stage2_additional_ablation_variant,unpaired_aggregated_reference_difference

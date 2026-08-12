@@ -1,0 +1,12 @@
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Method & Params (M) & 2~Nm Acc. & 2~Nm F1 & 4~Nm Acc. & 4~Nm F1 \\
+\midrule
+Full MHFL-MCA$^{\dagger}$ & 7.380 & 0.9999$\pm$0.0002 & 0.9999$\pm$0.0002 & 0.9925$\pm$0.0096 & 0.9925$\pm$0.0097 \\
+Homogeneous current-style & 8.784 & 0.9445$\pm$0.0418 & 0.9405$\pm$0.0477 & 0.9261$\pm$0.0481 & 0.9246$\pm$0.0511 \\
+Attention ($D=128$) & 4.601 & 0.9997$\pm$0.0007 & 0.9997$\pm$0.0007 & 0.9841$\pm$0.0188 & 0.9838$\pm$0.0194 \\
+Direct softmax & 7.380 & 0.9941$\pm$0.0087 & 0.9941$\pm$0.0088 & 0.9752$\pm$0.0331 & 0.9746$\pm$0.0342 \\
+\bottomrule
+\end{tabular}
+
+\footnotesize $^{\dagger}$Reused aggregate reference from the original Stage-2 main experiment. Comparisons with the newly trained controls are descriptive and unpaired.

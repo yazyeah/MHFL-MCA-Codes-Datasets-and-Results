@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "purpose": "paper_specific_display_only",
+  "source_evidence_contract": {
+    "raw_rows": 150,
+    "summary_groups": 15,
+    "variants": 5,
+    "conditions": 3,
+    "seeds_per_group": 10,
+    "raw_sha256": "2730500e6cf5f9c256336e0b344826aaa3161c5fa437b3a5ee8d9a5764ea4b57",
+    "summary_sha256": "c38bb7bfbfb254d30744a2c4cd0e733579ec7e48f1c995e46d6d8f9243b4c152"
+  },
+  "full_reference": {
+    "source": "configs/kaist_additional_ablation_full_reference.json",
+    "sha256": "2f2c4e9ad231a41b34caec87eba4ad915b615e3379e35dc1cb95343670b36194",
+    "comparison_type": "reused_aggregated_reference"
+  },
+  "paper_controls": [
+    "homogeneous_other",
+    "attention_dim_128",
+    "direct_softmax"
+  ],
+  "paper_label_mapping": {
+    "homogeneous_other": "Homogeneous current-style"
+  },
+  "supplementary_controls_retained": [
+    "homogeneous_vibration",
+    "equal_weights"
+  ],
+  "statistical_boundary": "No paired delta, paired SD, p-value, or significance claim is computed against the reused Full aggregate."
+}

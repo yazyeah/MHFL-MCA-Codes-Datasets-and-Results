@@ -1,0 +1,18 @@
+{
+  "num_classes": 5,
+  "segment_length": 2048,
+  "vib_layers": 5,
+  "other_layers": 3,
+  "vib_dropout": 0.2905585371157774,
+  "other_dropout": 0.39293093464896633,
+  "attention_dim": 256,
+  "fcb_units": 256,
+  "encoder_mode": "heterogeneous",
+  "use_caim": true,
+  "gate_mode": "two_stage",
+  "attention_initializer": "uniform",
+  "cross_feature_order": "value_source",
+  "expected_params_m": 7.38,
+  "spec_status": "confirmed_from_original_optuna_artifact",
+  "source_note": "Confirmed from provenance/original_optuna/log_MHCNN.txt (original SHA-256=B8809916148227949FF7389CBD1646CA4443A049AD39CC27626FFFD1D88CA555). The retained log records all seven best parameters and the 7,380,173-parameter model summary."
+}

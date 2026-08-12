@@ -1,0 +1,30 @@
+{
+  "model": "Full MHFL-MCA",
+  "source": "main_manuscript_stage2_experiment",
+  "protocol": "stage2_load_shift",
+  "source_load": "0Nm",
+  "n_train_per_class": 30,
+  "runs": 10,
+  "aggregation": "trimmed_mean_sd_drop_one_high_one_low",
+  "reference_type": "main_manuscript_aggregated_reference",
+  "conditions": {
+    "2Nm_0dB": {
+      "accuracy_mean": 0.9999,
+      "accuracy_sd": 0.0002,
+      "macro_f1_mean": 0.9999,
+      "macro_f1_sd": 0.0002
+    },
+    "4Nm_0dB": {
+      "accuracy_mean": 0.9925,
+      "accuracy_sd": 0.0096,
+      "macro_f1_mean": 0.9925,
+      "macro_f1_sd": 0.0097
+    }
+  },
+  "params_m": 7.38,
+  "source_tables": [
+    "Current manuscript Table 10, N=30 (2 Nm)",
+    "Current manuscript Table 11, N=30 (4 Nm)"
+  ],
+  "note": "The Full MHFL-MCA row is reused from the original 10-run Stage-2 main experiment at N=30 to avoid redundant retraining."
+}

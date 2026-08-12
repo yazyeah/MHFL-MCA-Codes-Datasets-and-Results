@@ -1,0 +1,18 @@
+{
+  "num_classes": 7,
+  "segment_length": 2048,
+  "vib_layers": 4,
+  "other_layers": 5,
+  "vib_dropout": 0.422,
+  "other_dropout": 0.35,
+  "attention_dim": 256,
+  "fcb_units": 256,
+  "encoder_mode": "heterogeneous",
+  "use_caim": true,
+  "gate_mode": "two_stage",
+  "attention_initializer": "glorot_uniform",
+  "cross_feature_order": "query_order",
+  "expected_params_m": 5.111759,
+  "spec_status": "locked_from_manuscript_table_3",
+  "source_note": "Matches the uploaded UO source and Table 3."
+}

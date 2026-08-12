@@ -1,0 +1,30 @@
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local data, transient outputs, and training artifacts
+data/
+cache/
+checkpoints/
+outputs/
+splits/
+tmp/
+*.h5
+*.keras
+*.pb
+*.tiff
+*.tif
+*.tdms
+*.mat
+*.npz
+*.zip
+
+# Editor and operating-system metadata
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# CSV, JSON, TeX, PDF, PNG, and SVG are intentionally not ignored: they are
+# the compact source-data and provenance artifacts published in this package.

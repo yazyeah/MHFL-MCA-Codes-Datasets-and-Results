@@ -1,0 +1,276 @@
+{
+  "root": "${MHFL_SUITE_ROOT}",
+  "python_target": "3.9",
+  "summary": {
+    "PASS": 53,
+    "WARN": 0,
+    "FAIL": 0
+  },
+  "files": [
+    {
+      "file": "${MHFL_SUITE_ROOT}/00_check_environment.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/01_prepare_kaist_checkpoint.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/02_modality_weights_and_missing.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/03_profile_efficiency.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/04_additional_ablation.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/05_lowshot_threshold.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/06_traditional_baselines.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/07_build_manuscript_assets.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/08_rebuild_existing_figures.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/09_model_spec_audit.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/10_synthetic_figure_smoke.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/11_source_alignment_audit.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/12_manuscript_metric_audit.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/audit_uo_main_reference.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/figures/build_lowshot_protocol_aware_figure.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/__init__.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/config.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/data.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/diagnostic_plots.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/features.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/model.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/plotting.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/profiling.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/provenance.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/publication.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/specs.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/stats.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/mhfl_review/train.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/provenance/original_optuna/MHCNN_Oputuna_Experiment.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/run_pipeline.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/source_snapshots/MHCNN_KAIST.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/source_snapshots/MHCNN_UO.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_additional_ablation.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_data_core.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_efficiency_profiler.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_features_stats.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_kaist_channel_config.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_kaist_confirmed_config.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_lowshot_final.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_main_manuscript_reference.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_manuscript_asset_gates.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_publication.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_specs.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_traditional_baselines_final.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tests/test_uo_optuna_confirmation.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/audit_additional_ablation_extension.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/audit_lowshot_final.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/audit_traditional_baselines_final.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/prepare_ablation_main_without_equal_weights.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/sanitize_publication_paths.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/static_audit.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/tools/validate_publication_package.py",
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "${MHFL_SUITE_ROOT}/validate_lowshot_paper_alignment.py",
+      "status": "PASS",
+      "findings": []
+    }
+  ]
+}

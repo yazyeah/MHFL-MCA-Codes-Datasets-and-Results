@@ -1,0 +1,1818 @@
+\documentclass[a4paper]{cas-sc}
+
+\usepackage[numbers]{natbib}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  citecolor=blue,
+  urlcolor=blue,
+}
+\usepackage{times}
+\usepackage{enumitem}
+\setlist[enumerate]{leftmargin=*,label=(\arabic*)}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{amsmath,amssymb}
+\usepackage{bbm}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{makecell}
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xspace}
+\usepackage{silence}
+\WarningFilter{latex}{Underfull \\hbox}
+\WarningFilter{latex}{Overfull \\hbox}
+% \WarningFilter{latex}{No positions in optional float specifier}
+\WarningFilter{hyperref}{Ignoring empty anchor}
+\WarningFilter{fixltx2e}{fixltx2e is not required with releases after 2015}
+
+\hbadness=10000
+\vbadness=10000
+\hfuzz=1000pt
+\vfuzz=1000pt
+\emergencystretch=3em
+\sloppy
+\AtBeginDocument{\hfuzz=1000pt\vfuzz=1000pt}
+
+\newlength{\LayerW}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+%%% Author-definition helper retained from the cas-dc template
+\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+
+% Best baseline (second-best overall) in each column
+\newcommand{\best}[1]{\underline{#1}}
+
+% % ===== float control for two-column cas-dc =====
+% \usepackage{dblfloatfix}
+% \usepackage[section]{placeins}
+
+% \setcounter{topnumber}{3}
+% \setcounter{dbltopnumber}{3}
+% \renewcommand{\topfraction}{0.95}
+% \renewcommand{\dbltopfraction}{0.95}
+% \renewcommand{\textfraction}{0.05}
+% \renewcommand{\floatpagefraction}{0.85}
+% \renewcommand{\dblfloatpagefraction}{0.85}
+
+% \setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+% \setlength{\dbltextfloatsep}{8pt plus 2pt minus 2pt}
+% \setlength{\floatsep}{8pt plus 2pt minus 2pt}
+
+\begin{document}
+\let\WriteBookmarks\relax
+
+
+\shorttitle{MHFL-MCA for robust fault diagnosis}
+\shortauthors{Author et~al.}
+
+\hfuzz=1000pt
+\hbadness=10000
+
+\title[mode=title]{Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis of machines under complex conditions}
+\tnotemark[1]
+\tnotetext[1]{This document is the results of the research
+   project funded by Natural Science Foundation of Hunan Province (Grant No. 2025JJ60284)}
+
+
+% \author[1]{Yuang Zhou}[orcid=0009-0005-8378-9784]
+
+% \author[2,3]{Tianci Zhang}[orcid=0000-0001-8239-8400]
+% \cormark[1]
+% \ead{modaoztc@csu.edu.cn}
+
+% \author[4]{Tongyang Pan}[orcid=0000-0002-7460-2093]
+
+% \author[4]{Jingsong Xie}[orcid=0000-0001-7280-3556]
+
+% \author[5]{Jinglong Chen}[orcid=0000-0002-9805-9849]
+
+% \affiliation[1]{organization={Dundee International Institute of Central South University},
+%                city={Changsha},
+%                country={China}}
+
+% \affiliation[2]{organization={State Key Laboratory of Precision Manufacturing for Extreme Service Performance, Central South University},
+%                city={Changsha},
+%                country={China}}
+
+% \affiliation[3]{organization={College of Mechanical and Electrical Engineering, Central South University},
+%                city={Changsha},
+%                country={China}}
+
+% \affiliation[4]{organization={School of Traffic \& Transportation Engineering, Central South University},
+%                city={Changsha},
+%                country={China}}
+                
+% \affiliation[5]{organization={State Key Laboratory for Manufacturing and Systems Engineering, Xi'an Jiaotong University},
+%                city={Xi'an},
+%                country={China}}
+
+% \cortext[cor1]{Corresponding author}
+
+
+\begin{abstract}
+Traditional vibration-based single-modal methods often struggle to maintain robust fault diagnosis under limited samples, varying operating conditions, and strong noise. Multimodal sensing can improve diagnostic robustness by combining complementary information from different sensors. However, many existing multimodal methods use homogeneous encoders for heterogeneous signals, provide insufficient cross-modal interaction, and treat modalities as equally reliable during fusion. To address these limitations, this study proposes a multimodal heterogeneous feature learning framework with modality-cross-attention (MHFL-MCA). The framework uses modality-specific convolutional encoders to preserve the distinct statistical characteristics of heterogeneous signals. It applies bidirectional cross-attention to capture complementary cross-modal dependencies. An adaptive modality reweighting strategy emphasizes more reliable modality representations during feature fusion. The resulting multimodal representation is used for fault diagnosis. MHFL-MCA is evaluated on two public bearing datasets with vibration--acoustic and vibration--current measurements. The experiments cover limited-sample, varying-load, and strong-noise conditions. The results show that MHFL-MCA achieves consistently strong diagnostic performance and robustness compared with the evaluated state-of-the-art methods. These findings demonstrate the effectiveness of heterogeneous feature learning and adaptive cross-modal fusion for robust fault diagnosis under the evaluated conditions. Code and results are publicly available at \href{https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results}{https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results}.
+\end{abstract}
+
+\begin{keywords}
+multimodal learning \sep Robust fault diagnosis \sep heterogeneous feature fusion \sep limited samples
+\end{keywords}
+
+\maketitle
+
+\section{Introduction}
+
+As manufacturing and machining industries undergo accelerated advancement, modern society is entering an era of intelligent manufacturing. In this context, intelligent fault diagnosis (IFD) for mechanical systems and components plays a key role in ensuring operational safety and prolonging service life\cite{Bearing1,Motor1}. Accordingly, IFD has attracted growing attention in a wide range of industrial assets. For clarity, related studies are reviewed from three complementary perspectives: traditional signal-processing-based diagnosis, learning-based diagnosis, and multimodal feature fusion.
+
+Traditional signal-processing-based methods construct diagnostic indicators through designed signal transformations and statistical modeling. Recent studies have extracted discriminative fault information under non-stationary and transient interference through transient-aware spectral segmentation informed by energy-distribution modeling and optimized band selection
+\cite{ChenCEP2026}, vibration-weighted maximum correlated
+kurtosis deconvolution with latent cyclic pattern discovery \cite{ChenJSV2026}, and Markovian spectral transition modeling with temporal dependencies \cite{ChenND2026}. Other optimization-assisted studies proposed a cyclic spectral coherence map-based filter with geometric mean optimization \cite{ChauhanTIA2026} and an orthogonal matching pursuit method optimized by Golden Jackal Optimization for rotating-machine fault
+detection \cite{VashishthaSHM2025}. These studies demonstrate the effectiveness of physically interpretable spectral analysis, sparse representation, and optimization-assisted signal processing for
+enhancing fault signatures under complex interference, and provide valuable methodological foundations for industrial fault diagnosis.
+
+Complementing these physically grounded approaches, data-driven learning algorithms have been widely introduced into IFD \cite{Gearbox1}. Frameworks based on machine learning (ML) \cite{Machinelearning,ZhangTIE2022}, deep learning (DL) \cite{Deeplearning,ZhangESWA2025}, and deep reinforcement learning (DRL) \cite{DRL,1} have been reported. Compared with traditional signal-processing pipelines, these methods reduce the dependence on handcrafted features by learning representations directly from data.
+
+However, most existing learning-based IFD methods rely on
+single-modality data, predominantly vibration signals
+\cite{SingleVibration1,SingleVibration2}. Extensive studies have shown that depending on a single sensor source often leads to limited information diversity and suboptimal generalization, especially when only small training sets are available or when measurements are contaminated by strong noise (low signal-to-noise ratio, SNR) \cite{Single,SOFTLABEL,Residual}. In these cases, the model tends to overfit and requires a large number of labeled samples for training. These issues make it difficult for single-modality learning methods to achieve satisfactory diagnostic performance under complex conditions.
+
+Multimodal data fusion provides a promising solution to the information limitations of single-modal diagnosis
+\cite{2,3}. From the perspective of task characteristics,
+existing multimodal methods can be organized into representation-transformation, denoising-assisted,
+attention-based, and optimization-based fusion strategies.
+
+Representation-transformation strategies construct complementary views or representation domains from monitoring signals. Che et al.\cite{Prove1} transformed vibration signals into grayscale images and time series through Principal Component Analysis (PCA), and integrated CNN- and DBN-based features through ensemble
+learning. Ma et al.\cite{Prove3} combined Continuous Wavelet Transform (CWT) and Symmetrized Dot Pattern (SDP) representations to exploit complementary time-frequency and polar information. More recently, Chen et al. proposed a prior-knowledge-constrained
+homotypic multi-source joint representation method with dynamic hierarchical feature tracing in a hybrid Walsh--frequency domain \cite{ChenMSSP2026}.
+
+Denoising-assisted strategies explicitly suppress measurement interference before feature fusion. Qiu et al.\cite{Prove2} combined a multiscale stacked denoising autoencoder with dual-branch feature extraction, and fused GASF-image features learned by multiscale CNNs with waveform features extracted by wavelet scattering networks.
+
+Attention-based strategies learn data-dependent importance during fusion. Wang et al.\cite{Prove4} introduced a three-stage feature fusion method that dynamically weights vibration and torque feature
+maps to highlight informative components and suppress irrelevant ones. Optimization-based strategies further search for effective fusion configurations under data scarcity. Ji et al.\cite{Prove5} developed an adaptive multimodal feature fusion network optimized by a Differential Evolution algorithm for combining 1D time-series and 2D grayscale-image representations.
+
+Building on the advances of multimodal fusion, it is increasingly evident that jointly leveraging heterogeneous measurements such as vibration and acoustic signals, models can compensate for the insufficient state-representation capacity of any single sensor type. The diversity of sensor information also reduces reliance on large annotated datasets, since features from one modality can support fault diagnosis when the other is weak or noise-contaminated. Therefore, constructing an intelligent diagnosis model using a multimodal monitoring data fusion scheme is expected to achieve robust mechanical fault diagnosis under complex conditions such as limited fault samples, variable operating conditions, and noise interference.
+
+Despite progress in traditional signal-processing-based diagnosis, learning-based diagnosis, and multimodal feature fusion, existing multimodal IFD approaches still face several limitations \cite{4,5}. First, many methods adopt identical neural network architectures to extract features from different modalities, even though their sampling rates, noise levels, and spectral characteristics differ substantially. A homogeneous backbone is therefore unlikely to provide optimal feature extraction for all modalities. Second, interactions between modalities are often weak: features are usually combined by straightforward concatenation, summation, or averaging, which ignores the fine-grained statistical dependencies and complementary structures across modalities. Third, most fusion strategies treat all modalities as equally informative and do not explicitly model their different representational capabilities for machine health states. As a result, the fused representation may be dominated by noisy or less reliable modalities and fail to achieve an optimal description of the fault patterns.
+
+To address these challenges, this paper develops a multimodal heterogeneous feature learning framework that learns modality-specific features from heterogeneous measurements and performs adaptive cross-modal fusion for reliable IFD under small training samples and robust noise conditions. The proposed framework introduces heterogeneous convolutional branches tailored to the statistical characteristics of each modality, a cross-attention mechanism to model bidirectional dependencies between modality-specific features, and a dynamic reweighting strategy to adaptively emphasize more reliable modalities at the feature fusion stage. The main contribution of this paper can be briefly concluded as follows:
+
+\begin{enumerate}
+
+  \item A multimodal heterogeneous CNN network is proposed, which customizes feature extraction networks for different modal data, achieving personalized feature extraction that preserves modality-specific characteristics.
+  \item A modality-cross-attention mechanism is proposed to model feature dependencies among different modal data, enhancing the joint representation capability of multimodal features.
+  \item A sample-wise modality reweighting strategy is introduced to estimate relative modality reliability and reduce the influence of less reliable representations during fusion.
+  \item Based on two sets of machinery fault experiments, the proposed method is validated for its effectiveness in limited samples, variable operating conditions, and strong noise scenarios, demonstrating superiority over state-of-the-art models.
+  
+\end{enumerate}
+
+The remainder of this paper is organized as follows.
+Section~2 presents the proposed multimodal framework, Section~3 reports the experimental analysis and validation, Section~4 concludes the study, and Section~5 discusses the limitations and future work.
+
+\section{Methodology}
+\subsection{Problem statement and architecture overview}
+
+Consider a multimodal bearing fault diagnosis task with paired measurements of two modalities. For each sample \(i\), the raw modality 1 and modality 2 segments are denoted as
+$\mathbf{x}_i^{(1)}, \mathbf{x}_i^{(2)} \in \mathbb{R}^{L}$, 
+where \(L\) is the number of time-domain points per segment, and the corresponding health label is $y_i$, which belongs to $\{0,1,\dots,K-1\}$ and $K$ denotes the number of total health states.
+
+The proposed method MHFL-MCA implements a mapping
+$\big(\mathbf{x}_i^{(1)}, \mathbf{x}_i^{(2)}\big) \;\rightarrow \mathbf{p}_i = \big(p_i^{(0)}, \dots, p_i^{(K-1)}\big)$, where \(p_i^{(k)}\) is the predicted posterior probability that sample \(i\) belongs to specified class \(k\). Accordingly, $\mathbf{p}_i$ lies in the probability simplex, i.e.,
+$p_i^{(k)}\in[0,1]$ for all $k$ and $\sum_{k=0}^{K-1} p_i^{(k)}=1$. We assume the two modalities are acquired synchronously and temporally aligned, so that each paired segment
+$\big(\mathbf{x}_i^{(1)}, \mathbf{x}_i^{(2)}\big)$ corresponds to the same time window. If the raw streams have different sampling rates, they are resampled to a common rate before segmentation. 
+
+The overall workflow is summarized in Fig.~\ref{fig:arch_overview}. Fig.~\ref{fig:arch_overview}\subref{fig:arch_overview_a} depicts the front-end feature learning and cross-modal interaction stage: the modality-specific heterogeneous encoder module (MSHEM) extracts modality-tailored feature maps $F_i^{(1)}$ and $F_i^{(2)}$ from paired modality 1 and modality 2 segments, and the cross-attention interaction module (CAIM) performs bidirectional cross-attention to produce cross-enhanced representations $G_i^{1\leftarrow 2}$ and $G_i^{2\leftarrow 1}$. 
+Fig.~\ref{fig:arch_overview}\subref{fig:arch_overview_b} illustrates the decision stage: the adaptive modality reweighting module (AMRM) estimates sample-wise modality reliability weights and constructs the fused representation $z_i$, which is finally mapped to the posterior probability vector $\mathbf{p}_i$ over $K$ health states by the fusion classification block (FCB).
+
+% ===== Figure 1 =====
+\begin{figure}[pos=htbp]
+  \centering
+
+  % -------- (a) Part I --------
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MHCNN architecture overview 1.png}
+    \caption{Modality-Specific Heterogeneous Encoder Module (MSHEM) and bidirectional cross-attention interaction module (CAIM). The modality 1 and modality 2 branches produce feature maps $F_i^{(1)}$ and $F_i^{(2)}$, which are refined into cross-enhanced representations $G_i^{1\leftarrow 2}$ and $G_i^{2\leftarrow 1}$.}
+    \label{fig:arch_overview_a}
+  \end{subfigure}
+
+  \vspace{4mm}
+
+  % -------- (b) Part II --------
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MHCNN architecture overview 2.png}
+    \caption{Adaptive modality reweighting (AMRM) and fusion classification block (FCB). AMRM estimates sample-wise modality reliability weights and constructs the fused representation $z_i$, which is mapped to the posterior probability vector $\mathbf{p}_i$ over $K$ health states by FCB.}
+    \label{fig:arch_overview_b}
+  \end{subfigure}
+
+  \caption{Overall architecture of the proposed MHFL-MCA framework. To avoid over-compressing visual details, the workflow is shown in two linked parts: (a) front-end feature learning and cross-modal interaction; (b) adaptive fusion and classification.}
+  \label{fig:arch_overview}
+\end{figure}
+
+\subsection{Modality-specific heterogeneous encoder module (MSHEM)}
+\label{subsec:mshem}
+The MSHEM is designed to map raw modality 1 and modality 2 time series into modality-specific feature maps while respecting their distinct statistical properties. 
+
+In this study, heterogeneous feature learning means that the two
+encoder branches do not share parameters and are configured
+independently in terms of depth, kernel size, activation, pooling, and dropout. This asymmetric design reflects the different temporal--spectral characteristics of vibration, acoustic, and motor-current signals: the vibration branch uses a larger kernel with LeakyReLU and average pooling, whereas the acoustic/current branch uses a smaller kernel with GELU and max pooling. Thus, signals generated by different sensing mechanisms are not forced into a single homogeneous feature extractor. 
+
+For each modality $m \in \{1,2\}$ and each sample index $i$, the input segment $\mathbf{x}_i^{(m)} \in \mathbb{R}^{L}$ is reshaped into
+\begin{equation}
+\mathbf{H}^{(m,0)}_i(t,1) = x_i^{(m)}(t), \qquad t = 1,\ldots,L,
+\label{eq:reshape}
+\end{equation}
+where $t \in \{1,\ldots,L\}$ indexes the temporal position in the input segment.
+
+For modality $m$, the encoder is implemented as a stack of $L_m$ one-dimensional convolutional blocks. The $l$-th block ($l = 1,\ldots,L_m$) first applies a 1-D convolution with kernel size $k_m^{(l)}$ and stride $s_m^{(l)}$ across the temporal axis. The pre-activation feature map $U_i^{(m,l)}\in\mathbb{R}^{T_m^{(l)}\times C_m^{(l)}}$ at temporal index $t$ and output channel $c$ is
+\begin{equation}
+U^{(m,l)}_i(t,c)=\sum_{\tau=0}^{k_m^{(l)}-1}\sum_{c'=1}^{C_{m}^{(l-1)}} w^{(m,l)}_{c',c,\tau}\,\mathbf{H}^{(m,l-1)}_i((t-1)s_m^{(l)}+\tau+1, c') + b^{(m,l)}_c ,
+\label{eq:conv_pre}
+\end{equation}
+where $c' \in \{1,\ldots,C_m^{(l-1)}\}$ and $c \in \{1,\ldots,C_m^{(l)}\}$ index the input and output channels respectively, $C_m^{(l-1)}$ and $C_m^{(l)}$ are the numbers of input and output channels of the $l$-th block, $w^{(m,l)}_{c',c,\tau}$ and $b^{(m,l)}_c$ are the convolutional weights and bias, and $\tau \in \{0,\ldots,k_m^{(l)}-1\}$ indexes the kernel position. Here in the Eq. (\ref{eq:conv_pre}), $t \in \{1,\ldots,T_m^{(l)}\}$ indexes the temporal locations of the $l$-th block output with length $T_m^{(l)}$. 
+
+
+A non-linear activation function is then applied channel-wise,
+\begin{equation}
+\hat{\mathbf{H}}^{(m,l)}_i(t,c)
+=
+\phi_m^{(l)}\!\big(U^{(m,l)}_i(t,c)\big),
+\label{eq:conv_nonlinear}
+\end{equation}
+where activation function $\phi_m^{(l)}(\cdot)$ is modality- and layer-dependent.
+
+Finally, a pooling operator $P_m^{(l)}(\cdot)$ is applied to reduce the temporal resolution, suppress noise, and enlarge the receptive field. Denoting the post-activation feature map by $\hat{\mathbf{H}}_i^{(m,l)} \in \mathbb{R}^{\hat{T}_m^{(l)} \times C_m^{(l)}}$, the pooled output is written as
+\begin{equation}
+\mathbf{H}_i^{(m,l)}
+=
+P_m^{(l)}\!\left(\hat{\mathbf{H}}_i^{(m,l)}\right)
+\in
+\mathbb{R}^{T_m^{(l)} \times C_m^{(l)}},
+\label{eq:pooling}
+\end{equation}
+
+Let $T_1$ and $T_2$ denote the temporal lengths of the final encoder outputs after all pooling layers, and let $C_1$ and $C_2$ denote the corresponding channel numbers. The final encoder outputs can be written as
+\begin{equation}
+\begin{aligned}
+F_i^{(1)} &= E_1\big(\mathbf{x}_i^{(1)};\,\boldsymbol{\theta}_1\big) \in \mathbb{R}^{T_1 \times C_1},\\
+F_i^{(2)} &= E_2\big(\mathbf{x}_i^{(2)};\,\boldsymbol{\theta}_2\big) \in \mathbb{R}^{T_2 \times C_2},
+\end{aligned}
+\label{eq:encoder_output}
+\end{equation}
+where $E_1(\cdot)$ and $E_2(\cdot)$ denote the modality 1 and modality 2 encoders parameterized by $\boldsymbol{\theta}_1$ and $\boldsymbol{\theta}_2$. Here $\boldsymbol{\theta}_1$ and $\boldsymbol{\theta}_2$ denote the collections of all trainable parameters in the modality 1 and modality 2 encoder branches respectively, and the two sets are not shared to allow modality-specific feature extraction.
+
+To improve reproducibility and tuning efficiency, the key architectural and optimization hyperparameters are selected through Optuna~\cite{Optuna}, a define-by-run hyperparameter optimization framework with efficient pruning. Specifically, we maximize the validation accuracy on a fixed held-out validation split from the source training domain by running a bounded-budget study (30 trials). The search space covers: the learning rate (log-uniform), batch size (categorical), the numbers of convolutional blocks in each modality-specific branch, dropout ratios, and the attention embedding dimension. These search ranges were selected to balance representation
+capacity, overfitting risk, and computational cost under
+limited-sample conditions. Specifically, the dropout range
+$[0.1,0.5]$ provides moderate regularization, $3$--$5$
+convolutional blocks enable sufficient hierarchical feature
+extraction without excessive network depth, and the attention
+dimensions $\{128,256\}$ balance cross-modal representation
+capacity and model complexity.
+
+\subsection{Cross-attention interaction module (CAIM)}
+\label{subsec:caim}
+
+As described in Section~\ref{subsec:mshem}, the MSHEM produces modality-specific feature maps $F_i^{(1)}$, $F_i^{(2)}$ for the modality 1 and modality 2 branches respectively. Although these features already encode modality-tailored information, they are still learned largely independently. To explicitly model the complementary and correlated structures across modalities, the cross-attention interaction module (CAIM) introduces bidirectional cross-attention between the features of two modalities.
+
+For the cross-attention block producing $G_i^{1 \leftarrow 2}$, the modality 1 features act as the queries, while the modality 2 features provide the keys and values. Let $C_1$ and $C_2$ denote the channel dimensions of $F_i^{(1)} \in \mathbb{R}^{T_1 \times C_1}$ and $F_i^{(2)} \in \mathbb{R}^{T_2 \times C_2}$ respectively, and let $D$ be the attention embedding dimension.
+Three linear projections are first applied:
+\begin{equation}
+Q_i^{(1)} = F_i^{(1)} W_q^{(1)}, \quad
+K_i^{(2)} = F_i^{(2)} W_k^{(2)}, \quad
+V_i^{(2)} = F_i^{(2)} W_v^{(2)},
+\label{eq:caim_qkv_v2a}
+\end{equation}
+where $W_q^{(1)} \in \mathbb{R}^{C_1 \times D}$, $W_k^{(2)} \in \mathbb{R}^{C_2 \times D}$, and
+$W_v^{(2)} \in \mathbb{R}^{C_2 \times D}$ are learnable weight matrices. The projections yield $Q_i^{(1)}\in\mathbb{R}^{T_1\times D}$, $K_i^{(2)}\in\mathbb{R}^{T_2 \times D}$, and $V_i^{(2)}\in\mathbb{R}^{T_2 \times D}$.  
+
+For a given sample $i$, the unnormalized attention score between the query at time index $t$ of the modality 1 branch and the key at time index $\tau$ of the modality 2 branch is computed as
+\begin{equation}
+    e_{t,\tau}^{1 \leftarrow 2}
+    =
+    \big\langle Q_i^{(1)}(t,:),\, K_i^{(2)}(\tau,:) \big\rangle,
+    \label{eq:caim_score_v2a}
+\end{equation}
+where $\langle \cdot, \cdot \rangle$ denotes the inner product and $Q_i^{(1)}(t,:)$ denotes the
+$D$-dimensional row vector at temporal index $t$ (i.e., selecting all columns), and similarly for
+$K_i^{(2)}(\tau,:)$ and $V_i^{(2)}(\tau,:)$. The corresponding normalized attention weight is obtained by a softmax operation over the key index $\tau$:
+\begin{equation}
+    \alpha_{t,\tau}^{1 \leftarrow 2}
+    =
+    \frac{\exp\big( e_{t,\tau}^{1 \leftarrow 2} \big)}
+    {\displaystyle \sum_{\tau' = 1}^{T_2} \exp\big( e_{t,\tau'}^{1 \leftarrow 2} \big)}.
+    \label{eq:caim_att_weight_v2a}
+\end{equation}
+
+The cross-enhanced modality 1 representation is given by a weighted aggregation of modality 2 value vectors:
+\begin{equation}
+    G_i^{1 \leftarrow 2}(t,:)
+    =
+    \sum_{\tau=1}^{T_2}
+    \alpha_{t,\tau}^{1 \leftarrow 2} \, V_i^{(2)}(\tau,:),
+    \quad t = 1,\dots,T_1,
+    \label{eq:caim_output_v2a}
+\end{equation}
+
+Note that the softmax in Eq.~\eqref{eq:caim_att_weight_v2a} is computed along the key-time dimension
+$\tau$ for each fixed query index $t$, so that $\sum_{\tau=1}^{T_2}\alpha_{t,\tau}^{1\leftarrow 2}=1$,
+resulting in a cross-attended feature map $G_i^{1 \leftarrow 2} \in \mathbb{R}^{T_1 \times D}$. Similarly, the second cross-attention block swaps the roles of the two modalities,
+taking modality~2 features as queries and modality~1 features as the key--value source,
+which yields $G_i^{2 \leftarrow 1} \in \mathbb{R}^{T_2 \times D}$.
+
+Although the paired raw segments are synchronously acquired, different sensing mechanisms produce modality-dependent latent response patterns and temporal resolutions. Therefore, CAIM does not perform raw-sample registration but learns soft correspondences between modality-specific fault representations. In matrix form, one attention direction can be expressed as
+\begin{equation}
+\mathbf{A}_{i}^{1\leftarrow2}
+=
+\operatorname{softmax}_{\mathrm{row}}
+\left(
+\mathbf{Q}_{i}^{(1)}
+\mathbf{K}_{i}^{(2)\top}
+\right),
+\qquad
+\mathbf{G}_{i}^{1\leftarrow2}
+=
+\mathbf{A}_{i}^{1\leftarrow2}
+\mathbf{V}_{i}^{(2)},
+\end{equation}
+with the reverse direction defined analogously. Since each row of $\mathbf{A}_{i}^{1\leftarrow2}$ is non-negative and sums to one, each cross-enhanced feature is a data-dependent convex combination of value vectors from the opposite modality. This provides a soft
+latent correspondence instead of fixed index-wise fusion. The two directional mappings are independently parameterized and are generally asymmetric; thus, each modality can retrieve complementary evidence from the other without assuming that one sensor source is permanently dominant.
+
+\subsection{Adaptive modality reweighting module (AMRM)}
+\label{subsec:amrm}
+
+Although CAIM enriches each modality through cross-modal interaction, the relative reliability of the two modalities may still vary across samples and operating conditions. The adaptive modality reweighting module (AMRM) therefore estimates sample-wise modality weights and constructs an adaptively fused representation.
+
+First, the cross-enhanced feature maps are flattened into global feature vectors:
+\begin{equation}
+    g_i^{1} = \operatorname{vec}\!\big( G_i^{1 \leftarrow 2} \big) \in \mathbb{R}^{D_1}, \qquad
+    g_i^{2} = \operatorname{vec}\!\big( G_i^{2 \leftarrow 1} \big) \in \mathbb{R}^{D_2},
+    \label{eq:amrm_flatten}
+\end{equation}
+where $D_1 = T_1 D$ and $D_2 = T_2 D$ denote the dimensions of the flattened modality 1 and modality 2 features respectively. The operator $\operatorname{vec}(\cdot)$ denotes vectorization by concatenating all rows of a matrix
+into a single column vector. 
+
+Two scalar preliminary scores are then obtained through sigmoid-activated dense units:
+\begin{equation}
+    s_i^{1} = \sigma \big( w_1^{\top} g_i^{1} + b_1 \big), \qquad
+    s_i^{2} = \sigma \big( w_2^{\top} g_i^{2} + b_2 \big),
+    \label{eq:amrm_sigmoid_scores}
+\end{equation}
+where $w_1, w_2$ and $b_1, b_2$ are learnable parameters and $\sigma(\cdot)$ denotes the element-wise sigmoid function mapping scores into $(0,1)$.
+
+To enforce a probabilistic interpretation and ensure that the final modality weights are comparable, $[s_i^{1}, s_i^{2}]^\top$ is further transformed by a softmax layer:
+\begin{equation}
+    \begin{bmatrix}
+        \alpha_i^{1} \\
+        \alpha_i^{2}
+    \end{bmatrix}
+    =
+    \operatorname{softmax}
+    \Big(
+        W_s
+        \begin{bmatrix}
+            s_i^{1} \\
+            s_i^{2}
+        \end{bmatrix}
+        + b_s
+    \Big),
+    \qquad
+    \alpha_i^{1}, \alpha_i^{2} \ge 0,\;
+    \alpha_i^{1} + \alpha_i^{2} = 1,
+    \label{eq:amrm_softmax_weights}
+\end{equation}
+where $W_s \in \mathbb{R}^{2 \times 2}$ and $b_s \in \mathbb{R}^{2}$ are trainable parameters. AMRM is conceptually a sample-wise modality-level gating mechanism rather than temporal or channel-wise attention. Unlike a one-step gate derived directly from concatenated features, it first scores each cross-enhanced modality separately and then jointly calibrates the two scores through Eq.~\ref{eq:amrm_softmax_weights}, yielding non-negative relative reliability weights that sum to one.
+
+Finally, the reweighted and concatenated fused representation is formed as
+\begin{equation}
+    z_i
+    =
+    \begin{bmatrix}
+        \alpha_i^{1} \, g_i^{1} \\
+        \alpha_i^{2} \, g_i^{2}
+    \end{bmatrix}
+    \in \mathbb{R}^{D_1 + D_2}.
+    \label{eq:amrm_fused_representation}
+\end{equation}
+In Eq. \eqref{eq:amrm_fused_representation}, $[\cdot;\cdot]$ denotes vector concatenation,
+and each modality feature is scaled by its corresponding weight before concatenation.
+
+\subsection{Fusion classification block (FCB)}
+\label{subsec:fcb}
+
+The fusion classification block (FCB) maps the adaptively fused representation $z_i$ to health-state posterior probabilities.
+Let $d_f$ denote the hidden dimension of the fusion classifier.
+To reduce dimensionality and enhance discriminability, a fully connected layer with LeakyReLU activation is applied:
+\begin{equation}
+    h_i = \phi \big( W_f z_i + b_f \big), \qquad
+    h_i \in \mathbb{R}^{d_f},
+    \label{eq:fcb_dense}
+\end{equation}
+where $W_f \in \mathbb{R}^{d_f \times (D_1 + D_2)}$ and $b_f \in \mathbb{R}^{d_f}$ are learnable parameters,
+and $\phi(\cdot)$ denotes the LeakyReLU nonlinearity.
+
+A final dense layer followed by a softmax activation then yields the posterior probability vector over all $K$ health states:
+\begin{equation}
+    p_i = \operatorname{softmax}\big( W_c h_i + b_c \big)
+    =
+    \big[
+        p_i^{(0)}, p_i^{(1)}, \dots, p_i^{(K-1)}
+    \big]^{\top},
+    \label{eq:fcb_softmax}
+\end{equation}
+where $W_c \in \mathbb{R}^{K \times d_f}$ and $b_c \in \mathbb{R}^{K}$ are trainable parameters, and $p_i^{(k)}$ denotes the predicted posterior probability that sample $i$ belongs to class $k$. The predicted label is given by
+\begin{equation}
+    \hat{y}_i = \arg\max_{k \in \{0,\dots,K-1\}} p_i^{(k)}.
+    \label{eq:fcb_pred_label}
+\end{equation}
+where $\arg\max$ returns the class index that maximizes the posterior probability.
+
+Given a training set $\{(x_i^{(1)}, x_i^{(2)}, y_i)\}_{i=1}^{M}$, where $M$ denotes the number of training samples, the entire MHFL-MCA framework is trained end-to-end by minimizing the categorical cross-entropy loss:
+\begin{equation}
+    \mathcal{L}
+    =
+    -\frac{1}{M}
+    \sum_{i=1}^{M}
+    \sum_{k=0}^{K-1}
+    \mathbb{I}(y_i = k)\,
+    \log p_i^{(k)},
+    \label{eq:fcb_loss}
+\end{equation}
+where $\mathbb{I}(\cdot)$ is the indicator function that equals 1 if the argument is true and 0 otherwise. Optimization is performed using the Adamax optimizer with mini-batch training.
+
+\subsection{Training and inference procedure}
+\label{sec:training_inference}
+
+\begin{algorithm}[!htbp]
+\small
+\caption{Training and inference procedure of MHFL-MCA}
+\label{alg:mhfl_mca}
+\begin{algorithmic}[1]
+
+\Require Paired training set
+$\mathcal{D}_{\mathrm{tr}}
+=\{(\mathbf{x}_{i}^{(1)},\mathbf{x}_{i}^{(2)},y_i)\}_{i=1}^{M}$;
+paired test set $\mathcal{D}_{\mathrm{te}}$;
+fixed training configuration $\mathcal{H}^{\ast}$;
+and training mode
+$\rho\in\{\mathrm{standard},\mathrm{consistency}\}$
+
+\Ensure Optimized parameters $\Theta^{\ast}$,
+posterior probabilities $\{\mathbf{p}_i\}$,
+and predicted labels $\{\hat{y}_i\}$
+
+\Procedure{Forward}{$\mathbf{X}^{(1)},\mathbf{X}^{(2)};\Theta$}
+
+    \State $\mathbf{F}^{(1)}
+    \gets E_{1}(\mathbf{X}^{(1)};\theta_{1})$,
+    $\mathbf{F}^{(2)}
+    \gets E_{2}(\mathbf{X}^{(2)};\theta_{2})$
+    \Comment{MSHEM}
+
+    \State $\mathbf{G}^{1\leftarrow2}
+    \gets
+    \operatorname{CAIM}_{1\leftarrow2}
+    (\mathbf{F}^{(1)},\mathbf{F}^{(2)})$
+
+    \State $\mathbf{G}^{2\leftarrow1}
+    \gets
+    \operatorname{CAIM}_{2\leftarrow1}
+    (\mathbf{F}^{(2)},\mathbf{F}^{(1)})$
+    \Comment{Bidirectional CAIM}
+
+    \State $\mathbf{g}^{1}
+    \gets
+    \operatorname{vec}(\mathbf{G}^{1\leftarrow2})$,
+    $\mathbf{g}^{2}
+    \gets
+    \operatorname{vec}(\mathbf{G}^{2\leftarrow1})$
+
+    \State $\mathbf{S}
+    \gets
+    \left[
+    \sigma(\mathbf{g}^{1}\mathbf{w}_{1}+b_{1}),
+    \sigma(\mathbf{g}^{2}\mathbf{w}_{2}+b_{2})
+    \right]$
+
+    \State
+    $\left[
+    \boldsymbol{\alpha}^{1},
+    \boldsymbol{\alpha}^{2}
+    \right]
+    \gets
+    \operatorname{softmax}
+    \left(
+    \mathbf{S}\mathbf{W}_{s}^{\top}
+    +\mathbf{b}_{s}
+    \right)$
+    \Comment{AMRM}
+
+    \State $\mathbf{Z}
+    \gets
+    \left[
+    \boldsymbol{\alpha}^{1}\odot\mathbf{g}^{1};
+    \boldsymbol{\alpha}^{2}\odot\mathbf{g}^{2}
+    \right]$
+    \Comment{Reliability-aware fusion}
+
+    \State $\mathbf{P}
+    \gets
+    \operatorname{FCB}
+    (\mathbf{Z};\Theta_{\mathrm{FCB}})$
+    \Comment{Class posterior probabilities}
+
+    \State \Return $\mathbf{P}$
+
+\EndProcedure
+
+\Statex
+\Statex \textbf{Training phase}
+
+\State Initialize the model parameters $\Theta$ and configure
+Adamax according to $\mathcal{H}^{\ast}$
+
+\For{$t=1,\ldots,T$}
+
+    \For{each mini-batch
+    $(\mathbf{X}^{(1)},\mathbf{X}^{(2)},\mathbf{Y})$
+    of size $B$}
+
+        \If{$\rho=\mathrm{consistency}$}
+
+            \State Construct the anchor view
+            $(\mathbf{X}_{\mathrm{base}}^{(1)},
+            \mathbf{X}_{\mathrm{base}}^{(2)})$
+
+            \State Construct the stochastic noisy view
+            $(\mathbf{X}_{\mathrm{noisy}}^{(1)},
+            \mathbf{X}_{\mathrm{noisy}}^{(2)})$
+
+            \State $\mathbf{P}_{\mathrm{base}}
+            \gets$
+            \Call{Forward}{
+            $\mathbf{X}_{\mathrm{base}}^{(1)},
+            \mathbf{X}_{\mathrm{base}}^{(2)};\Theta$}
+
+            \State $\mathbf{P}_{\mathrm{noisy}}
+            \gets$
+            \Call{Forward}{
+            $\mathbf{X}_{\mathrm{noisy}}^{(1)},
+            \mathbf{X}_{\mathrm{noisy}}^{(2)};\Theta$}
+
+            \State $\mathcal{L}
+            \gets
+            \mathcal{L}_{\mathrm{ce}}
+            (\mathbf{Y},\mathbf{P}_{\mathrm{base}})
+            +
+            \lambda(t)
+            D_{\mathrm{KL}}\!\left(
+            \operatorname{sg}(\mathbf{P}_{\mathrm{base}})
+            \,\|\,\mathbf{P}_{\mathrm{noisy}}
+            \right)$
+
+        \Else
+
+            \State $\mathbf{P}
+            \gets$
+            \Call{Forward}{
+            $\mathbf{X}^{(1)},\mathbf{X}^{(2)};\Theta$}
+
+            \State $\mathcal{L}
+            \gets
+            \mathcal{L}_{\mathrm{ce}}
+            (\mathbf{Y},\mathbf{P})$
+
+        \EndIf
+
+        \State Compute $\nabla_{\Theta}\mathcal{L}$
+
+        \State Update $\Theta$ using Adamax according to
+        $\mathcal{H}^{\ast}$
+
+    \EndFor
+
+\EndFor
+
+\State $\Theta^{\ast}\gets\Theta$
+
+\Statex
+\Statex \textbf{Inference phase}
+
+\For{each paired test sample
+$(\mathbf{x}_{i}^{(1)},\mathbf{x}_{i}^{(2)})
+\in\mathcal{D}_{\mathrm{te}}$}
+
+    \State $\mathbf{p}_{i}
+    \gets$
+    \Call{Forward}{
+    $\mathbf{x}_{i}^{(1)},
+    \mathbf{x}_{i}^{(2)};\Theta^{\ast}$}
+
+    \State $\hat{y}_{i}
+    \gets
+    \arg\max_{k\in\{0,\ldots,K-1\}}
+    p_{i}^{(k)}$
+
+\EndFor
+
+\State \Return $\Theta^{\ast}$ and
+$\{(\mathbf{p}_{i},\hat{y}_{i})\}_{i=1}^{|\mathcal{D}_{\mathrm{te}}|}$
+
+\end{algorithmic}
+\end{algorithm}
+
+The principal architecture and optimization hyperparameters are
+determined using the validation-based procedure described in
+Section~\ref{subsec:mshem} and are then fixed for subsequent training. Let $\mathcal{H}^{\ast}$ denote the resulting training configuration, including the number of epochs $T$, mini-batch size $B$, learning rate $\eta$, and other optimizer settings. Let $\Theta=\{\theta_{1},\theta_{2},
+\Theta_{\mathrm{CAIM}}^{1\leftarrow2},
+\Theta_{\mathrm{CAIM}}^{2\leftarrow1},
+\Theta_{\mathrm{AMRM}},\Theta_{\mathrm{FCB}}\}$
+denote all trainable parameters of MHFL-MCA. Bold symbols without sample indices in Algorithm~\ref{alg:mhfl_mca} denote the mini-batch counterparts of the sample-wise quantities defined in Eqs.~(5)--(15), and the corresponding operations are applied sample-wise. The core forward mapping, end-to-end training, and inference procedure of MHFL-MCA are summarized in
+Algorithm~\ref{alg:mhfl_mca}.
+
+% Standard training minimizes the categorical cross-entropy
+% objective in Eq.~(17). For the consistency-regularized Stage~2 of Case~2, the objective in Eq.~(22) is adopted, with the anchor and stochastic noisy views constructed according to
+% Section~3.2.2. During inference, the optimized parameters are
+% fixed, and each health-state label is determined from the maximum posterior probability as defined in Eq.~(16). 
+
+By jointly exploiting (i) heterogeneous modality-specific
+encoders, (ii) bidirectional cross-attention, (iii) adaptive
+modality reweighting, and (iv) a compact fusion classifier,
+MHFL-MCA constructs a robust and discriminative multimodal
+representation.
+
+\section{Experimental analysis and validation}
+\label{experiments}
+
+To validate the effectiveness and validity of the proposed system, extensive comparative and baseline experiments are conducted on two public datasets in this section. All experimental codes were implemented within Python 3.9.20, utilizing the Tensorflow 2.7.0 framework, and executed on a computing platform equipped with an Intel(R) Core(TM) i7-14650HX central processing unit (CPU), 16 GB of random access memory (RAM), and an NVIDIA GeForce RTX 4060 graphics processing unit (GPU) with 8 GB of video memory. 
+
+In this section, two cases are evaluated and analysed. Case 1 uses synchronized vibration and acoustic measurements collected under constant load and speed, and focuses on small-sample diagnosis. Case 2 uses synchronized vibration and three-phase motor current measurements from a varying-load testbed, and evaluates load-shift generalization by training on the source load and testing on other target loads and further introduce into the strong-noise environment for robust analysis.
+
+Within each case, all comparison methods use identical data
+partitions for training and evaluation and the same paired
+2048-point sample units; for each training size, they are evaluated over the same 10 runs using the same random seeds, evaluation metrics, and aggregation procedure.
+
+\subsection{Case 1: vibration and acoustic dataset from uOttawa}
+\subsubsection{Dataset description}
+
+The bearing dataset comprises synchronized vibration and acoustic measurements acquired by a research team at the University of Ottawa \cite{UO}. Four defect locations were investigated: inner race, outer race, ball, and cage, while three health stages were defined: healthy, developing fault, and faulty. For the MHFL-MCA evaluation, seven classes are selected, as listed in
+Table~\ref{tab:healthcondition}.
+
+Each original recording contains 10~s of data sampled at 42~kHz under a constant rotating speed of 1750~rpm. The raw files provide time-series vibration and acoustic amplitudes, and the corresponding test rig is shown in Fig.~\ref{fig:testrig}. The accelerometer was
+mounted directly on the motor drive-end bearing, while the microphone was positioned within 2~cm of the tested bearing. For each selected class, two synchronized recordings were used, and each recording was divided into 200 non-overlapping segments of 2048 points, yielding 400 paired vibration--acoustic samples per
+class.
+
+Fig.~\ref{fig:uo_waveforms} presents one representative paired segment for each health state. The vibration and acoustic channels exhibit different amplitude scales and temporal patterns, highlighting their heterogeneous measurement characteristics.
+
+\begin{figure}[pos=htbp]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figs/test rig.png} 
+  \caption{Test Rig in Case 1} 
+  \label{fig:testrig}
+\end{figure}
+
+\begin{figure}[pos=htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{figs/UO_waveforms_7x2.png}
+  \caption{Representative vibration and acoustic signal waveforms for the seven health statuses in the UO dataset (each segment contains 2048 data points).}
+  \label{fig:uo_waveforms}
+\end{figure}
+
+\begin{table}[pos=htbp]
+  \centering 
+  \caption{Bearing Health Conditions and Labels in Case 1}
+  \label{tab:healthcondition}
+  \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1} 
+  \begin{tabularx}{1\linewidth}{@{} C C @{}} 
+    \toprule
+    \textbf{Health Conditions} & \textbf{Class Index} \\
+    \midrule
+    Healthy   & Class 0 \\
+    Developing fault (inner race)                & Class 1 \\
+    Faulty (inner race)                 & Class 2 \\
+    Faulty (outer race)     & Class 3 \\
+    Faulty (ball) & Class 4 \\
+    Developing fault (cage)       & Class 5 \\
+    Faulty (cage)      & Class 6 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsubsection{Clarification for other diagnostic comparison methods}
+
+
+\begin{table}[pos=htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\caption{Structural description of the comparing frameworks.}
+\label{tab:compare_frameworks}
+\begin{tabularx}{\textwidth}{@{}
+>{\centering\arraybackslash}m{2.6cm}
+X
+>{\centering\arraybackslash}m{2.2cm}
+@{}}
+\toprule
+\textbf{Comparing methods} & \multicolumn{1}{c}{\textbf{Description}} & \textbf{Reference} \\
+\midrule
+
+MRCFN &
+A residual CNN based multi-sensor fusion network that extracts features from two sensor streams and reduces redundancy through spatial channel reconstruction. &
+\cite{MRCFN} \\
+\midrule
+
+CFFN &
+A two-branch CNN feature extractor followed by a CCA-based fusion module that aligns and integrates maximally correlated components across modalities. &
+\cite{CFFN} \\
+\midrule
+
+CDTFAFN &
+A coarse-to-fine dual-scale time--frequency attention fusion network: ICQ-NSGT based signal-to-image encoding enables coarse fusion in the TFR domain, and a time--frequency attention fusion unit learns fine-grained dual-scale features. &
+\cite{CDTFAFN} \\
+\midrule
+
+MSF-DFormer &
+A multisensor multiscale fusion network that combines multiscale feature extraction with spatial--channel adaptive fusion to refine intra-/inter-sensor representations. &
+\cite{MSFDFormer} \\
+\midrule
+
+KDCNN-DF &
+A hybrid framework that performs CWT-based time--frequency preprocessing, trains a compact student CNN via knowledge distillation for feature extraction, and uses a deep forest classifier for final diagnosis. &
+\cite{KDCNNDF} \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The proposed framework MHFL-MCA is benchmarked with five state-of-the-art intelligent fault diagnosis models 
+specialized in multi-sensor fusion under limited labeled samples, including the multi-sensor residual
+convolutional fusion network (MRCFN)~\cite{MRCFN}, the vibration and acoustic signal consistent feature
+fusion network (CFFN)~\cite{CFFN},
+the coarse-to-fine dual-scale time-frequency attention fusion network (CDTFAFN)~\cite{CDTFAFN}, the
+multisensor multiscale fusion network with deformable transformer (MSF-DFormer)~\cite{MSFDFormer}, and the
+knowledge-distillation CNN--deep forest framework (KDCNN-DF)~\cite{KDCNNDF}. A detailed summary of these comparative frameworks is provided in Table~\ref{tab:compare_frameworks}. 
+
+% To maintain fairness, all methods are evaluated under the same small-sample protocol. Detailed information is reported in the following sections.
+
+\subsubsection{Evaluation metrics description}
+To better evaluate diagnostic performance under limited samples, the following metrics are reported: macro-accuracy, macro-precision, macro-recall, macro-F1 score, ROC curve with AUC, confusion matrix, and t-SNE visualization. 
+
+For multi-class diagnosis, all class-wise quantities are computed in a one-versus-rest manner. 
+For each class $k$, let $\mathrm{TP}_k$, $\mathrm{TN}_k$, $\mathrm{FP}_k$, and $\mathrm{FN}_k$ denote the numbers of true positives, true negatives, false positives, and false negatives respectively. The accuracy, precision and F1 scores are denoted as:
+
+Accuracy.
+\begin{equation}
+\mathrm{Acc}_k=\frac{\mathrm{TP}_k+\mathrm{TN}_k}{\mathrm{TP}_k+\mathrm{TN}_k+\mathrm{FP}_k+\mathrm{FN}_k},\qquad
+\mathrm{Acc}_{\mathrm{macro}}=\frac{1}{K}\sum_{k=0}^{K-1}\mathrm{Acc}_k .
+\label{eq:acc_macro}
+\end{equation}
+
+Precision.
+\begin{equation}
+\mathrm{Prec}_k=\frac{\mathrm{TP}_k}{\mathrm{TP}_k+\mathrm{FP}_k},\qquad
+\mathrm{Prec}_{\mathrm{macro}}=\frac{1}{K}\sum_{k=0}^{K-1}\mathrm{Prec}_k .
+\label{eq:prec_macro}
+\end{equation}
+
+F1 score.
+\begin{equation}
+\mathrm{F1}_k=\frac{2\,\mathrm{TP}_k}{2\,\mathrm{TP}_k+\mathrm{FP}_k+\mathrm{FN}_k},\qquad
+\mathrm{F1}_{\mathrm{macro}}=\frac{1}{K}\sum_{k=0}^{K-1}\mathrm{F1}_k .
+\label{eq:f1_macro}
+\end{equation}
+
+When the test set is class-balanced, $\mathrm{Acc}_{\mathrm{macro}}$ is numerically close to $\mathrm{Rec}_{\mathrm{macro}}$ (macro-recall) under the one-versus-rest evaluation.
+
+In addition, ROC curves and the corresponding AUC are used to quantify class separability across decision thresholds; for multi-class problems. Confusion matrix is employed to summarize class-wise error patterns, and t-SNE is applied to project learned representations into 2D for qualitative inspection of class clustering.
+
+\subsubsection{Parameters and CNN heterogeneous architecture design for MHFL-MCA validation}
+\label{subsubsec:params_case1}
+
+This section summarizes the final network architecture and training hyperparameters used for Case~1.
+The detailed layer-wise architecture specification is reported in Table~\ref{tab:arch_two_side}, and the
+corresponding training hyperparameters are listed in Table~\ref{tab:train_hparams}. This configuration is
+fixed and reused throughout all subsequent comparative, repeated small-sample, and sensitivity experiments to ensure a consistent evaluation protocol.
+
+The selected heterogeneous CNN encoder adopts an asymmetric topology to match the distinct statistics of the
+vibration and acoustic measurements. The vibration branch contains four 1-D convolutional blocks (kernel
+size $\textbf{16}$) with LeakyReLU activation and average pooling after each block; a dropout rate of $\textbf{0.422}$ is
+applied at the last block to mitigate overfitting under limited labeled samples. In contrast, the acoustic
+branch contains five convolutional blocks (kernel size $\textbf{8}$) with GELU activation and max pooling after each
+block, with a dropout rate of $\textbf{0.350}$ at the last block to support a deeper hierarchical abstraction of
+transient and broadband cues.
+
+The cross-attention interaction uses an embedding dimension of $\textbf{D = 256}$, producing compact cross-enhanced
+feature maps that are subsequently reweighted and fused by AMRM, and finally mapped to class
+posteriors by the lightweight FCB. Under the configuration in Table~\ref{tab:arch_two_side}, the overall
+number of trainable parameters is $\textbf{5{,}111{,}759}$, balancing representational capacity and generalization in
+the small-sample regime.
+
+\begin{table}[pos=tp]
+\centering
+\caption{Optimal Network Architecture Parameters in Case 1}
+\label{tab:arch_two_side}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+
+% ===== full-width top rule (connect left+right) =====
+\noindent\begin{tabular*}{\linewidth}{@{}c@{}}
+\toprule
+\end{tabular*}\vspace{-6pt}
+
+\noindent
+% ===================== LEFT COLUMN =====================
+\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\centering
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} c c c c @{}}
+\textbf{Module} & \textbf{Layer (type)} & \textbf{Output} & \textbf{Params} \\
+\midrule
+
+\multirow{2}{*}{Input}
+& Input (Vib) & $(2048, 1)$ & 0 \\
+& Input (Aco) & $(2048, 1)$ & 0 \\
+\cmidrule(lr){1-4}
+
+\multirow{13}{*}{\shortstack{MSHEM\\(Vib)}}
+& Conv1D (k=16) & $(1024, 32)$ & 544 \\
+& LeakyReLU      & $(1024, 32)$ & 0 \\
+& AvgPool        & $(512, 32)$  & 0 \\
+& Conv1D (k=16)  & $(256, 64)$  & 32{,}832 \\
+& LeakyReLU      & $(256, 64)$  & 0 \\
+& AvgPool        & $(128, 64)$  & 0 \\
+& Conv1D (k=16)  & $(128, 128)$ & 131{,}200 \\
+& LeakyReLU      & $(128, 128)$ & 0 \\
+& AvgPool        & $(64, 128)$  & 0 \\
+& Conv1D (k=16)  & $(64, 256)$  & 524{,}544 \\
+& LeakyReLU      & $(64, 256)$  & 0 \\
+& Dropout        & $(64, 256)$  & 0 \\
+& AvgPool        & $(32, 256)$  & 0 \\
+\cmidrule(lr){1-4}
+
+\multirow{8}{*}{\shortstack{MSHEM\\(Aco)}}
+& Conv1D (k=8) & $(1024, 32)$ & 288 \\
+& GELU         & $(1024, 32)$ & 0 \\
+& MaxPool      & $(512, 32)$  & 0 \\
+& Conv1D (k=8) & $(256, 64)$  & 16{,}448 \\
+& GELU         & $(256, 64)$  & 0 \\
+& MaxPool      & $(128, 64)$  & 0 \\
+& Conv1D (k=8) & $(128, 128)$ & 65{,}664 \\
+& GELU         & $(128, 128)$ & 0 \\
+\bottomrule
+\end{tabular*}
+\end{minipage}%
+\hfill
+% ===================== RIGHT COLUMN =====================
+\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\centering
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} c c c c @{}}
+\textbf{Module} & \textbf{Layer (type)} & \textbf{Output} & \textbf{Params} \\
+\midrule
+
+\multirow{8}{*}{\shortstack{MSHEM\\(Aco)\\cont.}}
+& MaxPool      & $(64, 128)$  & 0 \\
+& Conv1D (k=8) & $(64, 256)$  & 262{,}400 \\
+& GELU         & $(64, 256)$  & 0 \\
+& MaxPool      & $(32, 256)$  & 0 \\
+& Conv1D (k=8) & $(32, 256)$  & 524{,}544 \\
+& GELU         & $(32, 256)$  & 0 \\
+& Dropout      & $(32, 256)$  & 0 \\
+& MaxPool      & $(16, 256)$  & 0 \\
+\cmidrule(lr){1-4}
+
+\multirow{2}{*}{CAIM}
+& CrossAtt (A$\to$V) & $(32, 256)$ & 196{,}608 \\
+& CrossAtt (V$\to$A) & $(16, 256)$ & 196{,}608 \\
+\cmidrule(lr){1-4}
+
+\multirow{9}{*}{AMRM}
+& Flatten (A)        & $(4096)$  & 0 \\
+& Flatten (V)        & $(8192)$  & 0 \\
+& Dense (Sig, A)     & $(1)$     & 4{,}097 \\
+& Dense (Sig, V)     & $(1)$     & 8{,}193 \\
+& Concat             & $(2)$     & 0 \\
+& Dense (Soft)       & $(2)$     & 6 \\
+& Lambda (Scale, A)  & $(4096)$  & 0 \\
+& Lambda (Scale, V)  & $(8192)$  & 0 \\
+& Concat             & $(12288)$ & 0 \\
+\cmidrule(lr){1-4}
+
+\multirow{4}{*}{FCB}
+& Dense (L-ReLU)     & $(256)$   & 3{,}145{,}984 \\
+& LeakyReLU          & $(256)$   & 0 \\
+& Dense              & $(7)$     & 1{,}799 \\
+& Softmax            & $(7)$     & 0 \\
+\bottomrule
+\end{tabular*}
+\end{minipage}
+
+\vspace{2pt}
+\noindent\makebox[\linewidth][r]{\textbf{Total Trainable Params: 5{,}111{,}759}}
+\vspace{1pt}
+\noindent\begin{tabular*}{\linewidth}{@{}c@{}}
+\bottomrule
+\end{tabular*}
+
+\end{table}
+
+\begin{table}[pos=htbp]
+  \centering
+  \caption{Hyperparameter Search Space and Optimal Values in Case 1}
+  \label{tab:train_hparams}
+  \newcolumntype{Y}{>{\centering\arraybackslash}X} 
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\linewidth}{@{} Y Y Y @{}} 
+    \toprule
+    \textbf{Hyperparameter} & \textbf{Search Space / Config} & \textbf{Optimal Value} \\
+    \midrule
+    Optimizer & Fixed & Adamax \\
+    Max Epochs & Fixed & 80 \\
+    Loss Function & Fixed & Categorical Cross-entropy \\
+    \midrule
+    Learning Rate & Log-uniform $[10^{-4}, 10^{-2}]$ & \textbf{0.00139} \\
+    Batch Size & Categorical $\{16, 32, 64\}$ & \textbf{16} \\
+    Vibration Layers & Integer $[3, 5]$ & \textbf{4} \\
+    Acoustic Layers & Integer $[3, 5]$ & \textbf{5} \\
+    Dropout (Vibration) & Float $[0.1, 0.5]$ & \textbf{0.422} \\
+    Dropout (Acoustic) & Float $[0.1, 0.5]$ & \textbf{0.350} \\
+    Attention Dim & Categorical $\{128, 256\}$ & \textbf{256} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsubsection{Training process analysis}
+\label{subsubsec:training_process_case1}
+
+This section describes the training strategy on Case~1, which consists of three stages: (i) hyperparameter selection, (ii) repeated few-shot training under fixed hyperparameters, and (iii) robust aggregation.
+
+All experiments use synchronized vibration--acoustic segments of 2048 points. Since both modalities were originally sampled at 42~kHz, no resampling was required. No amplitude normalization or standardization was applied, and the models were trained directly on the raw paired waveforms. The signals were divided into non-overlapping segments. For each run, the paired vibration and acoustic segments were jointly shuffled using a fixed random seed to preserve their cross-modal correspondence. The same common sample preparation was used for all comparison methods.
+
+Stage~1 (hyperparameter selection) fixes $N=15$ samples per class and runs Optuna for $30$ trials, where each trial is trained for $25$ epochs using Adamax and the best configuration is selected by held-out validation accuracy and then fixed for all subsequent experiments.
+
+Stage~2 (few-shot evaluation) varies $N$ from $5$ to $30$ samples per class and repeats each setting for $10$ runs; each model is trained for up to $80$ epochs using Adamax and categorical cross-entropy.
+
+\subsubsection{Fault diagnosis under small samples}
+
+This section reports the small-sample fault diagnosis results on Case~1 following the protocol mentioned before. Specifically, we vary the number of labeled training samples per class from $N=5$ to $30$ (i.e., $N=\{5,10,15,20,25,30\}$) and repeat each setting multiple times with fixed random seeds, reporting mean$\pm$std. Table~\ref{tab:case1_compare_main} summarizes the quantitative comparisons against five representative multimodal baselines, while Fig.~\ref{fig:case1_sota_curves} visualizes the performance trends across $N$. To provide a more intuitive qualitative inspection in the most challenging low-shot regime, we further present one-versus-rest ROC curves, confusion matrices, and t-SNE feature visualizations at $N=5$ using a representative run (Fig.~\ref{fig:case1_roc_N5_sota}--Fig.~\ref{fig:case1_tsne_n5}). Based on the above results, the following conclusions can be drawn:
+
+(1) The quantitative superiority under low-shot training. As shown in the Table~\ref{tab:case1_compare_main}, the proposed MHFL-MCA consistently achieves the best diagnostic performance across all training sizes. For example, at $N=5$, MHFL-MCA reaches an accuracy of $\textbf{0.9279}$, outperforming the strongest baseline (CFFN, $0.7683$) by $\textbf{15.96}$ percentage points. This indicates that heterogeneous modality-specific feature extraction combined with cross-modal interaction yields strong label efficiency.
+
+(2) The stable improvement trend with increasing $N$. As shown in Fig.~\ref{fig:case1_sota_curves}, with the increasing $N$, all methods benefit from more supervision; however, MHFL-MCA maintains a leading trajectory and exhibits a more stable performance envelope, especially in the low-shot region. This suggests that the proposed fusion strategy reduces sensitivity to limited-label stochasticity and improves generalization consistency.
+
+(3) Better class separability in ROC space at small training samples. As shown in Fig.~\ref{fig:case1_roc_N5_sota}, under the most challenging setting, MHFL-MCA shows consistently stronger ROC characteristics (closer to the upper-left corner with higher AUC), implying a more discriminative decision function when only a few labeled samples are available.
+
+(4) Clearer decision patterns and more compact feature structure. As shown in Fig.~\ref{fig:case1_cm_n5} and Fig.~\ref{fig:case1_tsne_n5}, the confusion matrix of MHFL-MCA is dominated by diagonal entries with fewer off-diagonal confusions, and the t-SNE embedding forms tighter intra-class clusters with larger inter-class margins compared with other methods, demonstrating that MHFL-MCA learns more structured and separable representations in the low-shot regime.
+
+Overall, the above results verify that MHFL-MCA provides robust and accurate multimodal fault diagnosis under limited labeled samples, with the most prominent advantage appearing in the extremely small-sample settings. Furthermore, the loss and diagnostic accuracy values were recorded in sample $20$, as shown in Fig.~\ref{fig:case1_curves_N20}, which can be observed to be stable and rapidly converge in the training process.
+
+\begin{table}[pos=tp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.18}
+\setlength{\tabcolsep}{4.0pt}
+
+\caption{Quantitative comparison at representative training samples on Case~1.}
+\label{tab:case1_compare_main}
+
+% ---------- (a): 5/10 ----------
+\begin{subtable}{\textwidth}
+\centering
+\caption{Comparison of diagnostic performance on Case~1 under 5 and 10 training samples per class.}
+\label{tab:case1_compare_5_10}
+\vspace{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l c c c c c c@{}}
+\toprule
+\multirow{2}{*}{Method} & \multicolumn{3}{c}{5 training samples} & \multicolumn{3}{c}{10 training samples} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+& Acc. & Prec. & F1 & Acc. & Prec. & F1 \\
+\midrule
+MRCFN & 0.6521$\pm$0.0788 & 0.6696$\pm$0.1307 & 0.6198$\pm$0.1063 & 0.6348$\pm$0.1215 & 0.6731$\pm$0.1962 & 0.6015$\pm$0.1541 \\
+CFFN  & \underline{0.7683$\pm$0.0579} & 0.7957$\pm$0.0494 & \underline{0.7601$\pm$0.0559} & 0.8168$\pm$0.0244 & 0.8239$\pm$0.0202 & 0.8075$\pm$0.0266 \\
+CDTFAFN & 0.6237$\pm$0.0760 & 0.7363$\pm$0.0276 & 0.5965$\pm$0.0863 & 0.7724$\pm$0.0288 & 0.8207$\pm$0.0177 & 0.7598$\pm$0.0367 \\
+MSF-DFormer & 0.7287$\pm$0.0654 & \underline{0.7979$\pm$0.0538} & 0.7028$\pm$0.0781 & \underline{0.8683$\pm$0.0429} & \underline{0.9034$\pm$0.0241} & \underline{0.8652$\pm$0.0418} \\
+KDCNN-DF & 0.7532$\pm$0.0282 & 0.7593$\pm$0.0286 & 0.7450$\pm$0.0318 & 0.8355$\pm$0.0176 & 0.8418$\pm$0.0158 & 0.8338$\pm$0.0179 \\
+Proposed (MHFL-MCA) &
+\textbf{0.9279$\pm$0.0288} & \textbf{0.9361$\pm$0.0237} & \textbf{0.9266$\pm$0.0299} &
+\textbf{0.9707$\pm$0.0175} & \textbf{0.9723$\pm$0.0160} & \textbf{0.9704$\pm$0.0178} \\
+\bottomrule
+\end{tabular}%
+}
+\end{subtable}
+
+\vspace{6pt}
+
+% ---------- (b): 15/20 ----------
+\begin{subtable}{\textwidth}
+\centering
+\caption{Comparison of diagnostic performance on Case~1 under 15 and 20 training samples per class.}
+\label{tab:case1_compare_15_20}
+\vspace{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l c c c c c c@{}}
+\toprule
+\multirow{2}{*}{Method} & \multicolumn{3}{c}{15 training samples} & \multicolumn{3}{c}{20 training samples} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+& Acc. & Prec. & F1 & Acc. & Prec. & F1 \\
+\midrule
+MRCFN & 0.8310$\pm$0.0331 & 0.8519$\pm$0.0367 & 0.8253$\pm$0.0369 & 0.8620$\pm$0.0448 & 0.8691$\pm$0.0412 & 0.8580$\pm$0.0477 \\
+CFFN  & 0.8110$\pm$0.0186 & 0.8122$\pm$0.0180 & 0.8027$\pm$0.0193 & 0.8731$\pm$0.0164 & 0.8747$\pm$0.0158 & 0.8695$\pm$0.0172 \\
+CDTFAFN & 0.8487$\pm$0.0351 & 0.8643$\pm$0.0296 & 0.8420$\pm$0.0374 & 0.9133$\pm$0.0200 & 0.9276$\pm$0.0190 & 0.9123$\pm$0.0206 \\
+MSF-DFormer & \underline{0.9562$\pm$0.0177} & \underline{0.9604$\pm$0.0152} & \underline{0.9558$\pm$0.0179} & \underline{0.9752$\pm$0.0090} & \underline{0.9771$\pm$0.0084} & \underline{0.9751$\pm$0.0090} \\
+KDCNN-DF & 0.8819$\pm$0.0085 & 0.8852$\pm$0.0090 & 0.8810$\pm$0.0088 & 0.8992$\pm$0.0109 & 0.9019$\pm$0.0096 & 0.8991$\pm$0.0108 \\
+Proposed (MHFL-MCA) &
+\textbf{0.9877$\pm$0.0055} & \textbf{0.9878$\pm$0.0055} & \textbf{0.9876$\pm$0.0056} &
+\textbf{0.9935$\pm$0.0042} & \textbf{0.9935$\pm$0.0042} & \textbf{0.9935$\pm$0.0042} \\
+\bottomrule
+\end{tabular}%
+}
+\end{subtable}
+
+\vspace{6pt}
+
+% ---------- (c): 25/30 ----------
+\begin{subtable}{\textwidth}
+\centering
+\caption{Comparison of diagnostic performance on Case~1 under 25 and 30 training samples per class.}
+\label{tab:case1_compare_25_30}
+\vspace{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l c c c c c c@{}}
+\toprule
+\multirow{2}{*}{Method} & \multicolumn{3}{c}{25 training samples} & \multicolumn{3}{c}{30 training samples} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+& Acc. & Prec. & F1 & Acc. & Prec. & F1 \\
+\midrule
+MRCFN & 0.9047$\pm$0.0446 & 0.9096$\pm$0.0440 & 0.9035$\pm$0.0456 & 0.9577$\pm$0.0226 & 0.9594$\pm$0.0223 & 0.9575$\pm$0.0229 \\
+CFFN  & 0.9303$\pm$0.0136 & 0.9314$\pm$0.0132 & 0.9295$\pm$0.0139 & 0.9586$\pm$0.0083 & 0.9590$\pm$0.0080 & 0.9583$\pm$0.0084 \\
+CDTFAFN & 0.9145$\pm$0.0221 & 0.9314$\pm$0.0143 & 0.9141$\pm$0.0234 & 0.9633$\pm$0.0174 & 0.9678$\pm$0.0139 & 0.9635$\pm$0.0171 \\
+MSF-DFormer & \underline{0.9918$\pm$0.0039} & \underline{0.9919$\pm$0.0037} & \underline{0.9918$\pm$0.0039} & \underline{0.9892$\pm$0.0058} & \underline{0.9896$\pm$0.0055} & \underline{0.9892$\pm$0.0058} \\
+KDCNN-DF & 0.9295$\pm$0.0056 & 0.9304$\pm$0.0058 & 0.9295$\pm$0.0056 & 0.9344$\pm$0.0099 & 0.9352$\pm$0.0096 & 0.9343$\pm$0.0099 \\
+Proposed (MHFL-MCA) &
+\textbf{0.9947$\pm$0.0036} & \textbf{0.9948$\pm$0.0034} & \textbf{0.9947$\pm$0.0036} &
+\textbf{0.9938$\pm$0.0029} & \textbf{0.9939$\pm$0.0028} & \textbf{0.9938$\pm$0.0029} \\
+\bottomrule
+\end{tabular}%
+}
+\end{subtable}
+\end{table}
+
+\begin{figure}[pos=htbp]
+  \centering
+
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/macro_accuracy_comparison.png}
+    \caption{Macro-accuracy.}
+    \label{fig:case1_sota_acc}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/macro_f1_comparison.png}
+    \caption{Macro-F1 score.}
+    \label{fig:case1_sota_f1}
+  \end{subfigure}
+
+  \vspace{0.35em}
+
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/macro_precision_comparison.png}
+    \caption{Macro-precision.}
+    \label{fig:case1_sota_prec}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/macro_recall_comparison.png}
+    \caption{Macro-recall.}
+    \label{fig:case1_sota_recall}
+  \end{subfigure}
+
+  \caption{Performance curves on Case~1 under varying training sizes ($N=5$--$30$ per class), reported as mean$\pm$std over repeated runs.}
+  \label{fig:case1_sota_curves}
+\end{figure}
+
+
+\begin{figure}[pos=tp]
+  \centering
+  \captionsetup{skip=4pt}
+  \setlength{\tabcolsep}{2pt}
+  \renewcommand{\arraystretch}{0.98}
+
+  \begin{tabular}{ccc}
+    \subcaptionbox{MRCFN}{\includegraphics[width=0.315\textwidth]{figs/roc_MRCFN.png}} &
+    \subcaptionbox{CFFN}{\includegraphics[width=0.315\textwidth]{figs/roc_CFFN.png}} &
+    \subcaptionbox{CDTFAFN}{\includegraphics[width=0.315\textwidth]{figs/roc_CDTFAFN.png}} \\
+    \subcaptionbox{MSF-DFormer}{\includegraphics[width=0.315\textwidth]{figs/roc_MSF-DFormer.png}} &
+    \subcaptionbox{KDCNN-DF}{\includegraphics[width=0.315\textwidth]{figs/roc_KDCNN.png}} &
+    \subcaptionbox{Proposed (MHFL-MCA)}{\includegraphics[width=0.315\textwidth]{figs/roc_MHCNN.png}} \\
+  \end{tabular}
+
+  \caption{One-versus-rest ROC curves at $N=5$ training samples per class for Case~1. Each panel reports class-wise ROC curves together with micro- and macro-averaged AUC values.}
+  \label{fig:case1_roc_N5_sota}
+\end{figure}
+
+\begin{figure}[pos=tp]
+  \centering
+  \captionsetup{skip=4pt}
+  \setlength{\tabcolsep}{2pt}
+  \renewcommand{\arraystretch}{0.98}
+
+  \begin{tabular}{ccc}
+    \subcaptionbox{MRCFN}{\includegraphics[width=0.315\textwidth]{figs/cm_MRCFN.png}} &
+    \subcaptionbox{CFFN}{\includegraphics[width=0.315\textwidth]{figs/cm_CFFN.png}} &
+    \subcaptionbox{CDTFAFN}{\includegraphics[width=0.315\textwidth]{figs/cm_CDTFAFN.png}} \\
+    \subcaptionbox{MSF-DFormer}{\includegraphics[width=0.315\textwidth]{figs/cm_MSF-DFormer.png}} &
+    \subcaptionbox{KDCNN-DF}{\includegraphics[width=0.315\textwidth]{figs/cm_KDCNN.png}} &
+    \subcaptionbox{Proposed (MHFL-MCA)}{\includegraphics[width=0.315\textwidth]{figs/cm_MHCNN.png}} \\
+  \end{tabular}
+
+  \caption{Confusion matrices at $N=5$ training samples per class for Case~1 (Sample~5 representative run). Diagonal entries correspond to correct classifications, and off-diagonal entries indicate inter-class confusions.}
+  \label{fig:case1_cm_n5}
+\end{figure}
+
+% \begin{figure*}[!t]
+%   \centering
+
+%   \begin{minipage}[t]{0.49\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{tsne_MRCFN.png}
+%     \vspace{-0.4em}
+%     \textbf{(a)} MRCFN
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}[t]{0.49\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{tsne_CFFN.png}
+%     \vspace{-0.4em}
+%     \textbf{(b)} CFFN
+%   \end{minipage}
+
+%   \vspace{0.6em}
+
+% \begin{minipage}[t]{0.49\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{tsne_CDTFAFN.png}
+%   \vspace{-0.4em}
+%   \textbf{(c)} CDTFAFN
+% \end{minipage}
+% \hfill
+% \begin{minipage}[t]{0.49\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{tsne_MSF-DFormer.png}
+%   \vspace{-0.4em}
+%   \textbf{(d)} MSF-DFormer
+% \end{minipage}
+
+% \vspace{0.6em}
+
+% \vspace{0.6em}
+
+%   \vspace{0.6em}
+
+%   \begin{minipage}[t]{0.49\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{tsne_KDCNN.png}
+%     \vspace{-0.4em}
+%     \textbf{(e)} KDCNN-DF
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}[t]{0.49\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{tsne_MHCNN.png}
+%     \vspace{-0.4em}
+%     \textbf{(f)} Proposed (MHCNN)
+%   \end{minipage}
+
+%   \caption{t-SNE visualizations at $N=5$ training samples per class for Case~1 (Sample~5 representative run).}
+%   \label{fig:case1_tsne_n5}
+% \end{figure*}
+% 上面是3x2，下面是2x3
+
+\begin{figure}[pos=tp]
+  \centering
+  \captionsetup{skip=4pt}
+  \setlength{\tabcolsep}{2pt}
+  \renewcommand{\arraystretch}{0.98}
+
+  \begin{tabular}{ccc}
+    \subcaptionbox{MRCFN}{\includegraphics[width=0.315\textwidth]{figs/tsne_MRCFN.png}} &
+    \subcaptionbox{CFFN}{\includegraphics[width=0.315\textwidth]{figs/tsne_CFFN.png}} &
+    \subcaptionbox{CDTFAFN}{\includegraphics[width=0.315\textwidth]{figs/tsne_CDTFAFN.png}} \\
+    \subcaptionbox{MSF-DFormer}{\includegraphics[width=0.315\textwidth]{figs/tsne_MSF-DFormer.png}} &
+    \subcaptionbox{KDCNN-DF}{\includegraphics[width=0.315\textwidth]{figs/tsne_KDCNN.png}} &
+    \subcaptionbox{Proposed (MHFL-MCA)}{\includegraphics[width=0.315\textwidth]{figs/tsne_MHCNN.png}} \\
+  \end{tabular}
+
+  \caption{t-SNE visualizations at $N=5$ training samples per class for Case~1 (Sample~5 representative run).}
+  \label{fig:case1_tsne_n5}
+\end{figure}
+
+\begin{figure}[pos=htbp]
+  \centering
+  \includegraphics[width=0.98\textwidth]{figs/curves_MHCNN.png}
+  \caption{Training and test loss and accuracy curves under $N=20$ training samples per class in Case~1.}
+  \label{fig:case1_curves_N20}
+\end{figure}
+
+
+\subsubsection{Ablation study}
+To quantify the individual contributions of the proposed components under limited labeled samples,
+we conduct a structured ablation study on the UO dataset. The ablation variants are designed to probe (i) single-modality learning, and (ii) the fusion strategy as well as
+the necessity of cross-modal interaction and modality-reliability reweighting. The detailed definitions of the five ablation variants are listed in Table~\ref{tab:uo_ablation_defs}. According to Table~\ref{tab:ablation_results}, the ablation results lead to the following conclusions:
+
+\begin{table}[pos=htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\caption{Definitions of the ablation variants on the UO dataset.}
+\label{tab:uo_ablation_defs}
+\begin{tabular}{@{}>{\centering\arraybackslash}p{0.28\linewidth} p{0.68\linewidth}@{}}
+\toprule
+\multicolumn{1}{c}{Method} & \multicolumn{1}{c}{Description} \\
+\midrule
+Ablation 1 (Single Vibration) &
+Vibration-only baseline using the vibration encoder and the shared classification block; no cross-modal interaction and no modality reweighting. \\
+\midrule
+Ablation 2 (Single Acoustic) &
+Acoustic-only baseline using the acoustic encoder and the shared classification block; no cross-modal interaction and no modality reweighting. \\
+\midrule
+Ablation 3 (Naive fusion) &
+Dual-branch feature extraction followed by direct concatenation; both CAIM and AMRM are removed. \\
+\midrule
+Ablation 4 (CAIM only) &
+Cross-attention interaction is enabled to enhance cross-modal feature representations, while the adaptive modality reweighting is removed. \\
+\midrule
+Ablation 5 (AMRM only) &
+Adaptive modality reweighting is enabled on top of concatenated features, while cross-attention interaction is removed. \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+(1) Multimodal learning is crucial under low-shot supervision. Compared with single-modality learning, the full MHFL-MCA achieves a substantial gain in diagnostic accuracy. For example, at $N=5$, MHFL-MCA improves the accuracy by $\textbf{40.39}$ and $\textbf{59.91}$ percentage points over the single-vibration and acoustic baselines($0.9279$ vs.\ $0.5240$, $0.3288$), indicating that vibration and acoustic signals provide complementary fault cues and that multimodal fusion significantly enhances label efficiency.
+
+(2) Naive concatenation is insufficient, structured fusion is necessary. Direct feature concatenation (Ablation~3) cannot fully exploit cross-modal dependency. At $N=5$, MHFL-MCA outperforms the naive fusion variant by $\textbf{29.06}$ percentage points in accuracy ($0.9279$ vs.\ $0.6373$), demonstrating that explicitly modeling inter-modal interaction and reliability-aware fusion is critical for robust representation learning in the small-sample regime.
+
+(3) CAIM and AMRM are complementary, combining both yields the best performance. Enabling only one component still leaves a noticeable gap to the full model. For example, at $N=5$, MHFL-MCA surpasses the Ablation 4 and 5 by $\textbf{28.06}$ and $\textbf{24.30}$ percentage points in accuracy ($0.9279$ vs.\ $0.6473$, $0.6849$), confirming their complementary roles: CAIM models cross-modal dependencies, whereas AMRM calibrates sample-wise modality contributions after cross-modal interaction.
+
+To sum up, the performance trends in Fig.~\ref{fig:uo_ablation_figA} further corroborate the above findings:
+across $N=5$--$30$, the full MHFL-MCA consistently maintains the leading curves for macro-accuracy, macro-precision,
+macro-recall, and macro-F1, with the most pronounced advantages appearing in the low-shot region.
+
+% =========================
+% Table A: N=5 and N=10 summary
+% =========================
+\begin{table}[pos=t]
+\caption{Ablation results on the UO dataset at small training sizes (trimmed mean $\pm$ std over 10 runs).}
+\label{tab:ablation_results}
+\centering
+\small
+\renewcommand{\arraystretch}{1.1}
+\setlength{\tabcolsep}{4pt}
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Method} & \multicolumn{3}{c}{\textbf{5 training samples}} & \multicolumn{3}{c}{\textbf{10 training samples}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+ & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+\midrule
+Ablation 1 & 0.5240$\pm$0.0378 & 0.5725$\pm$0.0460 & 0.4731$\pm$0.0615 & 0.6906$\pm$0.0468 & 0.7266$\pm$0.0586 & 0.6766$\pm$0.0497 \\
+Ablation 2 & 0.3288$\pm$0.0533 & 0.3520$\pm$0.0550 & 0.3207$\pm$0.0584 & 0.4638$\pm$0.0635 & 0.5188$\pm$0.0722 & 0.4525$\pm$0.0695 \\
+Ablation 3 & 0.6373$\pm$0.0636 & 0.6313$\pm$0.0410 & 0.6090$\pm$0.0689 & 0.7769$\pm$0.0374 & \underline{0.8218$\pm$0.0374} & 0.7525$\pm$0.0516 \\
+Ablation 4 & 0.6473$\pm$0.0422 & 0.6625$\pm$0.0523 & 0.5843$\pm$0.0637 & 0.8032$\pm$0.0290 & 0.8156$\pm$0.0324 & 0.7811$\pm$0.0281 \\
+Ablation 5 & \underline{0.6849$\pm$0.0404} & \underline{0.7507$\pm$0.0396} & \underline{0.6564$\pm$0.0422} & \underline{0.8218$\pm$0.0229} & 0.8185$\pm$0.0274 & \underline{0.8158$\pm$0.0225} \\
+\textbf{Proposed (MHFL-MCA)} & \textbf{0.9279$\pm$0.0288} & \textbf{0.9361$\pm$0.0237} & \textbf{0.9266$\pm$0.0299} & \textbf{0.9707$\pm$0.0175} & \textbf{0.9734$\pm$0.0150} & \textbf{0.9704$\pm$0.0178} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{figure}[pos=htbp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/ablation_acc.png}
+    \caption{Macro-accuracy}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/ablation_prec.png}
+    \caption{Macro-precision}
+  \end{subfigure}
+
+  \vspace{0.35em}
+
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/ablation_recall.png}
+    \caption{Macro-recall}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/ablation_f1.png}
+    \caption{Macro-F1 score}
+  \end{subfigure}
+
+  \caption{Ablation performance curves under varying training sizes on the UO dataset (trimmed mean $\pm$ std over 10 runs). Exp1--Exp5 correspond to Ablation~1--Ablation~5, respectively.}
+  \label{fig:uo_ablation_figA}
+\end{figure}
+
+\subsection{Case 2: vibration and current dataset from KAIST}
+
+\begin{table}[pos=t]
+  \centering
+  \caption{Bearing Health Conditions and Labels in Case 2}
+  \label{tab:kaist_healthcondition}
+  \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}
+  \begin{tabularx}{1\linewidth}{@{} C C @{}}
+    \toprule
+    \textbf{Health Conditions} & \textbf{Class Index} \\
+    \midrule
+    Normal (Normal) & Class 0 \\
+    Inner-race fault (IF-1) & Class 1 \\
+    Inner-race fault (IF-2) & Class 2 \\
+    Outer-race fault (OF-1)& Class 3 \\
+    Outer-race fault (OF-2) & Class 4 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[pos=htbp]
+  \centering
+  \captionsetup{skip=4pt}
+  \setlength{\tabcolsep}{2pt}
+  \renewcommand{\arraystretch}{0.98}
+
+  \begin{tabular}{ccc}
+    \subcaptionbox{MRCFN}{\includegraphics[width=0.315\textwidth]{figs/roc_4Nm_MRCFN.png}} &
+    \subcaptionbox{CFFN}{\includegraphics[width=0.315\textwidth]{figs/roc_4Nm_CFFN.png}} &
+    \subcaptionbox{CDTFAFN}{\includegraphics[width=0.315\textwidth]{figs/roc_4Nm_CDTFAFN.png}} \\
+    \subcaptionbox{MSF-DFormer}{\includegraphics[width=0.315\textwidth]{figs/roc_4Nm_MSF-DFormer.png}} &
+    \subcaptionbox{KDCNN-DF}{\includegraphics[width=0.315\textwidth]{figs/roc_4Nm_KDCNN.png}} &
+    \subcaptionbox{Proposed (MHFL-MCA)}{\includegraphics[width=0.315\textwidth]{figs/roc_4Nm_MHCNN.png}} \\
+  \end{tabular}
+
+  \caption{One-versus-rest ROC curves at $N=5$ training samples per class for Case~2 (load-shift setting, 4~Nm test domain; representative run, Sample~5). Each panel reports class-wise ROC curves together with micro- and macro-averaged AUC values.}
+  \label{fig:roc_case2_4nm}
+\end{figure}
+
+\begin{figure}[pos=htbp]
+  \centering
+  \captionsetup{skip=4pt}
+  \setlength{\tabcolsep}{2pt}
+  \renewcommand{\arraystretch}{0.98}
+
+  \begin{tabular}{ccc}
+    \subcaptionbox{MRCFN}{\includegraphics[width=0.315\textwidth]{figs/cm_4Nm_MRCFN.png}} &
+    \subcaptionbox{CFFN}{\includegraphics[width=0.315\textwidth]{figs/cm_4Nm_CFFN.png}} &
+    \subcaptionbox{CDTFAFN}{\includegraphics[width=0.315\textwidth]{figs/cm_4Nm_CDTFAFN.png}} \\
+    \subcaptionbox{MSF-DFormer}{\includegraphics[width=0.315\textwidth]{figs/cm_4Nm_MSF-DFormer.png}} &
+    \subcaptionbox{KDCNN-DF}{\includegraphics[width=0.315\textwidth]{figs/cm_4Nm_KDCNN.png}} &
+    \subcaptionbox{Proposed (MHFL-MCA)}{\includegraphics[width=0.315\textwidth]{figs/cm_4Nm_MHCNN.png}} \\
+  \end{tabular}
+
+  \caption{Confusion matrices at $N=5$ training samples per class for Case~2 (load-shift setting, 4~Nm test domain; representative run, Sample~5). Each panel reports the class-level prediction distribution, where stronger diagonal concentration indicates better fault discrimination under cross-load domain shift.}
+  \label{fig:cm_case2_4nm}
+\end{figure}
+
+\begin{figure}[pos=htbp]
+  \centering
+  \captionsetup{skip=4pt}
+  \setlength{\tabcolsep}{2pt}
+  \renewcommand{\arraystretch}{0.98}
+
+  \begin{tabular}{ccc}
+    \subcaptionbox{MRCFN}{\includegraphics[width=0.315\textwidth]{figs/tsne_4Nm_MRCFN.png}} &
+    \subcaptionbox{CFFN}{\includegraphics[width=0.315\textwidth]{figs/tsne_4Nm_CFFN.png}} &
+    \subcaptionbox{CDTFAFN}{\includegraphics[width=0.315\textwidth]{figs/tsne_4Nm_CDTFAFN.png}} \\
+    \subcaptionbox{MSF-DFormer}{\includegraphics[width=0.315\textwidth]{figs/tsne_4Nm_MSF-DFormer.png}} &
+    \subcaptionbox{KDCNN-DF}{\includegraphics[width=0.315\textwidth]{figs/tsne_4Nm_KDCNN.png}} &
+    \subcaptionbox{Proposed (MHFL-MCA)}{\includegraphics[width=0.315\textwidth]{figs/tsne_4Nm_MHCNN.png}} \\
+  \end{tabular}
+
+  \caption{t-SNE visualization of feature distributions for six models under the 4~Nm load-shift test condition ($N=5$, SNR$=0$ dB). The subplot order is consistent with the main-text comparative figures: (a) MRCFN, (b) CFFN, (c) CDTFAFN, (d) MSF-DFormer, (e) KDCNN-DF, and (f) the proposed MHFL-MCA.}
+  \label{fig:tsne_4Nm_all_models}
+\end{figure}
+
+\begin{table}[pos=htbp]
+  \centering
+  \caption{Quantitative comparison at representative training sizes on Case 2 under 2~Nm testing load. Values are trimmed mean$\pm$standard deviation over 10 runs.}
+  \label{tab:case2_quant_2nm}
+  \renewcommand{\arraystretch}{1.05}
+  \small
+
+  \vspace{2pt}
+  {\centering\textbf{(a) Comparison of diagnostic performance on Case 2 under 5 and 10 training samples per class.}\par}
+  \vspace{3pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} & \multicolumn{3}{c}{\textbf{5 training samples}} & \multicolumn{3}{c}{\textbf{10 training samples}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+    \midrule
+    MRCFN & 0.5929$\pm$0.0446 & 0.6084$\pm$0.0437 & 0.5845$\pm$0.0471 & 0.6486$\pm$0.0452 & 0.6711$\pm$0.0476 & 0.6397$\pm$0.0500 \\
+    CFFN & 0.5829$\pm$0.0418 & 0.6013$\pm$0.0466 & 0.5724$\pm$0.0445 & 0.6407$\pm$0.0412 & 0.6650$\pm$0.0449 & 0.6328$\pm$0.0456 \\
+    CDTFAFN & 0.6532$\pm$0.0336 & 0.6612$\pm$0.0361 & 0.6473$\pm$0.0351 & 0.7398$\pm$0.0289 & 0.7479$\pm$0.0344 & 0.7356$\pm$0.0312 \\
+    MSF-DFormer & \underline{0.7455$\pm$0.0431} & \underline{0.7519$\pm$0.0440} & \underline{0.7422$\pm$0.0444} & \underline{0.8582$\pm$0.0283} & \underline{0.8598$\pm$0.0298} & \underline{0.8567$\pm$0.0295} \\
+    KDCNN-DF & 0.6427$\pm$0.0438 & 0.6588$\pm$0.0485 & 0.6345$\pm$0.0462 & 0.7048$\pm$0.0423 & 0.7270$\pm$0.0434 & 0.6959$\pm$0.0455 \\
+    \textbf{Proposed (MHFL-MCA)} & \textbf{0.9739$\pm$0.0195} & \textbf{0.9747$\pm$0.0190} & \textbf{0.9736$\pm$0.0201} & \textbf{0.9839$\pm$0.0114} & \textbf{0.9841$\pm$0.0113} & \textbf{0.9837$\pm$0.0115} \\
+    \bottomrule
+  \end{tabular}%
+  }
+
+  \vspace{4pt}
+  {\centering\textbf{(b) Comparison of diagnostic performance on Case 2 under 15 and 20 training samples per class.}\par}
+  \vspace{3pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} & \multicolumn{3}{c}{\textbf{15 training samples}} & \multicolumn{3}{c}{\textbf{20 training samples}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+    \midrule
+    MRCFN & 0.6943$\pm$0.0397 & 0.7168$\pm$0.0409 & 0.6858$\pm$0.0436 & 0.7359$\pm$0.0350 & 0.7508$\pm$0.0353 & 0.7290$\pm$0.0379 \\
+    CFFN & 0.6856$\pm$0.0381 & 0.7136$\pm$0.0445 & 0.6772$\pm$0.0415 & 0.7246$\pm$0.0390 & 0.7478$\pm$0.0417 & 0.7178$\pm$0.0416 \\
+    CDTFAFN & 0.7898$\pm$0.0284 & 0.8008$\pm$0.0303 & 0.7852$\pm$0.0297 & 0.8343$\pm$0.0235 & 0.8426$\pm$0.0259 & 0.8312$\pm$0.0247 \\
+    MSF-DFormer & \underline{0.9278$\pm$0.0197} & \underline{0.9292$\pm$0.0199} & \underline{0.9275$\pm$0.0202} & \underline{0.9666$\pm$0.0106} & \underline{0.9670$\pm$0.0106} & \underline{0.9665$\pm$0.0107} \\
+    KDCNN-DF & 0.7549$\pm$0.0319 & 0.7736$\pm$0.0343 & 0.7480$\pm$0.0342 & 0.7988$\pm$0.0265 & 0.8114$\pm$0.0304 & 0.7940$\pm$0.0286 \\
+    \textbf{Proposed (MHFL-MCA)} & \textbf{0.9816$\pm$0.0068} & \textbf{0.9818$\pm$0.0069} & \textbf{0.9815$\pm$0.0068} & \textbf{0.9921$\pm$0.0042} & \textbf{0.9921$\pm$0.0042} & \textbf{0.9921$\pm$0.0042} \\
+    \bottomrule
+  \end{tabular}%
+  }
+
+  \vspace{4pt}
+  {\centering\textbf{(c) Comparison of diagnostic performance on Case 2 under 25 and 30 training samples per class.}\par}
+  \vspace{3pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} & \multicolumn{3}{c}{\textbf{25 training samples}} & \multicolumn{3}{c}{\textbf{30 training samples}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+    \midrule
+    MRCFN & 0.7693$\pm$0.0355 & 0.7805$\pm$0.0362 & 0.7648$\pm$0.0369 & 0.7968$\pm$0.0282 & 0.8067$\pm$0.0301 & 0.7933$\pm$0.0292 \\
+    CFFN & 0.7624$\pm$0.0332 & 0.7768$\pm$0.0354 & 0.7576$\pm$0.0351 & 0.7878$\pm$0.0297 & 0.7998$\pm$0.0317 & 0.7843$\pm$0.0314 \\
+    CDTFAFN & 0.8644$\pm$0.0208 & 0.8716$\pm$0.0226 & 0.8625$\pm$0.0213 & 0.8849$\pm$0.0192 & 0.8896$\pm$0.0210 & 0.8837$\pm$0.0196 \\
+    MSF-DFormer & \underline{0.9897$\pm$0.0047} & \underline{0.9898$\pm$0.0047} & \underline{0.9896$\pm$0.0047} & \underline{0.9895$\pm$0.0048} & \underline{0.9895$\pm$0.0048} & \underline{0.9895$\pm$0.0048} \\
+    KDCNN-DF & 0.8307$\pm$0.0243 & 0.8404$\pm$0.0272 & 0.8272$\pm$0.0259 & 0.8563$\pm$0.0211 & 0.8637$\pm$0.0240 & 0.8542$\pm$0.0222 \\
+    \textbf{Proposed (MHFL-MCA)} & \textbf{0.9920$\pm$0.0033} & \textbf{0.9921$\pm$0.0033} & \textbf{0.9920$\pm$0.0033} & \textbf{0.9999$\pm$0.0002} & \textbf{0.9999$\pm$0.0002} & \textbf{0.9999$\pm$0.0002} \\
+    \bottomrule
+  \end{tabular}%
+  }
+  \vspace{2pt}
+\end{table}
+
+\begin{table}[pos=htbp]
+  \centering
+  \caption{Quantitative comparison at representative training sizes on Case 2 under 4~Nm testing load. Values are trimmed mean$\pm$standard deviation over 10 runs.}
+  \label{tab:case2_quant_4nm}
+  \renewcommand{\arraystretch}{1.05}
+  \small
+
+  \vspace{2pt}
+  {\centering\textbf{(a) Comparison of diagnostic performance on Case 2 under 5 and 10 training samples per class.}\par}
+  \vspace{3pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} & \multicolumn{3}{c}{\textbf{5 training samples}} & \multicolumn{3}{c}{\textbf{10 training samples}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+    \midrule
+    MRCFN & 0.5384$\pm$0.0568 & 0.5562$\pm$0.0631 & 0.5288$\pm$0.0612 & 0.5932$\pm$0.0574 & 0.6146$\pm$0.0655 & 0.5842$\pm$0.0631 \\
+    CFFN & 0.5280$\pm$0.0536 & 0.5522$\pm$0.0688 & 0.5186$\pm$0.0608 & 0.5869$\pm$0.0551 & 0.6135$\pm$0.0693 & 0.5795$\pm$0.0612 \\
+    CDTFAFN & 0.5774$\pm$0.0508 & 0.5873$\pm$0.0549 & 0.5717$\pm$0.0525 & 0.6432$\pm$0.0461 & 0.6557$\pm$0.0530 & 0.6382$\pm$0.0493 \\
+    MSF-DFormer & \underline{0.7862$\pm$0.0466} & \underline{0.7940$\pm$0.0481} & \underline{0.7827$\pm$0.0485} & \underline{0.9040$\pm$0.0254} & \underline{0.9059$\pm$0.0256} & \underline{0.9032$\pm$0.0259} \\
+    KDCNN-DF & 0.5736$\pm$0.0544 & 0.5931$\pm$0.0629 & 0.5641$\pm$0.0586 & 0.6416$\pm$0.0538 & 0.6680$\pm$0.0627 & 0.6330$\pm$0.0578 \\
+    \textbf{Proposed (MHFL-MCA)} & \textbf{0.9156$\pm$0.0832} & \textbf{0.9207$\pm$0.0800} & \textbf{0.9108$\pm$0.0910} & \textbf{0.9420$\pm$0.0484} & \textbf{0.9446$\pm$0.0475} & \textbf{0.9402$\pm$0.0495} \\
+    \bottomrule
+  \end{tabular}%
+  }
+
+  \vspace{4pt}
+  {\centering\textbf{(b) Comparison of diagnostic performance on Case 2 under 15 and 20 training samples per class.}\par}
+  \vspace{3pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} & \multicolumn{3}{c}{\textbf{15 training samples}} & \multicolumn{3}{c}{\textbf{20 training samples}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+    \midrule
+    MRCFN & 0.6367$\pm$0.0535 & 0.6530$\pm$0.0600 & 0.6295$\pm$0.0572 & 0.6735$\pm$0.0496 & 0.6856$\pm$0.0539 & 0.6698$\pm$0.0522 \\
+    CFFN & 0.6298$\pm$0.0523 & 0.6513$\pm$0.0649 & 0.6232$\pm$0.0577 & 0.6654$\pm$0.0518 & 0.6873$\pm$0.0628 & 0.6619$\pm$0.0566 \\
+    CDTFAFN & 0.7174$\pm$0.0409 & 0.7264$\pm$0.0470 & 0.7135$\pm$0.0439 & 0.7556$\pm$0.0365 & 0.7615$\pm$0.0384 & 0.7545$\pm$0.0373 \\
+    MSF-DFormer & \underline{0.9538$\pm$0.0158} & \underline{0.9541$\pm$0.0159} & \underline{0.9537$\pm$0.0159} & \underline{0.9690$\pm$0.0105} & \underline{0.9692$\pm$0.0105} & \underline{0.9689$\pm$0.0106} \\
+    KDCNN-DF & 0.6973$\pm$0.0438 & 0.7133$\pm$0.0507 & 0.6914$\pm$0.0471 & 0.7327$\pm$0.0398 & 0.7445$\pm$0.0458 & 0.7295$\pm$0.0417 \\
+    \textbf{Proposed (MHFL-MCA)} & \textbf{0.9425$\pm$0.0752} & \textbf{0.9452$\pm$0.0730} & \textbf{0.9405$\pm$0.0774} & \textbf{0.9623$\pm$0.0290} & \textbf{0.9637$\pm$0.0281} & \textbf{0.9616$\pm$0.0295} \\
+    \bottomrule
+  \end{tabular}%
+  }
+
+  \vspace{4pt}
+  {\centering\textbf{(c) Comparison of diagnostic performance on Case 2 under 25 and 30 training samples per class.}\par}
+  \vspace{3pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} & \multicolumn{3}{c}{\textbf{25 training samples}} & \multicolumn{3}{c}{\textbf{30 training samples}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} & \textbf{Acc.} & \textbf{Prec.} & \textbf{F1} \\
+    \midrule
+    MRCFN & 0.7016$\pm$0.0470 & 0.7094$\pm$0.0486 & 0.6998$\pm$0.0478 & 0.7318$\pm$0.0404 & 0.7377$\pm$0.0412 & 0.7307$\pm$0.0408 \\
+    CFFN & 0.6960$\pm$0.0451 & 0.7077$\pm$0.0492 & 0.6948$\pm$0.0458 & 0.7251$\pm$0.0416 & 0.7334$\pm$0.0432 & 0.7245$\pm$0.0420 \\
+    CDTFAFN & 0.7845$\pm$0.0315 & 0.7882$\pm$0.0324 & 0.7838$\pm$0.0319 & 0.8078$\pm$0.0285 & 0.8117$\pm$0.0296 & 0.8074$\pm$0.0288 \\
+    MSF-DFormer & \underline{0.9663$\pm$0.0098} & \underline{0.9664$\pm$0.0098} & \underline{0.9663$\pm$0.0098} & \underline{0.9613$\pm$0.0114} & \underline{0.9614$\pm$0.0114} & \underline{0.9613$\pm$0.0115} \\
+    KDCNN-DF & 0.7612$\pm$0.0337 & 0.7679$\pm$0.0347 & 0.7606$\pm$0.0340 & 0.7902$\pm$0.0298 & 0.7942$\pm$0.0305 & 0.7900$\pm$0.0300 \\
+    \textbf{Proposed (MHFL-MCA)} & \textbf{0.9389$\pm$0.0609} & \textbf{0.9409$\pm$0.0606} & \textbf{0.9368$\pm$0.0639} & \textbf{0.9925$\pm$0.0096} & \textbf{0.9927$\pm$0.0096} & \textbf{0.9925$\pm$0.0097} \\
+    \bottomrule
+  \end{tabular}%
+  }
+  \vspace{2pt}
+\end{table}
+
+\begin{figure}[pos=htbp]
+    \centering
+    \includegraphics[width=0.98\linewidth]{figs/line_accuracy_vs_snr_2Nm_4Nm.png}
+    \caption{Accuracy degradation curves of different methods under additive noise in the load-shift setting. The left and right panels correspond to the 2 Nm and 4 Nm target loads, respectively.}
+    \label{fig:line_noise_loadshift}
+\end{figure}
+
+\begin{table}[pos=htbp]
+\centering
+\caption{Noise robustness results under the 2 Nm target load (Accuracy and F1).}
+\label{tab:noise_accf1_2nm}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}c*{10}{c}@{}}
+\toprule
+\multirow{2}{*}{Model} & \multicolumn{2}{c}{0 dB} & \multicolumn{2}{c}{-2 dB} & \multicolumn{2}{c}{-4 dB} & \multicolumn{2}{c}{-6 dB} & \multicolumn{2}{c}{-8 dB} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}
+ & Acc. & F1 & Acc. & F1 & Acc. & F1 & Acc. & F1 & Acc. & F1 \\
+\midrule
+ MRCFN & 0.9811$\pm$0.0045 & 0.9810$\pm$0.0046 & 0.6793$\pm$0.0041 & 0.6219$\pm$0.0048 & 0.4629$\pm$0.0026 & 0.3766$\pm$0.0026 & 0.3874$\pm$0.0014 & 0.2620$\pm$0.0020 & 0.3263$\pm$0.0031 & 0.1957$\pm$0.0013 \\
+ CFFN & 0.9525$\pm$0.0007 & 0.9519$\pm$0.0007 & 0.4595$\pm$0.0098 & 0.4195$\pm$0.0091 & 0.3007$\pm$0.0050 & 0.2565$\pm$0.0059 & 0.2518$\pm$0.0047 & 0.1724$\pm$0.0037 & 0.2156$\pm$0.0053 & 0.1173$\pm$0.0045 \\
+ CDTFAFN & 0.9905$\pm$0.0018 & 0.9905$\pm$0.0018 & \underline{0.9883$\pm$0.0012} & \underline{0.9883$\pm$0.0012} & \underline{0.9275$\pm$0.0018} & \underline{0.9247$\pm$0.0021} & \underline{0.7746$\pm$0.0087} & \underline{0.7608$\pm$0.0095} & 0.5872$\pm$0.0027 & 0.5378$\pm$0.0044 \\
+ MSF-DFormer & \underline{0.9964$\pm$0.0015} & \underline{0.9964$\pm$0.0015} & 0.9510$\pm$0.0056 & 0.9511$\pm$0.0054 & 0.8020$\pm$0.0049 & 0.7997$\pm$0.0052 & 0.6950$\pm$0.0039 & 0.6658$\pm$0.0056 & \underline{0.6538$\pm$0.0032} & \underline{0.5988$\pm$0.0054} \\
+ KDCNN-DF & 0.8693$\pm$0.0057 & 0.8676$\pm$0.0055 & 0.7191$\pm$0.0087 & 0.7047$\pm$0.0102 & 0.4362$\pm$0.0058 & 0.3848$\pm$0.0070 & 0.2723$\pm$0.0022 & 0.1828$\pm$0.0040 & 0.2095$\pm$0.0004 & 0.0856$\pm$0.0009 \\
+ \textbf{Proposed (MHFL-MCA)} & \textbf{1.0000$\pm$0.0000} & \textbf{1.0000$\pm$0.0000} & \textbf{0.9996$\pm$0.0005} & \textbf{0.9996$\pm$0.0005} & \textbf{0.9946$\pm$0.0012} & \textbf{0.9946$\pm$0.0012} & \textbf{0.9799$\pm$0.0027} & \textbf{0.9799$\pm$0.0027} & \textbf{0.9461$\pm$0.0049} & \textbf{0.9459$\pm$0.0049} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[pos=htbp]
+\centering
+\caption{Noise robustness results under the 4 Nm target load (Accuracy and F1).}
+\label{tab:noise_accf1_4nm}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}c*{10}{c}@{}}
+\toprule
+\multirow{2}{*}{Model} & \multicolumn{2}{c}{0 dB} & \multicolumn{2}{c}{-2 dB} & \multicolumn{2}{c}{-4 dB} & \multicolumn{2}{c}{-6 dB} & \multicolumn{2}{c}{-8 dB} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}
+ & Acc. & F1 & Acc. & F1 & Acc. & F1 & Acc. & F1 & Acc. & F1 \\
+\midrule
+ MRCFN & 0.9061$\pm$0.0033 & 0.9032$\pm$0.0038 & 0.6777$\pm$0.0045 & 0.6245$\pm$0.0070 & 0.4413$\pm$0.0032 & 0.3489$\pm$0.0038 & 0.3859$\pm$0.0029 & 0.2629$\pm$0.0020 & 0.3264$\pm$0.0016 & 0.1977$\pm$0.0011 \\
+ CFFN & 0.8953$\pm$0.0016 & 0.8888$\pm$0.0021 & 0.4096$\pm$0.0073 & 0.3837$\pm$0.0068 & 0.2694$\pm$0.0107 & 0.2428$\pm$0.0096 & 0.2408$\pm$0.0061 & 0.1585$\pm$0.0066 & 0.2204$\pm$0.0037 & 0.1199$\pm$0.0025 \\
+ CDTFAFN & 0.9850$\pm$0.0022 & 0.9850$\pm$0.0022 & \underline{0.9778$\pm$0.0026} & \underline{0.9777$\pm$0.0026} & \underline{0.9092$\pm$0.0022} & \underline{0.9044$\pm$0.0028} & \underline{0.7581$\pm$0.0045} & \underline{0.7423$\pm$0.0047} & 0.5604$\pm$0.0054 & 0.5118$\pm$0.0078 \\
+ MSF-DFormer & \underline{0.9961$\pm$0.0018} & \underline{0.9961$\pm$0.0018} & 0.9510$\pm$0.0039 & 0.9510$\pm$0.0038 & 0.8081$\pm$0.0035 & 0.8063$\pm$0.0036 & 0.6971$\pm$0.0058 & 0.6687$\pm$0.0083 & \underline{0.6472$\pm$0.0057} & \underline{0.5944$\pm$0.0077} \\
+ KDCNN-DF & 0.8213$\pm$0.0076 & 0.8134$\pm$0.0092 & 0.7119$\pm$0.0081 & 0.7004$\pm$0.0081 & 0.3915$\pm$0.0080 & 0.3489$\pm$0.0103 & 0.2249$\pm$0.0027 & 0.1157$\pm$0.0049 & 0.2024$\pm$0.0005 & 0.0717$\pm$0.0010 \\
+ \textbf{Proposed (MHFL-MCA)} & \textbf{0.9999$\pm$0.0002} & \textbf{0.9999$\pm$0.0002} & \textbf{0.9968$\pm$0.0009} & \textbf{0.9968$\pm$0.0009} & \textbf{0.9847$\pm$0.0016} & \textbf{0.9847$\pm$0.0016} & \textbf{0.9623$\pm$0.0023} & \textbf{0.9622$\pm$0.0024} & \textbf{0.9261$\pm$0.0044} & \textbf{0.9260$\pm$0.0044} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{figure}[pos=htbp]
+    \centering
+    \begin{subfigure}[t]{0.98\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figs/accuracy_vs_params_N30_final.png}
+        \label{fig:eff_acc_vs_params_n30}
+    \end{subfigure}
+
+    \vspace{6pt}
+
+\begin{subfigure}[t]{0.98\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figs/accuracy_vs_training_time_bubble_N30_final_v6.png}
+        \label{fig:eff_acc_vs_time_n30}
+    \end{subfigure}
+
+    \caption{Performance--efficiency trade-off of different methods in the KAIST load-shift case at $N=30$. The upper panel shows the relationship between accuracy and model size, while the lower panel jointly visualizes accuracy, training time, and parameter scale.}
+    \label{fig:efficiency_tradeoff_n30}
+\end{figure}
+
+\begin{table}[pos=t]
+    \centering
+    \caption{Performance--efficiency summary in the KAIST load-shift setting (0 Nm train/val, 2/4 Nm test). Accuracy is reported as trimmed mean $\pm$ standard deviation across 10 runs. Training time is the trimmed mean $\pm$ standard deviation of the per-run \emph{training} time at $N=30$ (visualization time excluded).}
+    \label{tab:efficiency_summary_loadshift}
+    \small
+    \setlength{\tabcolsep}{3.5pt}
+    \renewcommand{\arraystretch}{1.12}
+  
+\begin{tabularx}{\linewidth}{@{}c c c C C@{}}
+    \toprule
+    \multirow{2}{*}{Model} & \multirow{2}{*}{Params (M)} & \multirow{2}{*}{Train time (s)} & \multicolumn{2}{c}{\textbf{$N=30$ (Accuracy)}} \\
+    \cmidrule(lr){4-5}
+    & & & 2 Nm & 4 Nm \\
+    \midrule
+    MRCFN       & 0.441  & 88.41$\pm$1.06   & 0.7968$\pm$0.0282 & 0.7318$\pm$0.0494 \\
+    CFFN        & 1.002  & 46.62$\pm$7.38   & 0.7878$\pm$0.0297 & 0.7251$\pm$0.0416 \\
+    CDTFAFN     & 10.601 & 355.37$\pm$17.49 & 0.8849$\pm$0.0192 & 0.8078$\pm$0.0285 \\
+    MSF-DFormer & 1.349  & 199.89$\pm$6.56  & \underline{0.9895$\pm$0.0048} & \underline{0.9613$\pm$0.0114} \\
+    KDCNN-DF    & 0.215  & 5.11$\pm$0.25    & 0.8563$\pm$0.0211 & 0.7902$\pm$0.0298 \\
+    MHFL-MCA       & 7.380  & 28.15$\pm$0.27   & \textbf{0.9999$\pm$0.0002} & \textbf{0.9925$\pm$0.0096} \\
+    \bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Dataset description}
+
+The KAIST dataset comprises synchronized time-series measurements acquired on a rotating-machine testbed for fault diagnosis under varying operating conditions \cite{KAIST}. The original release provides vibration, acoustic, temperature, and three-phase motor current signals. In this study, the varying-load subset is adopted, and vibration and motor current are used as the two modalities for cross-load fault diagnosis.
+
+The testbed consists of a three-phase induction motor, torque meter, gearbox, two bearing housings (A and B), rotors, and a hysteresis brake. The motor is a four-pole AC machine rated at 3~HP, 380~V, and 60~Hz, and the gearbox increases the rotating speed by a factor of 2.07. To avoid spectral overlap with the 60~Hz driving frequency, the experiments were conducted at a constant rotating speed of 3010~rpm under three torque loads:
+0~Nm, 2~Nm, and 4~Nm. Acoustic measurements were available only under the zero-load condition because of brake-induced noise; therefore, motor current was selected as the second modality to ensure complete cross-load coverage.
+
+Four accelerometers were installed in the $x$- and $y$-directions of bearing housings A and B, while three current transformers measured the U-, V-, and W-phase motor currents. In this study, the $x$-direction vibration channel from bearing housing A and the
+U-phase current channel were selected as the paired inputs. Both channels were sampled at 25.6~kHz. Each condition was recorded for 120~s in the normal state and 60~s in the faulty states, with vibration expressed in $g$ and motor current in $A$. The synchronized signals were divided into non-overlapping segments of 2048 points, and at most 400 paired segments were retained for each health condition under each load.
+
+The complete dataset covers normal operation, bearing faults, shaft parallel misalignment, and rotor unbalance. In the selected bearing-fault subset, IF-1 and OF-1 correspond to fault severities of 0.3~mm, whereas IF-2 and OF-2 correspond to 1.0~mm. The five
+health-condition labels used in this study are listed in
+Table~\ref{tab:kaist_healthcondition}.
+
+\subsubsection{Training process analysis}
+\label{sec:case2_training_process}
+
+This case study evaluates diagnostic generalization under
+variable-load conditions. Since the selected vibration and U-phase current channels were both sampled at 25.6~kHz, no resampling was required. The synchronized signals were divided into non-overlapping windows of 2048 points, and each window was independently standardized using per-segment $z$-score normalization before noise injection. No additional normalization
+was applied after adding noise, thereby preserving the intended SNR differences. The paired vibration and current windows were jointly shuffled using fixed random seeds to maintain their cross-modal correspondence. The same segmented sample pools and common preprocessing were used for all comparison methods. Training data were drawn only from the zero-torque subset. The training strategy consists of three stages.
+
+The additive noise model is defined as
+\begin{equation}
+\tilde{x} = x + n,\quad
+\mathbb{E}[n^2] = \frac{\mathbb{E}[x^2]}{10^{\mathrm{SNR}/10}},
+\label{eq:snr_noise}
+\end{equation}
+
+Stage 1 (hyperparameter selection) performs optimization on the source load (0~Nm) only, searching the learning rate and batch size by maximizing validation accuracy under the baseline noise environment, and the best configuration is fixed for all subsequent runs.
+
+Stage 2 (load-shift training with consistency regularization) trains a model for each training size $N$ and repetition under the baseline environment, where an anchor view is formed by injecting $0$~dB noise into both modalities and a stochastic view is generated by sampling $\mathrm{SNR}\in[-10,0]$~dB, with a small fraction of samples additionally corrupted in only one modality to emulate sensor degradation; the objective combines cross-entropy and a KL-based consistency term,
+For a mini-batch of $B$ paired samples, the Stage 2 training
+objective is defined as
+\begin{equation}
+\mathcal{L}
+=
+\mathcal{L}_{\mathrm{ce}}
+\!\left(
+\mathbf{Y},
+\mathbf{P}_{\mathrm{base}}
+\right)
++
+\lambda(t)
+D_{\mathrm{KL}}
+\!\left(
+\operatorname{sg}
+\!\left(
+\mathbf{P}_{\mathrm{base}}
+\right)
+\,\|\, 
+\mathbf{P}_{\mathrm{noisy}}
+\right),
+\label{eq:stage2_loss}
+\end{equation}
+where $\mathcal{L}$ denotes the total Stage 2 training loss;
+$\mathbf{Y}\in\{0,1\}^{B\times K}$ is the one-hot ground-truth
+label matrix; and
+$\mathbf{P}_{\mathrm{base}},\mathbf{P}_{\mathrm{noisy}}
+\in[0,1]^{B\times K}$ denote the posterior probability matrices
+predicted from the anchor and stochastic noisy views, respectively.
+Here, $B$ is the mini-batch size, $K$ is the number of health conditions, $\mathcal{L}_{\mathrm{ce}}$ is the categorical
+cross-entropy loss, $D_{\mathrm{KL}}(\cdot\|\cdot)$ is the
+batch-averaged Kullback--Leibler divergence, and
+$\operatorname{sg}(\cdot)$ denotes the stop-gradient operation.
+The consistency coefficient is linearly increased according to
+$\lambda(t)=\lambda_{\max}\min(1,t/T_{\mathrm{w}})$, where $t$
+is the current training epoch, $\lambda_{\max}=0.12$, and
+$T_{\mathrm{w}}=15$; it therefore remains at $0.12$ after the
+first 15 epochs. The objective is optimized using Adamax with a
+gradient clipping norm of $1.0$.
+
+Stage 3 (robust noise study with a fixed trained model) trains one robustness model once on the source load using $N=30$ samples per class with a fixed random seed, and then evaluates it on both target loads at noise levels $\{0,-2,-4,-6,-8,-10\}$~dB with multiple independent noise realizations.
+
+\subsubsection{Analysis of diagnostic results under variable load conditions} 
+\label{sec:case2_variable_load_results}
+This section reports diagnostic performance under the load-shift setting in Case~2, where models are trained on the source load (0~Nm) and evaluated on two target loads (2~Nm and 4~Nm). Quantitative results at representative training sizes ($N=5$--$30$ per class) are summarized in Table~\ref{tab:case2_quant_2nm} (2~Nm) and Table~\ref{tab:case2_quant_4nm} (4~Nm). In addition, to quantify cross-load stability, we define an auxiliary load-gap metric as
+\begin{equation}
+\Delta_{\mathrm{load}}(N)=\mathrm{Acc}_{2\mathrm{Nm}}(N)-\mathrm{Acc}_{4\mathrm{Nm}}(N).
+\label{eq:delta_load}
+\end{equation}
+For qualitative inspection, we report ROC curves, confusion matrices, and t-SNE visualizations at $N=5$ under $\mathrm{SNR}=0$~dB. Visualization results for the most challenging target domain (4~Nm) are presented in (Fig.~\ref{fig:roc_case2_4nm}--Fig.~\ref{fig:tsne_4Nm_all_models}). Based on the above results, the following conclusions can be drawn:
+
+(1) MHFL-MCA achieves clear superiority in the low-shot load-shift regime. As shown in Table~\ref{tab:case2_quant_4nm}, at $N=5$ on the harder 4~Nm target load, MHFL-MCA improves accuracy by \textbf{12.94 percentage points} over the strongest baseline (0.9156 vs.\ 0.7862), indicating stronger label efficiency under operating-condition shift.
+
+(2) MHFL-MCA exhibits stable cross-load behavior measured by $\Delta_{\mathrm{load}}(N)$. Using Eq.~\eqref{eq:delta_load}, MHFL-MCA shows a small cross-load accuracy gap at low-shot training (e.g., $\Delta_{\mathrm{load}}(5)=0.9739-0.9156=\textbf{0.0583}$), implying limited performance degradation when transferring from the 2~Nm to the more challenging 4~Nm domain.
+
+(3) Qualitative results on the hardest target domain support improved class separability. On 4~Nm at $N=5$, the ROC curves in Fig.~\ref{fig:roc_case2_4nm} show stronger separability for MHFL-MCA, while the confusion matrix in Fig.~\ref{fig:cm_case2_4nm} exhibits more concentrated diagonal mass with fewer off-diagonal confusions. Consistently, the t-SNE embedding in Fig.~\ref{fig:tsne_4Nm_all_models} reveals tighter intra-class clustering and larger inter-class margins, indicating that MHFL-MCA learns more discriminative and transferable representations under load shift.
+
+Overall, the quantitative comparisons and hardest-domain visualizations jointly verify that MHFL-MCA provides reliable diagnostic generalization across operating loads, with the most pronounced benefits appearing in low-shot and cross-domain conditions.
+
+\subsubsection{Diagnostic results analysis in robust noise environment}
+This section evaluates robustness under additive Gaussian noise following the training and single-model multi-SNR evaluation protocol in Section~\ref{sec:case2_training_process}. Noise is injected according to Eq.~\eqref{eq:snr_noise}, and the trained robustness model is evaluated on both target loads (2~Nm and 4~Nm) at $\mathrm{SNR}\in\{0,-2,-4,-6,-8\}$~dB; the corresponding accuracy and F1 are reported in Table~\ref{tab:noise_accf1_2nm} and Table~\ref{tab:noise_accf1_4nm}, and Fig.~\ref{fig:line_noise_loadshift} summarizes the accuracy degradation trends. According to the analysis of the above results, the subsequent conclusions can be summarized.
+
+
+(1) MHFL-MCA achieves leading performance under severe noise in the load-shift setting. As shown in Table~\ref{tab:noise_accf1_4nm}, under the hardest condition (4~Nm, $\mathrm{SNR}=-8$~dB), MHFL-MCA attains an accuracy of $0.9261$, exceeding the strongest baseline (MSF-DFormer, $0.6472$) by $\textbf{27.89}$ percentage points. This demonstrates that the proposed multimodal fusion can preserve discriminative fault cues even when strong noise and operating-condition shift coexist.
+
+(2) MHFL-MCA exhibits stronger resistance to increasing noise and maintains stable cross-load behavior. From $0$~dB to $-8$~dB on the 4~Nm target load, the accuracy drop of MHFL-MCA is $\textbf{0.0738}$ (0.9999 to 0.9261), whereas MSF-DFormer degrades by $\textbf{0.3489}$ (0.9961 to 0.6472), indicating a substantially flatter degradation trend for MHFL-MCA.
+Furthermore, using the cross-load stability metric in Eq.~\eqref{eq:delta_load}, MHFL-MCA maintains a small load gap (only 0.9461-0.9261=\textbf{0.0200}) even at $\mathrm{SNR}=-8$~dB, suggesting that its robustness generalizes consistently across target loads rather than being specific to a single operating condition.
+
+In summary, the results consistently verify that MHFL-MCA provides the strongest robustness margin under decreasing SNR, with both higher absolute accuracy and a slower degradation rate under load-shift noise perturbations.
+
+\subsubsection{Computing efficiency analysis}
+In practical deployment, diagnostic models are often constrained not only by final accuracy but also by the computational cost of training and re-training, especially in scenarios such as on-site incremental updates, limited maintenance windows, or edge-side model adaptation under varying operating conditions. Therefore, this section evaluates the performance--efficiency of different methods in the KAIST load-shift task. The reported training time measures the per-run \emph{training} computation only (visualization and post-processing excluded), so that the comparison focuses on the core optimization cost.
+
+Overall, MHFL-MCA achieves higher accuracy with a relatively moderate parameter scale while requiring substantially shorter training time. As shown in Table~\ref{tab:efficiency_summary_loadshift}, CDTFAFN has a much larger model size ($10.601M$ parameters) and significantly longer training time ($355.37 s$), yet its accuracy at $N=30$ remains clearly below MHFL-MCA on both target loads ($0.8849$ vs.\ $0.9999$ on 2 Nm, and $0.8078$ vs.\ $0.9925$ on 4 Nm), indicating that increasing parameter count alone does not guarantee better cross-load diagnosis.
+
+Fig.~\ref{fig:efficiency_tradeoff_n30} further provides an intuitive view of the joint trade-off. Compared with the strongest baseline MSF-DFormer, although MSF-DFormer uses fewer parameters than MHFL-MCA ($1.349M$ vs.\ $7.380M$), it incurs a much higher training cost ($199.89 s$ vs.\ $28.15 s$) and still yields lower accuracy at $N=30$ on both loads ($0.9895$/$0.9613$ vs.\ $0.9999$/$0.9925$ for 2/4 Nm). This suggests that MHFL-MCA offers a more favorable balance among accuracy, training cost, and model scale under load-shift conditions. The above results demonstrate that MHFL-MCA provides a strong overall performance--efficiency profile, making it more suitable for real-world load-varying deployment than the compared baselines.
+
+% \FloatBarrier
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This study proposed MHFL-MCA, a multimodal heterogeneous feature learning framework for robust fault diagnosis under limited-sample, varying-load, and strong-noise conditions. The framework integrates
+modality-specific heterogeneous encoders, bidirectional
+cross-attention, and adaptive modality reweighting to construct complementary and reliability-aware multimodal representations. Experiments on the UO vibration--acoustic dataset and the KAIST
+vibration--current dataset demonstrated strong diagnostic performance under limited-sample, load-shift, and noise-corrupted settings. The results also showed that MHFL-MCA generalizes effectively from the source load to unseen target loads and degrades more slowly as the SNR decreases. Ablation studies confirmed the complementary contributions of cross-modal interaction and adaptive modality reweighting, while the efficiency analysis indicated a
+favorable balance among diagnostic accuracy, training time, and model size. Overall, MHFL-MCA provides an effective solution for robust multimodal fault diagnosis within the evaluated operating conditions.
+
+\section{Limitations and future work}
+\label{sec:limitations}
+
+Despite the encouraging results, several limitations remain. First, the current validation is limited to two public bearing datasets and a restricted set of fault categories. Although these datasets cover complementary modality pairs, multiple fault locations and severity levels, load shifts, and strong noise, they do not fully represent broader machine types or long-term degradation processes in real industrial environments. Consequently, the generalization
+of MHFL-MCA beyond the evaluated settings remains to be
+established. Second, the framework assumes that multimodal measurements are synchronously acquired and temporally aligned before segmentation. Its robustness to asynchronous sampling, temporary sensor failures, missing modalities, and modality drift has not yet been systematically evaluated. Third, the experiments
+mainly consider single known faults under a closed-set
+classification setting. Performance on compound faults, previously unseen fault types, and open-set fault diagnosis therefore remains unverified.
+
+Future work will extend the evaluation to additional synchronized multimodal datasets with broader fault families, including gear, shaft, and compound faults, as well as long-term industrial monitoring data. Synchronization-tolerant learning, missing-modality reconstruction, and reliability estimation will
+also be investigated to improve robustness to incomplete or misaligned observations. Finally, lightweight encoders, model compression, and deployment-oriented optimization will be explored
+to support real-time edge monitoring while preserving diagnostic robustness.
+
+% \section*{Acknowledgments}
+% Sample text inserted for demonstration.
+
+% \section*{Funding}
+% Sample text inserted for demonstration.
+
+% \section*{Data availability}
+% The data that support the findings of this study are derived from two public datasets: (i) the University of Ottawa Rolling Element Dataset and (ii) the KAIST bearing dataset used in the load-shift experiments. Both datasets are available from the original sources cited in this paper. To facilitate reproducibility, the source code of the proposed MHFL-MCA model, together with the experimental implementation details, is available at the public repository: \href{https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results}{https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results}.
+
+\bibliographystyle{model1-num-names}
+\bibliography{cas-refs}
+
+% \bio{figs/cas-pic1}
+% Author biography with author photo.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% \endbio
+
+% \bio{figs/cas-pic1}
+% Author biography with author photo.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% Author biography. Author biography. Author biography.
+% \endbio
+
+\end{document}

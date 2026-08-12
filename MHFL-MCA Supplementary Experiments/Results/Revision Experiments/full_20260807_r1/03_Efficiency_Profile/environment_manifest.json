@@ -1,0 +1,16 @@
+{
+  "python": "3.9.20 (main, Oct  3 2024, 07:38:01) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "${PYTHON_EXECUTABLE}",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "cwd": "${MHFL_SUITE_ROOT}",
+  "numpy": "1.21.0",
+  "pandas": "1.4.4",
+  "scipy": "1.8.1",
+  "sklearn": "1.1.3",
+  "matplotlib": "3.5.3",
+  "tensorflow": "2.7.0",
+  "nptdms": "1.10.0",
+  "project_root": "${MHFL_PROJECT_ROOT}",
+  "git_commit": "da879af0acc2fcafda1023600123223b3925cb69",
+  "profiler_architecture": "isolated_cpu_flops_gpu_runtime"
+}

@@ -1,0 +1,103 @@
+{
+  "status": "FAIL",
+  "required_for_manuscript": true,
+  "comparison_precision": "exact after four-decimal manuscript rounding",
+  "anchors": {
+    "5": {
+      "passed": false,
+      "fields": {
+        "test_accuracy_mean": {
+          "expected": 0.9279,
+          "actual": 0.8963381555153707,
+          "expected_4dp": "0.9279",
+          "actual_4dp": "0.8963",
+          "passed": false
+        },
+        "test_accuracy_sd": {
+          "expected": 0.0288,
+          "actual": 0.03904080713527477,
+          "expected_4dp": "0.0288",
+          "actual_4dp": "0.0390",
+          "passed": false
+        },
+        "test_macro_precision_mean": {
+          "expected": 0.9361,
+          "actual": 0.909378272023907,
+          "expected_4dp": "0.9361",
+          "actual_4dp": "0.9094",
+          "passed": false
+        },
+        "test_macro_precision_sd": {
+          "expected": 0.0237,
+          "actual": 0.03662988438776514,
+          "expected_4dp": "0.0237",
+          "actual_4dp": "0.0366",
+          "passed": false
+        },
+        "test_macro_f1_mean": {
+          "expected": 0.9266,
+          "actual": 0.8948570958216635,
+          "expected_4dp": "0.9266",
+          "actual_4dp": "0.8949",
+          "passed": false
+        },
+        "test_macro_f1_sd": {
+          "expected": 0.0299,
+          "actual": 0.03965456728469209,
+          "expected_4dp": "0.0299",
+          "actual_4dp": "0.0397",
+          "passed": false
+        }
+      }
+    },
+    "10": {
+      "passed": false,
+      "fields": {
+        "test_accuracy_mean": {
+          "expected": 0.9707,
+          "actual": 0.9785714285714286,
+          "expected_4dp": "0.9707",
+          "actual_4dp": "0.9786",
+          "passed": false
+        },
+        "test_accuracy_sd": {
+          "expected": 0.0175,
+          "actual": 0.00888797476816916,
+          "expected_4dp": "0.0175",
+          "actual_4dp": "0.0089",
+          "passed": false
+        },
+        "test_macro_precision_mean": {
+          "expected": 0.9723,
+          "actual": 0.9798494029408491,
+          "expected_4dp": "0.9723",
+          "actual_4dp": "0.9798",
+          "passed": false
+        },
+        "test_macro_precision_sd": {
+          "expected": 0.016,
+          "actual": 0.0077283282009747946,
+          "expected_4dp": "0.0160",
+          "actual_4dp": "0.0077",
+          "passed": false
+        },
+        "test_macro_f1_mean": {
+          "expected": 0.9704,
+          "actual": 0.9785067883020226,
+          "expected_4dp": "0.9704",
+          "actual_4dp": "0.9785",
+          "passed": false
+        },
+        "test_macro_f1_sd": {
+          "expected": 0.0178,
+          "actual": 0.00894039559858721,
+          "expected_4dp": "0.0178",
+          "actual_4dp": "0.0089",
+          "passed": false
+        }
+      }
+    }
+  },
+  "observed_anchor_match": false,
+  "final_assets_authorized": false
+}

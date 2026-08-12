@@ -1,0 +1,10 @@
+numpy
+scipy
+pandas
+matplotlib
+scikit-learn
+nptdms
+h5py
+Pillow
+PyMuPDF
+pytest

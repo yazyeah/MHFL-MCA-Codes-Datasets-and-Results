@@ -1,0 +1,15 @@
+{
+  "dropout_vib": 0.2905585371157774,
+  "dropout_cur": 0.39293093464896633,
+  "atten_dim": 256,
+  "n_layers_vib": 5,
+  "n_layers_cur": 3,
+  "lr": 0.0004156294449523281,
+  "batch_size": 16,
+  "best_value": null,
+  "best_trial_number": null,
+  "number_of_trials": 30,
+  "evidence_path": "provenance/original_optuna/log_MHCNN.txt",
+  "evidence_sha256": "B8809916148227949FF7389CBD1646CA4443A049AD39CC27626FFFD1D88CA555",
+  "confirmation_status": "confirmed"
+}

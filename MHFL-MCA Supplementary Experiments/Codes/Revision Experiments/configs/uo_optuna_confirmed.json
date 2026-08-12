@@ -1,0 +1,145 @@
+{
+  "search_root": "provenance/original_optuna",
+  "parameter_candidate_count": 1,
+  "parameter_candidates": [
+    {
+      "dropout_vib": 0.4223065128432895,
+      "dropout_aco": 0.3497078380248016,
+      "atten_dim": 256,
+      "n_layers_vib": 4,
+      "n_layers_aco": 5,
+      "lr": 0.0013865546776879656,
+      "batch_size": 16
+    }
+  ],
+  "parameter_evidence": [
+    {
+      "path": "provenance/original_optuna/best_parameters.txt",
+      "sha256": "23d54dd04122d957f67dc382c4f33bcf0532dad995e8178ad361d435adc77605",
+      "size_bytes": 30113,
+      "modification_time": "2026-02-03T08:38:08.424984+00:00",
+      "params": {
+        "dropout_vib": 0.4223065128432895,
+        "dropout_aco": 0.3497078380248016,
+        "atten_dim": 256,
+        "n_layers_vib": 4,
+        "n_layers_aco": 5,
+        "lr": 0.0013865546776879656,
+        "batch_size": 16
+      }
+    }
+  ],
+  "paper_anchors": {
+    "5": {
+      "accuracy_mean": 0.9279,
+      "accuracy_sd": 0.0288,
+      "macro_precision_mean": 0.9361,
+      "macro_precision_sd": 0.0237,
+      "macro_f1_mean": 0.9266,
+      "macro_f1_sd": 0.0299
+    },
+    "10": {
+      "accuracy_mean": 0.9707,
+      "accuracy_sd": 0.0175,
+      "macro_precision_mean": 0.9723,
+      "macro_precision_sd": 0.016,
+      "macro_f1_mean": 0.9704,
+      "macro_f1_sd": 0.0178
+    }
+  },
+  "source_program_evidence": {
+    "path": "provenance/original_optuna/MHCNN_Oputuna_Experiment.py",
+    "sha256": "f24b61d3810bc7f6d7ecc5895652635b3949d437981f1e1f1106587d967496be",
+    "size_bytes": 18402,
+    "modification_time": "2026-02-03T03:34:16.919768+00:00",
+    "protocol_checks": {
+      "dropout_vib_search": true,
+      "dropout_aco_search": true,
+      "attention_search": true,
+      "vibration_depth_search": true,
+      "acoustic_depth_search": true,
+      "learning_rate_search": true,
+      "batch_size_search": true,
+      "thirty_trials": true,
+      "median_pruner": true,
+      "paper_seed_schedule": true,
+      "adamax": true,
+      "eighty_epochs": true,
+      "heldout_as_validation": true,
+      "uniform_cross_attention_initializer": true,
+      "metricwise_drop_one_high_low": true
+    },
+    "random_initialization_note": "The retained source resets NumPy for data splitting but does not reset Python/TensorFlow model-initialization RNG state before each Stage-2 run. The exact historical initializer stream cannot be reconstructed without its process RNG state or checkpoints."
+  },
+  "summary_evidence": {
+    "path": "provenance/original_optuna/Final_Summary_Stats.csv",
+    "sha256": "6dd34c92b0b49d9b19eb344f2d38ae276407d81c55785d45fd0db4adb61a15f0",
+    "size_bytes": 4347,
+    "modification_time": "2026-02-03T08:37:23.224098+00:00",
+    "rows": 26,
+    "anchor_checks": {
+      "5": {
+        "expected": {
+          "accuracy_mean": 0.9279,
+          "accuracy_sd": 0.0288,
+          "macro_precision_mean": 0.9361,
+          "macro_precision_sd": 0.0237,
+          "macro_f1_mean": 0.9266,
+          "macro_f1_sd": 0.0299
+        },
+        "actual": {
+          "accuracy_mean": 0.9278933092224232,
+          "accuracy_sd": 0.0287857559053471,
+          "macro_precision_mean": 0.9361422235269148,
+          "macro_precision_sd": 0.0236756577110717,
+          "macro_f1_mean": 0.9266408480046118,
+          "macro_f1_sd": 0.0299373238179982
+        },
+        "passed_to_4dp": true
+      },
+      "10": {
+        "expected": {
+          "accuracy_mean": 0.9707,
+          "accuracy_sd": 0.0175,
+          "macro_precision_mean": 0.9723,
+          "macro_precision_sd": 0.016,
+          "macro_f1_mean": 0.9704,
+          "macro_f1_sd": 0.0178
+        },
+        "actual": {
+          "accuracy_mean": 0.9706501831501833,
+          "accuracy_sd": 0.0175436820526606,
+          "macro_precision_mean": 0.9722640451856802,
+          "macro_precision_sd": 0.0159689271616929,
+          "macro_f1_mean": 0.9704421284627172,
+          "macro_f1_sd": 0.0178383471219427
+        },
+        "passed_to_4dp": true
+      }
+    },
+    "anchors_passed": true
+  },
+  "dropout_vib": 0.4223065128432895,
+  "dropout_aco": 0.3497078380248016,
+  "atten_dim": 256,
+  "n_layers_vib": 4,
+  "n_layers_aco": 5,
+  "lr": 0.0013865546776879656,
+  "batch_size": 16,
+  "study_name": "no-name-0b7f7870-670c-450d-a7d9-781d2c4ed78a",
+  "best_trial_number": 22,
+  "best_value": 0.994434118270874,
+  "number_of_trials": 30,
+  "completed_trials": 12,
+  "pruned_trials": 18,
+  "storage": "in-memory (no persistent Optuna database declared in the retained run log)",
+  "sampler": "Optuna default sampler (not explicitly printed)",
+  "pruner": "MedianPruner",
+  "evidence_path": "provenance/original_optuna/best_parameters.txt",
+  "evidence_sha256": "23d54dd04122d957f67dc382c4f33bcf0532dad995e8178ad361d435adc77605",
+  "audit_generated_at": "2026-08-11T19:16:28.951226+00:00",
+  "confirmation_status": "confirmed_from_original_uo_artifact",
+  "evidence_level": "B_original_run_log_explicit_best_params",
+  "status": "CONFIRMED",
+  "source_note": "Recovered from the original UO Optuna console log's explicit final best-parameter line; cross-checked against its retained winning trial and the original Final_Summary_Stats.csv/Table-5 anchors."
+}

@@ -1,0 +1,40 @@
+{
+  "figure_id": "modality-weight-evidence-4Nm",
+  "core_conclusion": "AMRM weights are evaluated as sample-wise reliability indicators across load and noise conditions; the figure reports association rather than claiming causal calibration.",
+  "archetype": "overview heatmap -> performance heatmap -> paired relationship",
+  "evidence_hierarchy": [
+    "Panel a: learned vibration-source weight across controlled degradations",
+    "Panel b: matched diagnostic accuracy",
+    "Panel c: within-scenario changes relative to 0 dB"
+  ],
+  "width_mm": 183.0,
+  "height_mm": 61.0,
+  "source_data": [
+    "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_summary.csv",
+    "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_evidence_4Nm_relationship.csv"
+  ],
+  "replicate_unit": "independent model seeds, averaged over independent noise realizations",
+  "center_statistic": "mean",
+  "spread_definition": "between-model seed SD retained in source data; heatmaps display means",
+  "claim_limits": [
+    "Post-hoc interpretability analysis",
+    "No causal claim from weight–accuracy association"
+  ],
+  "notes": [],
+  "target_journal": "Advanced Engineering Informatics",
+  "backend": "Python/Matplotlib",
+  "source_data_manifest": [
+    {
+      "source_path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_summary.csv",
+      "file": "modality_weight_summary.csv",
+      "sha256": "1869c006cd45dbccb783d0d9659f7d2d4a2a2959dbeb3c5f1b6d514b4219eb48",
+      "size_bytes": 6733
+    },
+    {
+      "source_path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_evidence_4Nm_relationship.csv",
+      "file": "modality_weight_evidence_4Nm_relationship.csv",
+      "sha256": "82e8c44c5f6ad3a1a61bbcff9917ebeb81573092a352e5a9b5b0f278231a21ac",
+      "size_bytes": 893
+    }
+  ]
+}

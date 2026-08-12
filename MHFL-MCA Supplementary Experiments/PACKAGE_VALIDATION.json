@@ -1,0 +1,233 @@
+{
+  "status": "PASS",
+  "validation_scope": "publication_package_only_no_training",
+  "training_was_run": false,
+  "checks": [
+    {
+      "name": "python_ast",
+      "passed": true,
+      "detail": {
+        "files": 53,
+        "errors": []
+      }
+    },
+    {
+      "name": "json_parse",
+      "passed": true,
+      "detail": {
+        "files": 42,
+        "errors": []
+      }
+    },
+    {
+      "name": "forbidden_extensions",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "files_over_10_mb",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "portable_metadata_paths",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "02_modality_weight_raw_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 540,
+        "actual": 540
+      }
+    },
+    {
+      "name": "02_modality_weight_summary_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 36,
+        "actual": 36
+      }
+    },
+    {
+      "name": "02_missing_raw_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 132,
+        "actual": 132
+      }
+    },
+    {
+      "name": "02_missing_summary_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 12,
+        "actual": 12
+      }
+    },
+    {
+      "name": "04_raw_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 150,
+        "actual": 150
+      }
+    },
+    {
+      "name": "04_summary_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 15,
+        "actual": 15
+      }
+    },
+    {
+      "name": "04_paper_table_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 4,
+        "actual": 4
+      }
+    },
+    {
+      "name": "05_raw_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 140,
+        "actual": 140
+      }
+    },
+    {
+      "name": "05_summary_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 14,
+        "actual": 14
+      }
+    },
+    {
+      "name": "05_paired_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 7,
+        "actual": 7
+      }
+    },
+    {
+      "name": "06_raw_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 480,
+        "actual": 480
+      }
+    },
+    {
+      "name": "06_summary_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 48,
+        "actual": 48
+      }
+    },
+    {
+      "name": "06_candidate_row_count",
+      "passed": true,
+      "detail": {
+        "expected": 144,
+        "actual": 144
+      }
+    },
+    {
+      "name": "04_raw_unique",
+      "passed": true,
+      "detail": "variant/condition/seed"
+    },
+    {
+      "name": "05_raw_unique",
+      "passed": true,
+      "detail": "variant/N/seed"
+    },
+    {
+      "name": "06_raw_unique",
+      "passed": true,
+      "detail": "case/load/N/SNR/method/seed"
+    },
+    {
+      "name": "04_metrics_finite",
+      "passed": true,
+      "detail": "four metrics"
+    },
+    {
+      "name": "05_metrics_finite",
+      "passed": true,
+      "detail": "seven metrics"
+    },
+    {
+      "name": "06_metrics_finite",
+      "passed": true,
+      "detail": "four metrics"
+    },
+    {
+      "name": "04_gate_pass",
+      "passed": true,
+      "detail": "PASS"
+    },
+    {
+      "name": "05_anchor_failure_preserved",
+      "passed": true,
+      "detail": "FAIL"
+    },
+    {
+      "name": "05_post_gate_failure_preserved",
+      "passed": true,
+      "detail": {
+        "status": "FAIL",
+        "authorized": false
+      }
+    },
+    {
+      "name": "05_manifest_blocked_preserved",
+      "passed": true,
+      "detail": "BLOCKED"
+    },
+    {
+      "name": "06_protocol_pass",
+      "passed": true,
+      "detail": "PASS"
+    },
+    {
+      "name": "04_paper_table_values",
+      "passed": true,
+      "detail": "Full plus three current-paper controls"
+    },
+    {
+      "name": "05_hybrid_anchor_mapping",
+      "passed": true,
+      "detail": "N=5/10 Table 5; other Full points controlled extension"
+    },
+    {
+      "name": "05_hybrid_hash_binding",
+      "passed": true,
+      "detail": "source summaries, display data, PDF, and SVG"
+    },
+    {
+      "name": "deep_reference_rows",
+      "passed": true,
+      "detail": 108
+    },
+    {
+      "name": "recorded_tex_sha256",
+      "passed": true,
+      "detail": {
+        "expected": "cd6bc52feb997a7cdc3b56d9e951ed212f15019c25a88ab21edd3b3db4ad83ce",
+        "actual": "cd6bc52feb997a7cdc3b56d9e951ed212f15019c25a88ab21edd3b3db4ad83ce"
+      }
+    },
+    {
+      "name": "deep_reference_scope_disclosed",
+      "passed": true,
+      "detail": "Portable byte-identical LaTeX snapshot of the recorded 2026-08-10 source; the 2026-08-12 final manuscript should be revalidated before claiming final-source identity."
+    }
+  ]
+}

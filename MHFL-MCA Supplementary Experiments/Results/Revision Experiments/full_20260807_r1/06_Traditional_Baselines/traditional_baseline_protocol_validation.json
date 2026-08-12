@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "output": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines",
+  "raw_rows": 480,
+  "summary_groups": 48,
+  "candidate_rows": 144,
+  "evaluation_seeds": [
+    20260806,
+    20260807,
+    20260808,
+    20260809,
+    20260810,
+    20260811,
+    20260812,
+    20260813,
+    20260814,
+    20260815
+  ],
+  "tuning": {
+    "tuning_seed": 20260805,
+    "tuning_n": 15,
+    "selected_parameters": {
+      "UO": {
+        "early": {
+          "C": 100.0,
+          "gamma": "scale"
+        },
+        "mod1": {
+          "C": 10.0,
+          "gamma": "scale"
+        },
+        "mod2": {
+          "C": 10.0,
+          "gamma": "scale"
+        }
+      },
+      "KAIST": {
+        "early": {
+          "C": 10.0,
+          "gamma": "scale"
+        },
+        "mod1": {
+          "C": 10.0,
+          "gamma": "scale"
+        },
+        "mod2": {
+          "C": 1.0,
+          "gamma": "auto"
+        }
+      }
+    },
+    "uo_evaluation_split_audits": 60,
+    "uo_audits_with_shared_source_recordings": 60,
+    "recording_disjoint_claim_permitted": false
+  },
+  "hashes": {
+    "raw": "31fdef7a22baddfb69ddd70a391424eef688d6c7b72afd39a0e2dbfbea393fb2",
+    "summary": "7a587d4a7d0423fb894a6e3a1801a7504588b5b86af4e744e0144bcbdf20bb85",
+    "candidate": "64dd7262bb2a74f92f8267902c696466836f83fd4b8be22c52f5a248c2d884d4",
+    "tuning_audit": "7409ae2f40941c0b2793b2a55a7532a3a07eee4b81e1715580b91ce67cbd5a29",
+    "manifest": "bea0c68e292f8565e4d5ee02c04dec310f483bc17c12921fb7351a11e4d1fa8b"
+  }
+}

@@ -1,0 +1,1147 @@
+{
+  "status": "legacy_supplementary_full_not_used_in_final_hybrid_table",
+  "purpose": "Preserve the old supplementary Full run without using it in the hybrid-reference final table.",
+  "run_tag": "full_20260807_r1",
+  "seed_count": 5,
+  "seeds": [
+    20260806,
+    20260807,
+    20260808,
+    20260809,
+    20260810
+  ],
+  "reused_variant_seeds": [
+    20260806,
+    20260807,
+    20260808,
+    20260809,
+    20260810,
+    20260811,
+    20260812,
+    20260813
+  ],
+  "baseline_legacy_variant_model_runs": 25,
+  "preexisting_extension_variant_model_runs": 15,
+  "legacy_full_seeds": [
+    20260806,
+    20260807,
+    20260808,
+    20260809,
+    20260810,
+    20260811,
+    20260812,
+    20260813,
+    20260814
+  ],
+  "legacy_full_raw_rows": 27,
+  "legacy_full_raw": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/legacy_supplementary_full_not_used_in_final_hybrid_table/legacy_full_raw.csv",
+    "size_bytes": 2029,
+    "mtime_ns": 1786131923795495200,
+    "sha256": "e4cd919040a12df352017b1cbc97c2f2eb718b5979d72cc09babcca82eaf920c"
+  },
+  "legacy_first_five_raw": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/legacy_supplementary_full_not_used_in_final_hybrid_table/legacy_first_five_raw.csv",
+    "size_bytes": 7906,
+    "mtime_ns": 1786131923798484700,
+    "sha256": "28962fcce2c8a3d9d91e8ace421c2517ff9f1f9e55b7d6b84bdbc169308b145d"
+  },
+  "legacy_full_summary": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/legacy_supplementary_full_not_used_in_final_hybrid_table/legacy_full_summary.csv",
+    "size_bytes": 398,
+    "mtime_ns": 1786131923811309100,
+    "sha256": "2d94bfec98a3b199bd847e3f648ca60435d4dceca8bab0d7822db6b499961be2"
+  },
+  "source_legacy_raw": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/additional_ablation_raw.csv",
+    "size_bytes": 12974,
+    "mtime_ns": 1786118027233709900,
+    "sha256": "3c267f3c0b0652e180c71e0215bbe1206e4edd27ca018fbd4523dbb01b01db78"
+  },
+  "reused_variant_model_files": [
+    {
+      "seed": 20260806,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260806/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786100222139991100,
+        "sha256": "3580bd859fc98fcdb96cb1b5e090f1214a42654bfe6e80bd6918c1595a6f01f3"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260806/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786100222042276600,
+        "sha256": "8385b5804b9a62b5178dbe79c01ab5eff75223f36c91d08582aa5d516803e85e"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260806/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9154,
+        "mtime_ns": 1786100222043279100,
+        "sha256": "9f654fb971861ed256f235ba710b8fc2bec34e012e29c32e6c5b871e6c960bb3"
+      }
+    },
+    {
+      "seed": 20260806,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260806/manifest.json",
+        "size_bytes": 3085,
+        "mtime_ns": 1786100294898830300,
+        "sha256": "6c3a3597c45e52fa3ce69199c0d9ef90f82aa26c7ae74bc99dffd1ed5ab5cdb1"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260806/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786100294784031900,
+        "sha256": "d5a97e64e8db62fff95ce73625431cc8f0077224c494eb7a3d77b472d601ecbe"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260806/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9599,
+        "mtime_ns": 1786100294785169900,
+        "sha256": "ad02cbd87cb29158350fbe7a5ce6ebdd729cb7d3f254454c83288a26d874b89c"
+      }
+    },
+    {
+      "seed": 20260806,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260806/manifest.json",
+        "size_bytes": 3081,
+        "mtime_ns": 1786100370855889800,
+        "sha256": "acff6ebb8a40dfbdd41cd643b7a8e7ada06320b82b7338fff7bbbedc2ca697ae"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260806/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786100370753779500,
+        "sha256": "28ccce7e837c46cf5a6baef378d907afc013d8c15c80e603a8bfe25e1622228d"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260806/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9179,
+        "mtime_ns": 1786100370754794400,
+        "sha256": "ce1b86516124f6c3a050fae184a156d1e3595691ff7c4d2b0ab0f84d6fb7961d"
+      }
+    },
+    {
+      "seed": 20260806,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260806/manifest.json",
+        "size_bytes": 3074,
+        "mtime_ns": 1786100446004698800,
+        "sha256": "ff795b3010d3116b1d1a117b64fbc5d1b879e0348518c95364569c7d092e18de"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260806/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786100445856286000,
+        "sha256": "7a1286e1b51c92342c4613a8515393eb0fe2f70db4b9e713d7e3abf37f02beab"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260806/direct_softmax_stage2.history.csv",
+        "size_bytes": 9142,
+        "mtime_ns": 1786100445857289500,
+        "sha256": "9380a9f0a1eb0526ecc8850b244becce891d9c518abe415e48d9baa231d29811"
+      }
+    },
+    {
+      "seed": 20260806,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260806/manifest.json",
+        "size_bytes": 3060,
+        "mtime_ns": 1786100518103146500,
+        "sha256": "2479cabbe57bd25b5361d3f1dccbf9a720462ae85a5ea4f9a3facde639223f78"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260806/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786100517979923300,
+        "sha256": "cb72f91a71fb3e9293eebb74d42b8f6cb9d6c6892543fc154a900a9cde884730"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260806/equal_weights_stage2.history.csv",
+        "size_bytes": 9027,
+        "mtime_ns": 1786100517982484400,
+        "sha256": "2b0509f9d975bff69d417e4e858fa67d39ad77733c83e6702de3faad4172142a"
+      }
+    },
+    {
+      "seed": 20260807,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260807/manifest.json",
+        "size_bytes": 3104,
+        "mtime_ns": 1786100680343813900,
+        "sha256": "954d68ed05b3c90402c03bf976181f253c75a6f14b2d7ca94a6335503117de00"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260807/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786100680237766200,
+        "sha256": "a4b1ed9c268fc94046fb4fea3afcc899b2e05145d3af6497b5d07e743e23a598"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260807/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9112,
+        "mtime_ns": 1786100680238787600,
+        "sha256": "96af82112871eee11dd3ef97a4c1b28e39de06e160502bfdaaf416d57cb165d7"
+      }
+    },
+    {
+      "seed": 20260807,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260807/manifest.json",
+        "size_bytes": 3085,
+        "mtime_ns": 1786100750630517000,
+        "sha256": "8b816a95649d1540600f70c5f1713b3ba6843c4ad3d51304b7c526729efad9cf"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260807/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786100750529548000,
+        "sha256": "09b4788b996e549a7160cc629321f2d6771bfa834ba0b3238155a6674da7758a"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260807/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9562,
+        "mtime_ns": 1786100750530552000,
+        "sha256": "d5c8f0f6a5d033e0d3ceb4367fd09bd183d1a8843c80e4af2f465c3f0b0dee2c"
+      }
+    },
+    {
+      "seed": 20260807,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260807/manifest.json",
+        "size_bytes": 3081,
+        "mtime_ns": 1786100882103605900,
+        "sha256": "1f949b82ff0ce367c911096ce501bdf8b9bfcb8588d3befe4f34b4fdba42bb41"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260807/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786100881940545700,
+        "sha256": "ef724bd94e28b86988923a6c3dfc1bfb4f73e794b1049f9f74ecd3b9ca8552db"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260807/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9122,
+        "mtime_ns": 1786100881950331900,
+        "sha256": "f5e5cabe8c7acf4e592b1f54e55f8bfbdd500a2ccfd2e56db90b78b3df20cf79"
+      }
+    },
+    {
+      "seed": 20260807,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260807/manifest.json",
+        "size_bytes": 3074,
+        "mtime_ns": 1786101110898858600,
+        "sha256": "2ed3e398a0ba90c3fd59359a16960da2aab16539f9b45822cd7a99e2a6ea74e6"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260807/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786101110762804400,
+        "sha256": "80e995481f5798ccaf8fab4f34017f9ff27658adf15ba67bd49cfded50a8d322"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260807/direct_softmax_stage2.history.csv",
+        "size_bytes": 9101,
+        "mtime_ns": 1786101110763808800,
+        "sha256": "f3d84d51dda9f4775794c6c3f9b5800cbd5a23bfcac93e0e24e3598f7c5ae9e9"
+      }
+    },
+    {
+      "seed": 20260807,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260807/manifest.json",
+        "size_bytes": 3060,
+        "mtime_ns": 1786101430027013000,
+        "sha256": "5b82b756163b04eeaca82fa0f8c7e49c083917882a6b2751d1664e5f76d145b0"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260807/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786101429021840000,
+        "sha256": "ff7b24b2d030245f4394f673bb12ef670c99acd5616139af8a6b962f3fc982d7"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260807/equal_weights_stage2.history.csv",
+        "size_bytes": 9098,
+        "mtime_ns": 1786101429032238600,
+        "sha256": "abf5650d2da9a8c3217d0d1b65a3b7e004773df23cb68a89fcef28922ae0cddd"
+      }
+    },
+    {
+      "seed": 20260808,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260808/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786102442121885000,
+        "sha256": "a45614aeaaa1c90bfffc751ce63fb5ce76a304fe54af10e464f9db2b00f62ae7"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260808/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786102441904174000,
+        "sha256": "3a3b651b1e7726262b63736f20a336da72cf850118e09ed21a85e5734c40e2df"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260808/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9260,
+        "mtime_ns": 1786102441912438100,
+        "sha256": "f88da2d69c3368901cd01baf65ea131e9fc46e60fabfb7dda86fb40abd84eca2"
+      }
+    },
+    {
+      "seed": 20260808,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260808/manifest.json",
+        "size_bytes": 3085,
+        "mtime_ns": 1786102912331999200,
+        "sha256": "4c32d36dc5e189e9d24f7c2ccb824743dda2ef4e3af700c0605f30f8ace63f9a"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260808/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786102911198809300,
+        "sha256": "edc5fbd7d5e0297f1a5f9308873552288d8686f97a579281ca1f3ae85e9ef7af"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260808/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9521,
+        "mtime_ns": 1786102911208877100,
+        "sha256": "479d6dcd63ca43aadd883974b4970294da6a255c4ee46b703a29aa57ac681306"
+      }
+    },
+    {
+      "seed": 20260808,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260808/manifest.json",
+        "size_bytes": 3080,
+        "mtime_ns": 1786103361961039900,
+        "sha256": "93cdec1a586abfbf2df6d5b90e1cd9d8a7bbee085d102cad4783ebdf53bf3d84"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260808/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786103361782686300,
+        "sha256": "e74815a90087ecd66267fc3cad7778630f538934fdeb4a41e56a59cc6f6d913e"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260808/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9256,
+        "mtime_ns": 1786103361789118400,
+        "sha256": "e9cddcb82a8b248fadece5329508ef7dd2235c693bf0eb509be4e6a8494c92c3"
+      }
+    },
+    {
+      "seed": 20260808,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260808/manifest.json",
+        "size_bytes": 3073,
+        "mtime_ns": 1786103845696850700,
+        "sha256": "645b5515f38a8204ffbfef1cd4fe7645cc78a5c8e188ffc168deac348478fdb2"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260808/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786103844566644300,
+        "sha256": "f718f9759d3834c17dd7eeb72c6bdaf51832f461835998fb806f26c6279f1b6d"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260808/direct_softmax_stage2.history.csv",
+        "size_bytes": 9186,
+        "mtime_ns": 1786103844572751900,
+        "sha256": "2e85baa0b2b1948012fb559c5da0820e66cabdd59cdc262b06e334ab1c194bc0"
+      }
+    },
+    {
+      "seed": 20260808,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260808/manifest.json",
+        "size_bytes": 3061,
+        "mtime_ns": 1786104230300810500,
+        "sha256": "a6d3e5e7a054f0a1aa08baffea6027f823a6a6eb979c6b7ba2aa234f4999f9b3"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260808/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786104230124013400,
+        "sha256": "dd5d135289120d417604006bdc46406e37071b659c733b89e47fc2b8b134e965"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260808/equal_weights_stage2.history.csv",
+        "size_bytes": 9174,
+        "mtime_ns": 1786104230127553800,
+        "sha256": "e373b486c235e4cf9074a5514f14318cb5e1b28e6294217aca75c2470f5821ff"
+      }
+    },
+    {
+      "seed": 20260809,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260809/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786105170788582000,
+        "sha256": "061b5cd434a6878da8288aa81c24fd2baed59cbd8854d80d9689e9e9d407bd4b"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260809/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786105170573209600,
+        "sha256": "b95d80f93218afcb9e88e72056b665741afddcd0bd03766f3d4bd1cec0913fef"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260809/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9130,
+        "mtime_ns": 1786105170581691500,
+        "sha256": "c078d3e498dfd60f3b12f779ec6a6fb21eee23d8ad16da3049147482f06838f8"
+      }
+    },
+    {
+      "seed": 20260809,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260809/manifest.json",
+        "size_bytes": 3083,
+        "mtime_ns": 1786105621238819700,
+        "sha256": "39d9a0d11e635f56418b609bd19a3792e059f80902a185099b5e2989427952cc"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260809/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786105621010880000,
+        "sha256": "f9de05f7d33427b50d0453a94d3ca759e599e75f8a7604c81b98e530a753e4be"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260809/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9620,
+        "mtime_ns": 1786105621026368100,
+        "sha256": "73b2ed876fbf4cc142b273cdf8fced76b2eff3c3a99fe1bb6a5b7c8b9f1d7aeb"
+      }
+    },
+    {
+      "seed": 20260809,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260809/manifest.json",
+        "size_bytes": 3080,
+        "mtime_ns": 1786106087181226300,
+        "sha256": "e9ff7243134ee17a0c872177b792fac0c482db30dcabe4b8685ec094116592f4"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260809/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786106086951230900,
+        "sha256": "069a122cceda736730bd67cc45a461e43838a41c15282d8b311c6e2324e29a0d"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260809/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9192,
+        "mtime_ns": 1786106086962175300,
+        "sha256": "1acd302b6da73c411a18e20947113674f7a5fb89f6d74375d1ac36492842a0d0"
+      }
+    },
+    {
+      "seed": 20260809,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260809/manifest.json",
+        "size_bytes": 3074,
+        "mtime_ns": 1786106561960327700,
+        "sha256": "88aa308fc180244b58ccda757952a7c3a95a0c24689245822de377d812d71f82"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260809/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786106561691270000,
+        "sha256": "2f385e87dc02aaab57acbb0e9ee76c08c500280d661abadf0faeb4dc5c76fd42"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260809/direct_softmax_stage2.history.csv",
+        "size_bytes": 9197,
+        "mtime_ns": 1786106561701551400,
+        "sha256": "b4ec201fa6d362d4745859ca57a3c0d124392e156874178e239073c0d1c38a8c"
+      }
+    },
+    {
+      "seed": 20260809,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260809/manifest.json",
+        "size_bytes": 3061,
+        "mtime_ns": 1786106984174919000,
+        "sha256": "716523417f0f6506271136158a5f3acda4aaab156f702ce42b9d178ab79ecdf8"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260809/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786106983887444700,
+        "sha256": "48b6d3304e6591732f76d7c0b7ccb47a9930d340f99dc31e56f3c47c663690e8"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260809/equal_weights_stage2.history.csv",
+        "size_bytes": 9066,
+        "mtime_ns": 1786106983897990600,
+        "sha256": "4f94767f738c939cdaa27f8bdcfdd8d79ebd18e4a79aaa1d586d4ecfab9c5018"
+      }
+    },
+    {
+      "seed": 20260810,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260810/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786107864324062900,
+        "sha256": "d71a840d6464a45b99cf7b6bc921c5b5009b5df24b4cb04a287aa09847452bee"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260810/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786107864070845800,
+        "sha256": "0bd352814eb9000a17f7103d99ec4c25ddb31205142d338e4411ea6cfaf18178"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260810/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9404,
+        "mtime_ns": 1786107864081187900,
+        "sha256": "d124845318ec88cad3d0b73b464a86cf67b32dcf5d6886caec9a1e44aeda6beb"
+      }
+    },
+    {
+      "seed": 20260810,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260810/manifest.json",
+        "size_bytes": 3084,
+        "mtime_ns": 1786108272446065100,
+        "sha256": "ad5259ab6b60b57e125a6adfe3142a746a2c4cd154145a9635c30f25faa7ebaf"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260810/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786108272191852700,
+        "sha256": "b69d1ba58eab4853176ca799e8766985defaacaf0a9c2b21668247d68aa7724c"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260810/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9433,
+        "mtime_ns": 1786108272205494800,
+        "sha256": "24b7b9b785444c17cfe1c18697b12082ab1872af07c45c10e20dc2bca0ff590d"
+      }
+    },
+    {
+      "seed": 20260810,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260810/manifest.json",
+        "size_bytes": 3081,
+        "mtime_ns": 1786108701037646200,
+        "sha256": "d06f40203e7a768ca69248316ca6af1c083e134e382d6883045ac112b7c4f5b8"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260810/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786108700818894100,
+        "sha256": "617c409dfbd84b09c069a64994aab031f1ad75368388a1f51818195fb06d998c"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260810/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9356,
+        "mtime_ns": 1786108700829129100,
+        "sha256": "67c09371ed710136e5e780aa05ecef282ad13cf442985534e100aa53d731f3be"
+      }
+    },
+    {
+      "seed": 20260810,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260810/manifest.json",
+        "size_bytes": 3073,
+        "mtime_ns": 1786109120018941200,
+        "sha256": "7d91059432bb225d588c5d69175ee14cdc924e726b8e518c3c4a0568661e8cdf"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260810/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786109119776900700,
+        "sha256": "abbec3c7dafe26edb7bd0b6b3acec094dca6d9fec07a9c246103d8dd09370c7a"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260810/direct_softmax_stage2.history.csv",
+        "size_bytes": 9140,
+        "mtime_ns": 1786109119786709900,
+        "sha256": "2209ce8f7dc2c4143d40a6ca502f38796100de3b36ba1a0c0c355ce9cd1165af"
+      }
+    },
+    {
+      "seed": 20260810,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260810/manifest.json",
+        "size_bytes": 3061,
+        "mtime_ns": 1786109549114629600,
+        "sha256": "466c94b1fc06b76ef15ab6ccf3aac65689a901a1b074a831f99825380b51cb16"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260810/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786109548836891300,
+        "sha256": "34a8da59da69919b939d360f893a07f0d0d67363eb0e880a760900a3ed358917"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260810/equal_weights_stage2.history.csv",
+        "size_bytes": 9289,
+        "mtime_ns": 1786109548849111600,
+        "sha256": "ac24db9120ea984d25751ad90e57eb9259f0ba818d897349ed8851a6f75b3db7"
+      }
+    },
+    {
+      "seed": 20260811,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260811/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786116503509941800,
+        "sha256": "e3a07825dc5b0fa371bf0ea5f8c4213495886b353e9e6acec5ed5bcc6c2e1347"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260811/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786116503325614600,
+        "sha256": "6a89c7c3a2815a433742f6d6edccd0960c80c114413228a2503de9ef8dac0c95"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260811/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9405,
+        "mtime_ns": 1786116503330434300,
+        "sha256": "df0b082343a41538c5cd17330273abff8b984f88a2b772528ab5add1e88e1e59"
+      }
+    },
+    {
+      "seed": 20260811,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260811/manifest.json",
+        "size_bytes": 3085,
+        "mtime_ns": 1786116705366020600,
+        "sha256": "ae6379d3b7fdfbae9fd78a1d36bc2a59b6e696ac8a0a402ed2a557672ff4983d"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260811/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786116705178087700,
+        "sha256": "7a0c2f4431a640291da1a7d521684b4945ac74de4fa12c844ed5e676688edd94"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260811/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9559,
+        "mtime_ns": 1786116705181900300,
+        "sha256": "6a05bf5f11acb63caebc2a49f336d52961a4dcb8682a2941abe06c6c05a9fc2d"
+      }
+    },
+    {
+      "seed": 20260811,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260811/manifest.json",
+        "size_bytes": 3081,
+        "mtime_ns": 1786116794843260900,
+        "sha256": "1e2e931d6ecbee74b76376d3dc2ea964047aed7c822bd4055c8322af5ca89228"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260811/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786116794716522800,
+        "sha256": "3b5e56450ec728fe58f2ebd5ba306568223d489801f5881924f06679a58764ec"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260811/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9431,
+        "mtime_ns": 1786116794719867100,
+        "sha256": "aac88ee02fc82be3224905118649df53dd4cd978e629db954294c4ef5903f6d2"
+      }
+    },
+    {
+      "seed": 20260811,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260811/manifest.json",
+        "size_bytes": 3074,
+        "mtime_ns": 1786116871376880400,
+        "sha256": "c2e267ada046baf6060f0daaac30d63cf5522e0ca0f8ce577e7ea8626b6874d9"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260811/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786116871244894000,
+        "sha256": "96d0ca0157229f866f7b8ee7f010e44b593fd66bfbc34b246d8c468403d4d46b"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260811/direct_softmax_stage2.history.csv",
+        "size_bytes": 9447,
+        "mtime_ns": 1786116871247264100,
+        "sha256": "0c394010ca51ad1f28de80258e4252cf9ec39b7b3a2270191f6b5f6a8be81273"
+      }
+    },
+    {
+      "seed": 20260811,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260811/manifest.json",
+        "size_bytes": 3061,
+        "mtime_ns": 1786116944867596400,
+        "sha256": "6219c54c7e7f2a4162be7f53eb9b9ce3c903804c848148bc80489b0286c009a3"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260811/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786116944731774200,
+        "sha256": "36efa0dccc398350cafbfbb6b86b7a844112a1319f3a183c7ffe8a47c1fffec1"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260811/equal_weights_stage2.history.csv",
+        "size_bytes": 9343,
+        "mtime_ns": 1786116944734924800,
+        "sha256": "93a0aadc32ab48d8975bca2328d4437ec1a854a7bf040daf37c66e1c3f58c2d5"
+      }
+    },
+    {
+      "seed": 20260812,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260812/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786117108515262700,
+        "sha256": "19e32153f16d8a867843f9481b95c4074702a85d0508d8fceb8a61b1e860e588"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260812/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786117108365311600,
+        "sha256": "157761aee56683f9c819bd616ce32d203ad4c9f2daf139c0a01d4402e257bb21"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260812/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9149,
+        "mtime_ns": 1786117108368222000,
+        "sha256": "8acae7b38590cc0151b33c178e1b97fca5d0edd98b1790bc2503ed8962d95ca6"
+      }
+    },
+    {
+      "seed": 20260812,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260812/manifest.json",
+        "size_bytes": 3085,
+        "mtime_ns": 1786117190466266000,
+        "sha256": "6fd157eff5dea3d4b6a28f01b4c5f385f6d17ad13f1cf4525230e70e4b6639a2"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260812/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786117190337843700,
+        "sha256": "082da8940d496c5bc558b4f2e3eb341adb76ababe3e041b0f54c57292fba44d1"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260812/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9587,
+        "mtime_ns": 1786117190339994500,
+        "sha256": "2cb933e83ed45e8e2809dc474f8b37bb2466fe645a3ba62cd7b70bb878aa1af1"
+      }
+    },
+    {
+      "seed": 20260812,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260812/manifest.json",
+        "size_bytes": 3081,
+        "mtime_ns": 1786117275098964000,
+        "sha256": "6d744123f7134e9d3f1a6111110be47e68408042f5b8252cf1b405c74666b488"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260812/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786117274986869600,
+        "sha256": "4db9f4bea19327785614d1552515b686cbf2bfbea20a6fb7fd2df4bdd8ad3441"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260812/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9099,
+        "mtime_ns": 1786117274989018800,
+        "sha256": "4e577eb1e5161816b0e3e988d4155300355f53f1df292bf2e9188bf6deb205fc"
+      }
+    },
+    {
+      "seed": 20260812,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260812/manifest.json",
+        "size_bytes": 3074,
+        "mtime_ns": 1786117358689085400,
+        "sha256": "e286a09e060e35966a271253d69e4ae5407c67dcf3a1181409e18effab799a63"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260812/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786117358553804400,
+        "sha256": "dda757d301dd6af135cf3813ad699271b9c5ba89fca94fdfa43f3cf3bdd8bb1d"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260812/direct_softmax_stage2.history.csv",
+        "size_bytes": 9128,
+        "mtime_ns": 1786117358555798400,
+        "sha256": "d65491fa0b952fa1f970ecd758d743741ebd7a5c8501a58c58271534c3af182b"
+      }
+    },
+    {
+      "seed": 20260812,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260812/manifest.json",
+        "size_bytes": 3061,
+        "mtime_ns": 1786117436415593500,
+        "sha256": "8d48e4aafd40e07eef5b2e2e995be79a6327f49137dfa19b3112d249ef189223"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260812/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786117436263890400,
+        "sha256": "f64f77197951bf3d2c95ed98cc63109f89126305bcd41ede4701b5a8fd10ee39"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260812/equal_weights_stage2.history.csv",
+        "size_bytes": 9106,
+        "mtime_ns": 1786117436266668300,
+        "sha256": "000dae5de997b63c5a88f16cedddc3718ed17b025dac1a5b2bdf94812b19b34d"
+      }
+    },
+    {
+      "seed": 20260813,
+      "variant": "homogeneous_vibration",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260813/manifest.json",
+        "size_bytes": 3105,
+        "mtime_ns": 1786117610695345700,
+        "sha256": "404d2d74b475659522e0de7ac75298db45bc399955e5bd03e59b5fef95a7155a"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260813/model.weights.h5",
+        "size_bytes": 23991416,
+        "mtime_ns": 1786117610396808500,
+        "sha256": "b053f44a4c203c67cdd984c512702f901c32fef01f64410c2bb393b1ff3a24f8"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_vibration/seed20260813/homogeneous_vibration_stage2.history.csv",
+        "size_bytes": 9353,
+        "mtime_ns": 1786117610399160500,
+        "sha256": "9513d709586c0cb42fc1b42deb978a5146c24dcfc02e3812066ec62c9c514527"
+      }
+    },
+    {
+      "seed": 20260813,
+      "variant": "homogeneous_other",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260813/manifest.json",
+        "size_bytes": 3085,
+        "mtime_ns": 1786117689636517000,
+        "sha256": "fad9a208a75b6b62cbb2cdfb1fcea73f1accc4bc594c1aa4c426339c5ee71da7"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260813/model.weights.h5",
+        "size_bytes": 35205280,
+        "mtime_ns": 1786117689503291700,
+        "sha256": "4be830173e122c73d0e65e7842607ba839f79e38be77af6019f7a64442d88251"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/homogeneous_other/seed20260813/homogeneous_other_stage2.history.csv",
+        "size_bytes": 9594,
+        "mtime_ns": 1786117689506331700,
+        "sha256": "e781adc9b4718cb727e0d15c467d43a5943cde2bcc2c91bd23053828e4cd15a9"
+      }
+    },
+    {
+      "seed": 20260813,
+      "variant": "attention_dim_128",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260813/manifest.json",
+        "size_bytes": 3081,
+        "mtime_ns": 1786117772932279400,
+        "sha256": "6ff8eb0aa8ab5b1b52eeda4bdbf19dbd7129677dc96b35e2a5c0eab131f946af"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260813/model.weights.h5",
+        "size_bytes": 18480920,
+        "mtime_ns": 1786117772791950300,
+        "sha256": "677656e741804916f533ff2e9c0ac8dc6fecb807163bda882a51067387359cc8"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/attention_dim_128/seed20260813/attention_dim_128_stage2.history.csv",
+        "size_bytes": 9103,
+        "mtime_ns": 1786117772795019600,
+        "sha256": "b244edb4ffb5acaccc7ed4efe2280114d276819585bbf1bda6b8bdbe175caa70"
+      }
+    },
+    {
+      "seed": 20260813,
+      "variant": "direct_softmax",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260813/manifest.json",
+        "size_bytes": 3074,
+        "mtime_ns": 1786117855532895400,
+        "sha256": "e3837a46d7216c2783bb9fdbc8c26b0096ac33b4055c9e834e1f98c714f43ec5"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260813/model.weights.h5",
+        "size_bytes": 29595560,
+        "mtime_ns": 1786117855354269300,
+        "sha256": "e7de6632ab6cc835b5c97cb0343eee88731d2629bbc0a6a131f403da218f019e"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/direct_softmax/seed20260813/direct_softmax_stage2.history.csv",
+        "size_bytes": 9314,
+        "mtime_ns": 1786117855360337300,
+        "sha256": "29ceb3ce504c4638aebd9793668d5647ad9f0ae0b9221b7ce435c431cb841459"
+      }
+    },
+    {
+      "seed": 20260813,
+      "variant": "equal_weights",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260813/manifest.json",
+        "size_bytes": 3061,
+        "mtime_ns": 1786117936776921600,
+        "sha256": "ce62da3ab6703938c7d79fc772ab9a4bb43c7db497bf0023bc87d71a167a3b34"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260813/model.weights.h5",
+        "size_bytes": 29508104,
+        "mtime_ns": 1786117936633316700,
+        "sha256": "538ea804440fbd6f79c4d9af11aa557c395b0118312926536e1524b48488f2f5"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/equal_weights/seed20260813/equal_weights_stage2.history.csv",
+        "size_bytes": 9086,
+        "mtime_ns": 1786117936644442700,
+        "sha256": "855f66d876fcb56ec751cbcf0cb3fa8e517a9cd84c4d395a3bbc28eb1eea5bea"
+      }
+    }
+  ],
+  "reused_variant_model_integrity_signature": "54d7ac7c27fb3ff9309ab53295ac46cd3aa545e6ede549b571893ff7201d7949",
+  "legacy_full_model_files": [
+    {
+      "seed": 20260806,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260806/manifest.json",
+        "size_bytes": 3050,
+        "mtime_ns": 1786100139706496600,
+        "sha256": "58d92d23decd35b2969e5c82f0c0234c639559a55794aff2d75cc778e3bb53d9"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260806/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786100139489939500,
+        "sha256": "8d3f0f198b6a818e46b4569ea75d33e8383c55b2144bf214c4323085e3a64cbd"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260806/full_stage2.history.csv",
+        "size_bytes": 9047,
+        "mtime_ns": 1786100139491932900,
+        "sha256": "943d40ff36a73f25b056a8da05b278787ce96090d1c777bc18bfd5a35b4d6f63"
+      }
+    },
+    {
+      "seed": 20260807,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260807/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786100598419755300,
+        "sha256": "a9595d991e55c5e02e1a1dd2020258d11fe7f08b4bf7f233d68ae5c56712bb44"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260807/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786100598308962200,
+        "sha256": "fadd861a0e65dea76ea1568f8474de2181512ef3a580fc966696d8aca6b0e3a1"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260807/full_stage2.history.csv",
+        "size_bytes": 9044,
+        "mtime_ns": 1786100598310997800,
+        "sha256": "d17bc076e218535646c4b9ddafc923abf1176e769a8dcad33da6dada703aecc2"
+      }
+    },
+    {
+      "seed": 20260808,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260808/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786101861864816800,
+        "sha256": "abd870d1009ab0632e54a9c7c469a021ad270010114410d4734ba0d28971bcb0"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260808/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786101861659298400,
+        "sha256": "8b6c8c5f70d20108e931500b0caba5abc94bf724a26cfae0602f5ba19197608f"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260808/full_stage2.history.csv",
+        "size_bytes": 9180,
+        "mtime_ns": 1786101861665188500,
+        "sha256": "3c413fec3dc85aaad60d36c4e756777adfb99b5e2f64e47e8ebc43c0d1f645f7"
+      }
+    },
+    {
+      "seed": 20260809,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260809/manifest.json",
+        "size_bytes": 3050,
+        "mtime_ns": 1786104655304413900,
+        "sha256": "0bf7a86144000728dcfb82d14e0688f7dfa7dc6ab65cd6520cc1f0120b17f285"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260809/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786104655049947700,
+        "sha256": "995224cba51958d82f1451caab559bd34d56e422bd1b8ce86c0e736efd206686"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260809/full_stage2.history.csv",
+        "size_bytes": 9107,
+        "mtime_ns": 1786104655055971100,
+        "sha256": "6b99b51c9d9779253fffb6a6859aebad5f0b2fa39075d0c67bbe94565479d68b"
+      }
+    },
+    {
+      "seed": 20260810,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260810/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786107411276198000,
+        "sha256": "7c603ecd362e9accc7f39553ff130da99b010598fd9b31e23206384ba214a4e7"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260810/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786107410078885100,
+        "sha256": "b02cee42f381720a17ccd6751951ff518ecfd2fbcacf66e254015dd3ab37635e"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260810/full_stage2.history.csv",
+        "size_bytes": 9235,
+        "mtime_ns": 1786107410089025100,
+        "sha256": "60eb55871a1c8682d1c5889350dfaec246e9e9d25f778c17feb44c1e4b88faa0"
+      }
+    },
+    {
+      "seed": 20260811,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260811/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786116257227281200,
+        "sha256": "4f970c81e0fe201c304d710b22e1945c4bb6b9c1a7f91d6af82e3c4e425e8a26"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260811/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786116257020448200,
+        "sha256": "3f763c32b195a57dd8a7efa5499eeae067bc1f130e699e7de44c35540b6e4c4e"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260811/full_stage2.history.csv",
+        "size_bytes": 9415,
+        "mtime_ns": 1786116257023249200,
+        "sha256": "2b1da366b1eaf84485904e6c8ebf191dac1ce089db04c1430abe5f28ab01bc87"
+      }
+    },
+    {
+      "seed": 20260812,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260812/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786117025573389600,
+        "sha256": "070c08bcc185b06e140f6fe2ec9803022f59779612bbfd36a87e08c8d5d7b65d"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260812/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786117025433698000,
+        "sha256": "4127e5cade9220086e116bae2bb6fa9de4b5ae1eae70e90bae6c7037b7fcae4f"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260812/full_stage2.history.csv",
+        "size_bytes": 9182,
+        "mtime_ns": 1786117025436003800,
+        "sha256": "e714ed7c66e834d4bd936f427e895c623c4329882559ccfefbd7a8bba9a05b37"
+      }
+    },
+    {
+      "seed": 20260813,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260813/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786117521816690800,
+        "sha256": "29160faf058ace831dab29be6ce4b8d75150af4de1c72409ac434c6968f35561"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260813/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786117521676574200,
+        "sha256": "4f330d6ccdde04224f7fba281dd622e8faad87a9b35aeb3248f78a614a64e97f"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260813/full_stage2.history.csv",
+        "size_bytes": 9073,
+        "mtime_ns": 1786117521679916100,
+        "sha256": "3d8def84e2a0c575071fc4d062b9df6b0fefa3195425165fe46c867369893eee"
+      }
+    },
+    {
+      "seed": 20260814,
+      "variant": "full",
+      "model_manifest": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260814/manifest.json",
+        "size_bytes": 3051,
+        "mtime_ns": 1786118025326733600,
+        "sha256": "9c306bda2a55c33edcfa81726cc311836a251ca7a6175affb4813013d50291df"
+      },
+      "weights": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260814/model.weights.h5",
+        "size_bytes": 29597464,
+        "mtime_ns": 1786118025179300000,
+        "sha256": "03662888686157c94f7d17c5af21510964334277d86ac644a97bbae4a2e59219"
+      },
+      "history": {
+        "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/models/full/seed20260814/full_stage2.history.csv",
+        "size_bytes": 8987,
+        "mtime_ns": 1786118025184905300,
+        "sha256": "023b1a556ccf783137ee18b651eff8335c57b75a5329f3c0884540199b1eaf48"
+      }
+    }
+  ],
+  "legacy_full_model_integrity_signature": "dfed7533566b88052ba314b1d970811bb2fbbad67d2a82a1e322f523853a1033",
+  "legacy_full_checkpoint_policy": "left_in_place_read_only_not_deleted_not_overwritten",
+  "used_in_final_table": false
+}

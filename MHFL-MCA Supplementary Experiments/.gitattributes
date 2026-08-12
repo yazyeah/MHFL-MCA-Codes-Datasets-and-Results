@@ -1,0 +1,13 @@
+# Preserve byte-identical provenance artifacts and their recorded SHA-256.
+Codes/**/provenance/original_optuna/** -text -whitespace
+Codes/**/provenance/main_manuscript_sources/** -text -whitespace
+Codes/**/source_snapshots/** -text -whitespace
+
+# Publication binaries.
+*.pdf -text
+*.png -text
+
+# Published SVGs are immutable figure artifacts. Preserve their exact bytes
+# and suppress path-data whitespace diagnostics without weakening checks for
+# README, Python, CSV, JSON, or other text files.
+*.svg -text -whitespace

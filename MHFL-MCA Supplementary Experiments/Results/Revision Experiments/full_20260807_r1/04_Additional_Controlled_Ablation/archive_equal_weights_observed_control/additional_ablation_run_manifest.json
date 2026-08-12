@@ -1,0 +1,142 @@
+{
+  "status": "complete_hybrid_reference_candidate",
+  "result_mode": "hybrid_reference_ablation",
+  "run_tag": "full_20260807_r1",
+  "protocol": "stage2",
+  "target_seeds": [
+    20260806,
+    20260807,
+    20260808,
+    20260809,
+    20260810,
+    20260811,
+    20260812,
+    20260813,
+    20260814,
+    20260815
+  ],
+  "raw_gate": {
+    "rows": 150,
+    "variants": 5,
+    "conditions": 3,
+    "seeds": [
+      20260806,
+      20260807,
+      20260808,
+      20260809,
+      20260810,
+      20260811,
+      20260812,
+      20260813,
+      20260814,
+      20260815
+    ],
+    "duplicate_rows": 0,
+    "nan_values": 0,
+    "infinite_values": 0,
+    "failed_seeds": []
+  },
+  "model_runs": 50,
+  "reused_first_five_model_runs": 25,
+  "reused_preexisting_extension_model_runs": 15,
+  "planned_extension_model_slots": 25,
+  "new_model_runs_remaining_at_hybrid_start": 10,
+  "target_extension_model_runs_semantics": "resume-safe missing five-variant seed slots; preexisting valid extension caches are reused",
+  "full_model_training_performed": false,
+  "aggregation": "trimmed_mean_sd_drop_one_high_one_low",
+  "retained_after_trim": 8,
+  "archive_manifest_path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/legacy_supplementary_full_not_used_in_final_hybrid_table/archive_manifest.json",
+  "reused_variant_model_integrity_signature": "54d7ac7c27fb3ff9309ab53295ac46cd3aa545e6ede549b571893ff7201d7949",
+  "legacy_full_model_integrity_signature": "dfed7533566b88052ba314b1d970811bb2fbbad67d2a82a1e322f523853a1033",
+  "legacy_full_checkpoint_policy": "left_in_place_read_only_not_deleted_not_overwritten",
+  "raw": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/additional_ablation_variant_raw.csv",
+    "size_bytes": 13574,
+    "mtime_ns": 1786132724856833800,
+    "sha256": "2730500e6cf5f9c256336e0b344826aaa3161c5fa437b3a5ee8d9a5764ea4b57"
+  },
+  "summary": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/additional_ablation_variant_summary.csv",
+    "size_bytes": 4819,
+    "mtime_ns": 1786132727228578800,
+    "sha256": "c38bb7bfbfb254d30744a2c4cd0e733579ec7e48f1c995e46d6d8f9243b4c152"
+  },
+  "model_provenance": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/additional_ablation_model_provenance.json",
+    "size_bytes": 201919,
+    "mtime_ns": 1786132729151813300,
+    "sha256": "3bd85f7d53c6cebd57f0bd6298bf251cb63ab6b08a706be747ba665a369a871a"
+  },
+  "full_reference": {
+    "path": "${MHFL_SUITE_ROOT}/configs/kaist_additional_ablation_full_reference.json",
+    "size_bytes": 828,
+    "mtime_ns": 1786120445559960700,
+    "sha256": "76ff108ff0a9728eca7f8a0dae7518bebaf525993c318bc2bba89ed2736afeed"
+  },
+  "full_reference_metadata": {
+    "source": "main_manuscript_stage2_experiment",
+    "protocol": "stage2_load_shift",
+    "n_train_per_class": 30,
+    "runs": 10
+  },
+  "comparison_policy": {
+    "clean_conditions_in_hybrid_table": [
+      "2Nm_0dB",
+      "4Nm_0dB"
+    ],
+    "noise_condition_source_data_only": "4Nm_-8dB",
+    "paired_delta_to_full_generated": false,
+    "comparison_type": "unpaired_aggregated_reference_difference",
+    "stage3_table12_full_used": false,
+    "statistical_significance_claim_allowed": false
+  },
+  "post_gate": {
+    "status": "PASS",
+    "raw_gate": {
+      "rows": 150,
+      "variants": 5,
+      "conditions": 3,
+      "seeds": [
+        20260806,
+        20260807,
+        20260808,
+        20260809,
+        20260810,
+        20260811,
+        20260812,
+        20260813,
+        20260814,
+        20260815
+      ],
+      "duplicate_rows": 0,
+      "nan_values": 0,
+      "infinite_values": 0,
+      "failed_seeds": []
+    },
+    "summary_rows": 15,
+    "summary_groups": 15,
+    "retained_after_trim": 8,
+    "aggregation": "trimmed_mean_sd_drop_one_high_one_low",
+    "model_runs": 50,
+    "reused_first_five_model_runs": 25,
+    "planned_extension_model_slots": 25,
+    "legacy_full_archive_status": "legacy_supplementary_full_not_used_in_final_hybrid_table",
+    "failed_seeds": [],
+    "duplicates": 0,
+    "nan_or_inf": 0,
+    "paired_delta_to_full_generated": false,
+    "stage3_minus8db_full_used": false
+  },
+  "hybrid_candidate_csv": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/manuscript_hybrid_ablation_candidate.csv",
+    "size_bytes": 1121,
+    "mtime_ns": 1786132733120879800,
+    "sha256": "38f27a0f6bacddb64b2338ceec353c139b5472797624baa84b94c4c9514b0dd1"
+  },
+  "hybrid_candidate_tex": {
+    "path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/04_additional_ablation/manuscript_hybrid_ablation_candidate.tex",
+    "size_bytes": 1517,
+    "mtime_ns": 1786132733137459200,
+    "sha256": "d991c4f076602689c43ccb2c5806d1f4e5ba7aeab32cc8a71eaf1a42607041d2"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "flops_storage",
+  "protocol": "stage2",
+  "mode": "full",
+  "checkpoint_sha256": "e5a0fc8a3b8fc07a79300a65599bcc074dd0a56123b22b9153c68f58862e266e",
+  "metrics": {
+    "trainable_params": 7380173,
+    "trainable_params_m": 7.380173,
+    "flops": 243171883,
+    "flops_g": 0.243171883,
+    "macs_estimated": 121585941,
+    "macs_g_estimated": 0.1215859415,
+    "weights_size_mb": 28.226341247558594,
+    "savedmodel_size_mb": 28.758880615234375,
+    "flop_profiler_note": "TensorFlow graph float operations; batch size = 1; MACs are estimated as FLOPs / 2."
+  }
+}

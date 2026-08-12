@@ -1,0 +1,33 @@
+{
+  "figure_id": "traditional-multimodal-baselines",
+  "core_conclusion": "Add interpretable non-neural multimodal references without replacing the five deep baselines.",
+  "archetype": "two-case benchmark comparison",
+  "evidence_hierarchy": [
+    "UO limited-sample",
+    "KAIST cross-load"
+  ],
+  "width_mm": 183.0,
+  "height_mm": 63.0,
+  "source_data": [
+    "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/traditional_baselines_summary.csv"
+  ],
+  "replicate_unit": "persistent split seeds",
+  "center_statistic": "metric-wise trimmed mean after removing one highest and one lowest result",
+  "spread_definition": "population SD (ddof=0) across eight independently retained values per metric",
+  "claim_limits": [
+    "Not a reproduction of the reviewer-recommended optimized OMP/CSC algorithms"
+  ],
+  "notes": [
+    "Accuracy, Macro-F1, Macro-Precision, and Macro-Recall are trimmed independently over 10 fixed seeds."
+  ],
+  "target_journal": "Advanced Engineering Informatics",
+  "backend": "Python/Matplotlib",
+  "source_data_manifest": [
+    {
+      "source_path": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/06_traditional_baselines/traditional_baselines_summary.csv",
+      "file": "traditional_baselines_summary.csv",
+      "sha256": "7a587d4a7d0423fb894a6e3a1801a7504588b5b86af4e744e0144bcbdf20bb85",
+      "size_bytes": 17322
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+method,source_variant,display_scope,params_m,2Nm_accuracy_mean,2Nm_accuracy_sd,2Nm_macro_f1_mean,2Nm_macro_f1_sd,4Nm_accuracy_mean,4Nm_accuracy_sd,4Nm_macro_f1_mean,4Nm_macro_f1_sd,comparison_type
+Full MHFL-MCA reference,reused_stage2_full,paper_main,7.380,0.9999,0.0002,0.9999,0.0002,0.9925,0.0096,0.9925,0.0097,reused_aggregated_reference
+Homogeneous current-style,homogeneous_other,paper_main,8.784,0.9445,0.0418,0.9405,0.0477,0.9261,0.0481,0.9246,0.0511,unpaired_aggregated_reference_difference
+Attention (D=128),attention_dim_128,paper_main,4.601,0.9997,0.0007,0.9997,0.0007,0.9841,0.0188,0.9838,0.0194,unpaired_aggregated_reference_difference
+Direct softmax,direct_softmax,paper_main,7.380,0.9941,0.0087,0.9941,0.0088,0.9752,0.0331,0.9746,0.0342,unpaired_aggregated_reference_difference

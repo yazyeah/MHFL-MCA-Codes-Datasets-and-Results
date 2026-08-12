@@ -1,0 +1,67 @@
+{
+  "figure_id": "missing-modality-stress-4Nm",
+  "target_width_mm": 89.0,
+  "target_height_mm": 64.0,
+  "font_family": [
+    "sans-serif"
+  ],
+  "sans_serif_stack": [
+    "Arial",
+    "Helvetica",
+    "Liberation Sans",
+    "DejaVu Sans"
+  ],
+  "svg_fonttype": "none",
+  "pdf_fonttype": 42,
+  "raster_dpi": 600,
+  "minimum_pdf_glyph_pt_target": 5.0,
+  "manual_panel_audit_required": true,
+  "svg_audit": {
+    "svg": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/missing_modality_stress_4Nm_bundle/missing_modality_stress_4Nm.svg",
+    "editable_text_nodes": 13,
+    "path_nodes": 14,
+    "pass_editable_text": true,
+    "width_mm": 89.00000015277777,
+    "height_mm": 64.00000005833334,
+    "expected_width_mm": 89.0,
+    "expected_height_mm": 64.0,
+    "minimum_detected_svg_font_size": null,
+    "pass_width": true,
+    "pass_height": true
+  },
+  "pdf_audit": {
+    "pdf": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/missing_modality_stress_4Nm_bundle/missing_modality_stress_4Nm.pdf",
+    "fitz_audit_error": "No module named 'fitz'",
+    "pdffonts_output": [
+      "name                                 type              encoding         emb sub uni object ID",
+      "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+      "ELUGPM+ArialMT                       CID TrueType      Identity-H       yes yes yes     16  0",
+      "ELUGPM+Arial-BoldMT                  CID TrueType      Identity-H       yes yes yes     24  0"
+    ],
+    "pass_font_embedding": true
+  },
+  "tiff_audit": {
+    "file": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/missing_modality_stress_4Nm_bundle/missing_modality_stress_4Nm.tiff",
+    "pixel_width": 2102,
+    "pixel_height": 1511,
+    "dpi_x": 600.0,
+    "dpi_y": 600.0,
+    "expected_pixel_width": 2102,
+    "expected_pixel_height": 1512,
+    "pass_pixel_size": true,
+    "pass_dpi": true
+  },
+  "png_audit": {
+    "file": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/missing_modality_stress_4Nm_bundle/missing_modality_stress_4Nm.png",
+    "pixel_width": 1051,
+    "pixel_height": 755,
+    "dpi_x": 299.9994,
+    "dpi_y": 299.9994,
+    "expected_pixel_width": 1051,
+    "expected_pixel_height": 756,
+    "pass_pixel_size": true,
+    "pass_dpi": true
+  },
+  "automatic_failures": [],
+  "automatic_status": "PASS_WITH_MANUAL_REVIEW"
+}

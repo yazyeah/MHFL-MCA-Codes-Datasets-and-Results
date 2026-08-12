@@ -1,0 +1,9 @@
+{
+  "status": "BLOCKED",
+  "mode": "full",
+  "run_tag": "full_20260807_r1",
+  "protocol": "uo_source_aligned_paired_deterministic_extension_v1",
+  "completed_run_artifacts": 140,
+  "final_outputs_authorized": false,
+  "finished_unix_time": 1786493385.2677755
+}

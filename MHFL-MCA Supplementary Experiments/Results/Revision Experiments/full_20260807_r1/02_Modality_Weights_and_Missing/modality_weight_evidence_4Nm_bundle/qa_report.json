@@ -1,0 +1,67 @@
+{
+  "figure_id": "modality-weight-evidence-4Nm",
+  "target_width_mm": 183.0,
+  "target_height_mm": 61.0,
+  "font_family": [
+    "sans-serif"
+  ],
+  "sans_serif_stack": [
+    "Arial",
+    "Helvetica",
+    "Liberation Sans",
+    "DejaVu Sans"
+  ],
+  "svg_fonttype": "none",
+  "pdf_fonttype": 42,
+  "raster_dpi": 600,
+  "minimum_pdf_glyph_pt_target": 5.0,
+  "manual_panel_audit_required": true,
+  "svg_audit": {
+    "svg": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_evidence_4Nm_bundle/modality_weight_evidence_4Nm.svg",
+    "editable_text_nodes": 98,
+    "path_nodes": 27,
+    "pass_editable_text": true,
+    "width_mm": 182.99999983055554,
+    "height_mm": 61.00000006111111,
+    "expected_width_mm": 183.0,
+    "expected_height_mm": 61.0,
+    "minimum_detected_svg_font_size": null,
+    "pass_width": true,
+    "pass_height": true
+  },
+  "pdf_audit": {
+    "pdf": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_evidence_4Nm_bundle/modality_weight_evidence_4Nm.pdf",
+    "fitz_audit_error": "No module named 'fitz'",
+    "pdffonts_output": [
+      "name                                 type              encoding         emb sub uni object ID",
+      "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+      "ELUGPM+ArialMT                       CID TrueType      Identity-H       yes yes yes     21  0",
+      "ELUGPM+Arial-BoldMT                  CID TrueType      Identity-H       yes yes yes     29  0"
+    ],
+    "pass_font_embedding": true
+  },
+  "tiff_audit": {
+    "file": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_evidence_4Nm_bundle/modality_weight_evidence_4Nm.tiff",
+    "pixel_width": 4322,
+    "pixel_height": 1440,
+    "dpi_x": 600.0,
+    "dpi_y": 600.0,
+    "expected_pixel_width": 4323,
+    "expected_pixel_height": 1441,
+    "pass_pixel_size": true,
+    "pass_dpi": true
+  },
+  "png_audit": {
+    "file": "${MHFL_SUITE_ROOT}/outputs/full_20260807_r1/02_weights_missing/modality_weight_evidence_4Nm_bundle/modality_weight_evidence_4Nm.png",
+    "pixel_width": 2161,
+    "pixel_height": 720,
+    "dpi_x": 299.9994,
+    "dpi_y": 299.9994,
+    "expected_pixel_width": 2161,
+    "expected_pixel_height": 720,
+    "pass_pixel_size": true,
+    "pass_dpi": true
+  },
+  "automatic_failures": [],
+  "automatic_status": "PASS_WITH_MANUAL_REVIEW"
+}

@@ -1,0 +1,23 @@
+\begin{table}[pos=htbp]
+\centering
+\caption{Protocol-aware extreme low-shot sensitivity on the UO dataset. In the displayed Full series, the $N=5$ and $N=10$ accuracy values are taken directly from Table~\ref{tab:case1_compare_main}; the remaining Full values and all without-CAIM and paired-gain values are from the controlled sensitivity extension. Sensitivity-study values are trimmed mean $\pm$ population standard deviation over 10 runs after independently removing the highest and lowest value.}
+\label{tab:extreme_lowshot_caim}
+\small
+\setlength{\tabcolsep}{2.8pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}cccc@{}}
+\toprule
+$N$ & \shortstack{Sensitivity\\Full MHFL-MCA} & \shortstack{Sensitivity\\without CAIM} & \shortstack{Paired CAIM\\gain} \\
+\midrule
+1 & 0.5273$\pm$0.0423 & 0.4451$\pm$0.0452 & 0.0846$\pm$0.0736 \\
+2 & 0.7552$\pm$0.0847 & 0.5704$\pm$0.0589 & 0.1792$\pm$0.0712 \\
+3 & 0.8020$\pm$0.0745 & 0.6996$\pm$0.0780 & 0.1064$\pm$0.0736 \\
+4 & 0.9320$\pm$0.0273 & 0.7932$\pm$0.0486 & 0.1415$\pm$0.0482 \\
+5 & 0.9279$\pm$0.0288 & 0.8437$\pm$0.0246 & 0.0677$\pm$0.0400 \\
+7 & 0.9461$\pm$0.0389 & 0.8950$\pm$0.0165 & 0.0568$\pm$0.0388 \\
+10 & 0.9707$\pm$0.0175 & 0.9174$\pm$0.0262 & 0.0592$\pm$0.0297 \\
+\bottomrule
+\end{tabular*}
+\vspace{1mm}
+\raggedright\footnotesize Full accuracy at $N=5$ and $N=10$ is reproduced directly from Table~\ref{tab:case1_compare_main} within the single displayed Full series. Table~\ref{tab:case1_compare_main} contains neither train--held-out gaps nor matched no-CAIM per-seed results; those derived quantities remain from the controlled sensitivity extension and are not calculated from historical aggregate means.\par
+\end{table}

@@ -1,0 +1,7 @@
+Method,Params (M),2 Nm Accuracy,2 Nm Macro-F1,4 Nm Accuracy,4 Nm Macro-F1,source,comparison_type
+Full MHFL-MCA reference,7.380,0.9999 ± 0.0002,0.9999 ± 0.0002,0.9925 ± 0.0096,0.9925 ± 0.0097,main_manuscript_aggregated_reference,reference
+Homogeneous-vibration,5.976013,0.9998 ± 0.0002,0.9998 ± 0.0002,0.9951 ± 0.0054,0.9951 ± 0.0054,new_stage2_additional_ablation_variant,unpaired_aggregated_reference_difference
+Homogeneous-other,8.784333,0.9445 ± 0.0418,0.9405 ± 0.0477,0.9261 ± 0.0481,0.9246 ± 0.0511,new_stage2_additional_ablation_variant,unpaired_aggregated_reference_difference
+Attention (D=128),4.601037,0.9997 ± 0.0007,0.9997 ± 0.0007,0.9841 ± 0.0188,0.9838 ± 0.0194,new_stage2_additional_ablation_variant,unpaired_aggregated_reference_difference
+Direct softmax,7.380167,0.9941 ± 0.0087,0.9941 ± 0.0088,0.9752 ± 0.0331,0.9746 ± 0.0342,new_stage2_additional_ablation_variant,unpaired_aggregated_reference_difference
+Equal weights,7.359685,1.0000 ± 0.0000,1.0000 ± 0.0000,0.9958 ± 0.0056,0.9958 ± 0.0056,new_stage2_additional_ablation_variant,unpaired_aggregated_reference_difference
