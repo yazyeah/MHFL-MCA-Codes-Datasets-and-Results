@@ -32,7 +32,7 @@ MHFL-MCA targets **intelligent fault diagnosis (IFD)** under two practical const
 It addresses these challenges by combining (i) **heterogeneous modality-specific encoders**, (ii) **bidirectional cross-attention**, and (iii) **sample-wise adaptive modality re-weighting** to produce robust fused representations.
 
 <p align="center">
-  <img width="900" alt="Overall workflow of MHFL-MCA" src="MHFL-MCA%20Supplementary%20Experiments/figures/MHFL-MCA_architecture.jpeg" />
+  <img width="900" alt="MHFL-MCA architecture" src="MHFL-MCA%20Supplementary%20Experiments/figures/MHFL-MCA_architecture.jpeg" />
 </p>
 
 *Overall MHFL-MCA workflow (Figure 1).*
