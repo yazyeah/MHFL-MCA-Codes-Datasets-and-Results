@@ -11,8 +11,8 @@ MHFL-MCA targets **intelligent fault diagnosis (IFD)** under two practical const
 
 It addresses these challenges by combining (i) **heterogeneous modality-specific encoders**, (ii) **bidirectional cross-attention**, and (iii) **sample-wise adaptive modality re-weighting** to produce robust fused representations.
 
-<img width="8192" height="3494" alt="MHCNN architecture overview 1" src="https://github.com/user-attachments/assets/f2ce527e-4066-428e-b555-3d3668d9b795" />
-<img width="8192" height="3724" alt="MHCNN architecture overview 2" src="https://github.com/user-attachments/assets/7de70f63-616d-4d74-88f3-510714ec3e52" />
+<img width="8192" height="8192" alt="MHFL-MCA architecture" src="https://github.com/user-attachments/assets/d807309f-c658-44ad-9df9-940768ee3092" />
+
 
 ---
 
