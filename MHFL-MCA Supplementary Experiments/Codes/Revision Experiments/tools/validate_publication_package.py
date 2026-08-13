@@ -336,15 +336,22 @@ def write_release_indexes(root: Path) -> None:
             }
         )
     manifest = root / "PUBLICATION_MANIFEST.csv"
-    with manifest.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=("path", "category", "size_bytes", "sha256"))
+    with manifest.open("w", encoding="utf-8", newline="\n") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=("path", "category", "size_bytes", "sha256"),
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(records)
     checksums = root / "SHA256SUMS.txt"
-    checksums.write_text(
-        "".join("{0}  {1}\n".format(item["sha256"], item["path"]) for item in records),
-        encoding="utf-8",
-    )
+    with checksums.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(
+            "".join(
+                "{0}  {1}\n".format(item["sha256"], item["path"])
+                for item in records
+            )
+        )
 
 
 def parse_args() -> argparse.Namespace:
@@ -375,10 +382,9 @@ def main() -> None:
             "training_was_run": False,
             "checks": result.checks,
         }
-        (root / "PACKAGE_VALIDATION.json").write_text(
-            json.dumps(report, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
+        report_path = root / "PACKAGE_VALIDATION.json"
+        with report_path.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
 
     failed = [item["name"] for item in result.checks if not item["passed"]]
     print("Publication package validation: {0}".format("PASS" if not failed else "FAIL"))

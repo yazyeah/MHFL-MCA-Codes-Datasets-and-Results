@@ -52,6 +52,11 @@ set, not a claim that every historical transitive package was serialized by
 the formal runs. In particular, the historical Optuna package version was not
 recorded.
 
+The Windows GitHub Actions job uses CPython 3.9.13, the latest Python 3.9
+build currently available in that runner's tool cache. It performs
+no-training compatibility tests; the recorded experiment environment and the
+Conda reconstruction contract remain Python 3.9.20.
+
 The audited workstation had user-site package contamination. A clean
 environment should therefore set `PYTHONNOUSERSITE=1`; the lock file, not the
 global or user site, is the installation contract.
