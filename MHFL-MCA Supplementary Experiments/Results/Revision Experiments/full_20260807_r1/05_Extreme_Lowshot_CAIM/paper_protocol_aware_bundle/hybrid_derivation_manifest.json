@@ -24,9 +24,9 @@
     "sha256": "cd6bc52feb997a7cdc3b56d9e951ed212f15019c25a88ab21edd3b3db4ad83ce",
     "reference_version": "current_submission_2026-08-10"
   },
-  "controlled_summary_sha256": "ff39e8f8f77c03a182718fa10b88daaf4d92732aba5f81bf3c92ad592af74776",
-  "controlled_paired_summary_sha256": "e156861ebcd35f95d52cc6bc2536efd72ba41518c009548a62b8730e86d759ea",
-  "display_data_sha256": "34613b515ce1d7101bd86f55425c6f1111a725b72e7b515233e18810c01f9a8c",
+  "controlled_summary_sha256": "66c3fc3599bae369612d9bcb8cb16d287ee327d3e5364fd5857c5c630bb31761",
+  "controlled_paired_summary_sha256": "3085d44ad9e334f3f1cbde7c6cd92694a0fd754b6f2673b1663ec2735a03dd35",
+  "display_data_sha256": "017a7aa1fd62816a112c36e04215cfebe39831d90395fa8daf6dafcd027b5908",
   "figure_pdf_sha256": "1a157cd5bdc213e61a2ab44d2f83830eb0b892b0404281a52315f3cb0aa5ad21",
   "figure_svg_sha256": "a97309382f7a58cadfb1b339fe9f264955165e90eb8bf94dc5b4d867265272e0",
   "claim_limit": "The hybrid display is protocol-aware source presentation, not an exact replay or a pooled estimator."

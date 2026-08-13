@@ -1,3 +1,7 @@
+# The publication manifest hashes exact package bytes. Disable platform line-
+# ending conversion so the same SHA-256 values validate on Linux and Windows.
+* -text
+
 # Preserve byte-identical provenance artifacts and their recorded SHA-256.
 Codes/**/provenance/original_optuna/** -text -whitespace
 Codes/**/provenance/main_manuscript_sources/** -text -whitespace
