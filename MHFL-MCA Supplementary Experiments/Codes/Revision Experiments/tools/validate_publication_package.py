@@ -2,8 +2,8 @@
 """Validate the compact GitHub publication package without running training.
 
 The validator checks syntax, JSON readability, source-data row contracts,
-identity uniqueness, expected gate states, prohibited binary extensions,
-portable metadata paths, and immutable manuscript-source hashes. With
+identity uniqueness, declared source mappings, prohibited binary extensions,
+portable metadata paths, and immutable source hashes. With
 ``--write-report`` it creates the release manifest, checksum list, and a JSON
 validation report at the package root.
 """
@@ -184,9 +184,14 @@ def validate_result_contracts(root: Path, result: Validation) -> None:
     manifest05 = read_json(base / "05_Extreme_Lowshot_CAIM" / "controlled_extension" / "lowshot_run_manifest.json")
     protocol06 = read_json(base / "06_Traditional_Baselines" / "traditional_baseline_protocol_validation.json")
     result.check("04_gate_pass", post04.get("status") == "PASS", post04.get("status"))
-    result.check("05_anchor_failure_preserved", anchor05.get("status") == "FAIL", anchor05.get("status"))
-    result.check("05_post_gate_failure_preserved", post05.get("status") == "FAIL" and post05.get("final_outputs_authorized") is False, {"status": post05.get("status"), "authorized": post05.get("final_outputs_authorized")})
-    result.check("05_manifest_blocked_preserved", manifest05.get("status") == "BLOCKED", manifest05.get("status"))
+    result.check(
+        "05_protocol_boundary_recorded",
+        anchor05.get("status") == "FAIL"
+        and post05.get("status") == "FAIL"
+        and post05.get("final_outputs_authorized") is False
+        and manifest05.get("status") == "BLOCKED",
+        "Historical-replay status is retained separately from the controlled extension.",
+    )
     result.check("06_protocol_pass", protocol06.get("status") == "PASS", protocol06.get("status"))
 
     table15 = rows_by_name["04_paper_table"]
@@ -243,6 +248,33 @@ def validate_result_contracts(root: Path, result: Validation) -> None:
     )
     result.check("05_hybrid_hash_binding", hybrid_hashes_ok, "source summaries, display data, PDF, and SVG")
 
+    thresholds = read_json(
+        base
+        / "05_Extreme_Lowshot_CAIM"
+        / "controlled_extension"
+        / "operational_thresholds.json"
+    )
+    threshold_map = {
+        str(item.get("variant")): item for item in thresholds
+        if isinstance(item, Mapping)
+    }
+    threshold_ok = (
+        set(threshold_map) == {"full", "no_caim"}
+        and threshold_map["full"].get("first_empirical_n") == 3
+        and threshold_map["no_caim"].get("first_empirical_n") == 5
+        and all(
+            item.get("criterion")
+            == "trimmed test accuracy >= 0.80 and trimmed seed SD <= 0.10"
+            and "not a universal theoretical threshold" in str(item.get("claim_limit", ""))
+            for item in threshold_map.values()
+        )
+    )
+    result.check(
+        "05_operational_threshold_contract",
+        threshold_ok,
+        "Full N=3 and no-CAIM N=5 under the predefined protocol-specific criterion",
+    )
+
 
 def validate_reference(root: Path, result: Validation) -> None:
     code = root / "Codes" / "Revision Experiments"
@@ -255,8 +287,32 @@ def validate_reference(root: Path, result: Validation) -> None:
     result.check("recorded_tex_sha256", actual == expected, {"expected": expected, "actual": actual})
     result.check(
         "deep_reference_scope_disclosed",
-        "2026-08-12" in reference.get("current_manuscript_source", {}).get("public_release_note", ""),
+        reference.get("current_manuscript_source", {}).get("public_release_note")
+        == "Portable byte-identical LaTeX snapshot of the declared 2026-08-10 table source.",
         reference.get("current_manuscript_source", {}).get("public_release_note"),
+    )
+
+    verification = read_json(
+        root / "Provenance" / "audits" / "ARTIFACT_VALUE_VERIFICATION.json"
+    )
+    totals = verification.get("totals", {})
+    checks = verification.get("checks", [])
+    result.check(
+        "artifact_value_verification",
+        verification.get("scope_status") == "VERIFIED_FOR_DECLARED_SCOPE"
+        and verification.get("training_was_run") is False
+        and len(checks) == 8
+        and all(item.get("status") == "PASS" for item in checks)
+        and totals.get("checks") == 8
+        and totals.get("failed_checks") == 0
+        and totals.get("table_rows_checked") == 135
+        and totals.get("numeric_fields_checked") == 808
+        and totals.get("numeric_mismatches") == 0,
+        {
+            "scope_status": verification.get("scope_status"),
+            "training_was_run": verification.get("training_was_run"),
+            "totals": totals,
+        },
     )
 
 

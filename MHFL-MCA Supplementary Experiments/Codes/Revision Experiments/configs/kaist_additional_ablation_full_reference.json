@@ -23,8 +23,8 @@
   },
   "params_m": 7.38,
   "source_tables": [
-    "Current manuscript Table 10, N=30 (2 Nm)",
-    "Current manuscript Table 11, N=30 (4 Nm)"
+    "Declared Table 10 source, N=30 (2 Nm)",
+    "Declared Table 11 source, N=30 (4 Nm)"
   ],
   "note": "The Full MHFL-MCA row is reused from the original 10-run Stage-2 main experiment at N=30 to avoid redundant retraining."
 }

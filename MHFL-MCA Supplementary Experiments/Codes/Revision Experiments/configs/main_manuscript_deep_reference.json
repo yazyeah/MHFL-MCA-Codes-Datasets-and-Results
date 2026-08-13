@@ -2317,7 +2317,7 @@
       "Table 9": "tab:case2_quant_2nm",
       "Table 10": "tab:case2_quant_4nm"
     },
-    "public_release_note": "Portable byte-identical LaTeX snapshot of the recorded 2026-08-10 source; the 2026-08-12 final manuscript should be revalidated before claiming final-source identity."
+    "public_release_note": "Portable byte-identical LaTeX snapshot of the declared 2026-08-10 table source."
   },
   "public_release_source_root": "provenance/main_manuscript_sources"
 }

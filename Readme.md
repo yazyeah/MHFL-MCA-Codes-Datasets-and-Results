@@ -1,5 +1,25 @@
 # 📌 MHFL-MCA Codes, Datasets and Results
 
+[![Repository audit](https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/actions/workflows/repository-audit.yml/badge.svg)](https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/actions/workflows/repository-audit.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+This repository provides the MHFL-MCA implementation, datasets, result
+artifacts, provenance records and supplementary experiments for inspection
+and reproducibility assessment.
+
+Quick links: [reproducibility](REPRODUCIBILITY.md) ·
+[data access](DATA.md) · [dataset licenses](DATA_LICENSES.md) ·
+[MIT license](LICENSE) · [license scope](LICENSE_SCOPE.md) ·
+[environment](ENVIRONMENT.md) · [hardware](HARDWARE.md) ·
+[checkpoint contract](MODEL_ZOO.md) ·
+[artifact value verification](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md)
+
+Author-owned software and documentation are released under the MIT License.
+Dataset and third-party rights remain governed by
+[DATA_LICENSES.md](DATA_LICENSES.md),
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), and the exclusions in
+[LICENSE_SCOPE.md](LICENSE_SCOPE.md).
+
 This repository provides a **TensorFlow/Keras** implementation of the paper:
 
 > **MHFL-MCA: Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis with limited samples**
@@ -15,7 +35,7 @@ It addresses these challenges by combining (i) **heterogeneous modality-specific
   <img width="900" alt="Overall workflow of MHFL-MCA" src="MHFL-MCA%20Supplementary%20Experiments/figures/MHFL-MCA_architecture.jpeg" />
 </p>
 
-*Overall workflow used in the revised manuscript (Figure 1).*
+*Overall MHFL-MCA workflow (Figure 1).*
 
 ---
 
@@ -23,7 +43,7 @@ It addresses these challenges by combining (i) **heterogeneous modality-specific
 
 ### 1.1 Problem setup and inputs
 
-For each sample $i$, MHCNN takes **two synchronized 1-D time-domain segments**:
+For each sample $i$, MHFL-MCA takes **two synchronized 1-D time-domain segments**:
 
 - **Vibration**: $x_i^{(v)} \in \mathbb{R}^{L}$
 - **Acoustic** (paper) / **Current** (KAIST scripts in this repo): $x_i^{(a)} \in \mathbb{R}^{L}$
@@ -124,10 +144,12 @@ yielding the posterior probability over health states.
 
 ## 📂 2. Dataset Explanation
 
-The paper evaluates MHCNN on two public datasets. This repository focuses on reproducing the **KAIST Load-Shift** setting, while also keeping the **uOttawa (UO)** case organized for reference.
+The paper evaluates MHFL-MCA on two public datasets. This repository supports the **KAIST Load-Shift** and **uOttawa (UO)** cases and records the supplementary experiment protocols separately.
 
 > **Important update:** In this repository, datasets **ARE included** and stored under the `Datasets/` directory (as shown in your local folder structure).  
-> If the dataset is large, you should use **Git LFS** to store and pull it correctly (see the reproducibility guide).
+> Git LFS is required to resolve the tracked datasets. Prefer the selective
+> download commands in [DATA.md](DATA.md) instead of pulling every historical
+> result object.
 
 ---
 
@@ -211,7 +233,7 @@ This section is written as a **step-by-step checklist** for reproducing the **KA
 
 - **Windows 10/11** (Windows 11 recommended)
 - (Strongly recommended) **NVIDIA GPU with ≥ 8 GB VRAM**
-- **Git** + *(Optional)* **Git LFS** (only if you store large files via LFS)
+- **Git** + **Git LFS** (required to resolve the tracked datasets)
 - A terminal: **Anaconda Prompt** (recommended) or **PowerShell**
 - This repository cloned locally (including `Datasets/`)
 
@@ -229,9 +251,9 @@ https://git-scm.com/downloads
 git --version
 ~~~
 
-#### 0.1.2 (Optional) Install Git LFS
+#### 0.1.2 Install Git LFS
 
-> Only needed if you track large files using Git LFS.
+> Required for the dataset files stored by this repository.
 
 1) Install Git LFS:  
 https://git-lfs.com/
@@ -248,17 +270,20 @@ git lfs version
 > Recommended: clone the repo instead of downloading ZIP.
 
 ~~~bash
-git clone <YOUR_GITHUB_REPO_URL>
-cd <YOUR_REPO_FOLDER>
+git clone https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results.git
+cd MHFL-MCA-Codes-Datasets-and-Results
 ~~~
 
-#### 0.2.1 (Optional) Pull LFS files
+#### 0.2.1 Pull only the required LFS files
 
-If your repo uses Git LFS:
+For KAIST only:
 ~~~bash
 git lfs install
-git lfs pull
+git lfs pull --include="Datasets/KAIST/**" --exclude=""
 ~~~
+
+See [DATA.md](DATA.md) before an unrestricted LFS pull; the complete LFS
+payload is approximately 8.86 GiB.
 
 ---
 
@@ -496,7 +521,7 @@ This section provides a **step-by-step checklist** for reproducing the **uOttawa
 
 - **Windows 10/11**
 - (Recommended) **NVIDIA GPU with ≥ 8 GB VRAM**
-- **Git** + *(Optional)* **Git LFS**
+- **Git** + **Git LFS**
 - A terminal: **Anaconda Prompt** (recommended) or **PowerShell**
 - This repository cloned locally (including `Datasets/` if you keep datasets inside the repo)
 
@@ -621,7 +646,7 @@ python your_uo_script.py
 ~~~
 
 Common UO scripts include:
-- The main MHCNN few-shot experiment (Case 1, vib+aco)
+- The main MHFL-MCA few-shot experiment (Case 1, vibration + acoustic)
 - Ablation scripts (Exp1 ~ Exp5), where each script disables specific modules:
   - Exp1: Single Vibration only
   - Exp2: Single Acoustic only
@@ -748,7 +773,7 @@ YOUR_UO_OUTPUT_DIR/
       └─ Samples_05/Run_01/... (same pattern)
 ```
 
-A typical directory layout produced by **UO main MHCNN few-shot experiment** (if your main script uses the same convention) is:
+A typical directory layout produced by the **UO main MHFL-MCA few-shot experiment** (the legacy output directory retains its historical filename) is:
 
 ```text
 YOUR_UO_OUTPUT_DIR/
@@ -810,7 +835,7 @@ YOUR_UO_OUTPUT_DIR/
 The [`MHFL-MCA Supplementary Experiments`](MHFL-MCA%20Supplementary%20Experiments/README.md)
 folder contains the code, confirmed configurations, tests, provenance records,
 compact source data, and figure-generation utilities for the experiments added
-during revision. Raw datasets, model weights, caches, and temporary files are
+as supplementary evidence. Raw datasets, model weights, caches, and temporary files are
 not duplicated in this folder.
 
 ### 6.1 Included experiment scopes
@@ -837,7 +862,8 @@ Set-Location '.\MHFL-MCA Supplementary Experiments\Codes\Revision Experiments'
 
 $env:PYTHONDONTWRITEBYTECODE = '1'
 $env:MHFL_SUITE_ROOT = (Get-Location).Path
-$env:MHFL_RUN_TAG = 'full_<date>_r1'
+$runDate = Get-Date -Format 'yyyyMMdd'
+$env:MHFL_RUN_TAG = "full_${runDate}_r1"
 
 $env:MHFL_UO_DATA_ROOT = '<UO 3_MatLab_Raw_Data>'
 $env:MHFL_KAIST_VIB_DIR = '<KAIST vibration directory>'
@@ -854,7 +880,7 @@ Remove-Item Env:MHFL_ALLOW_CURRENT_FALLBACK -ErrorAction SilentlyContinue
 Remove-Item Env:MHFL_CURRENT_CHANNEL_REGEX -ErrorAction SilentlyContinue
 ```
 
-Review the confirmed UO/KAIST configuration files and their evidence hashes
+Inspect the confirmed UO/KAIST configuration files and their evidence hashes
 before explicitly accepting the KAIST specification:
 
 ```powershell
@@ -880,11 +906,10 @@ Experiment 05 is intentionally documented separately. Its controlled run is:
 python 05_lowshot_threshold.py --mode full --run-tag $env:MHFL_RUN_TAG
 ```
 
-This command generates the 140/14/7 controlled-extension data contract, but
-its final Table-5 replay gate may exit nonzero because the historical
-TensorFlow initializer and batch-shuffling state was not retained. Do not
-selectively rerun seeds to force the historical aggregates. To reproduce the
-paper-facing protocol-aware figure from the published source data, run:
+This command generates the 140/14/7 controlled-extension data contract. The
+historical TensorFlow initializer and batch-shuffling state was not retained,
+so the extension is not represented as a byte-for-byte stochastic replay. To
+reproduce the protocol-aware figure from the published source data, run:
 
 ```powershell
 $published = '..\..\Results\Revision Experiments\full_20260807_r1\05_Extreme_Lowshot_CAIM'
@@ -895,10 +920,9 @@ python .\figures\build_lowshot_protocol_aware_figure.py `
   --stem 'lowshot_sensitivity_protocol_aware_reproduced'
 ```
 
-The current `07_build_manuscript_assets.py` remains an internal strict gate
-for its recorded artifact contract; it is not advertised as a one-command
-rebuild of the current manuscript's hybrid low-shot display. Likewise, do not
-use `run_pipeline.py full` as the public revision workflow.
+`07_build_manuscript_assets.py` remains an internal strict gate for its
+recorded artifact contract. Use the source-specific commands above for public
+reproduction rather than `run_pipeline.py full`.
 
 ### 6.3 No-training validation
 
@@ -922,10 +946,6 @@ the evidence boundaries and exact output locations.
 
 ---
 
-## 📚 Citation
-
-If you use this code in your work, please cite the corresponding paper.
-
 ## Extra explanation
-The respository is indexed in DeepWiki, log in to find more details:
+The repository is indexed in DeepWiki; log in to find more details:
 https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results

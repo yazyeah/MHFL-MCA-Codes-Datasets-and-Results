@@ -1,7 +1,7 @@
-## Revision experiments and source data
+## Supplementary experiments and source data
 
 The `Codes/Revision Experiments` and `Results/Revision Experiments` folders
-contain the modular reviewer-response experiments, source data, audit gates,
+contain the modular supplementary experiments, source data, audit gates,
 and figure-generation utilities used for the revised MHFL-MCA manuscript.
 
 Key reproducibility contracts are:

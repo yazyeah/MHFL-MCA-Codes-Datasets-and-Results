@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "verification_id": "mhfl_mca_artifact_values_20260813",
+  "scope_status": "VERIFIED_FOR_DECLARED_SCOPE",
+  "verification_scope": "Published repository tables, source-data summaries, protocol-aware display values, and selected byte identities",
+  "training_was_run": false,
+  "checks": [
+    {
+      "id": "deep_reference_tables",
+      "status": "PASS",
+      "rows_checked": 108,
+      "numeric_fields_checked": 648,
+      "mismatch_count": 0,
+      "metrics": [
+        "accuracy_mean",
+        "accuracy_sd",
+        "macro_precision_mean",
+        "macro_precision_sd",
+        "macro_f1_mean",
+        "macro_f1_sd"
+      ]
+    },
+    {
+      "id": "extreme_lowshot_display",
+      "status": "PASS",
+      "rows_checked": 7,
+      "numeric_fields_checked": 42,
+      "mismatch_count": 0,
+      "source_policy": {
+        "full_accuracy_N_5_and_N_10": "declared_main_reference",
+        "other_full_accuracy_points": "controlled_sensitivity_extension",
+        "without_caim_gap_and_paired_gain": "controlled_sensitivity_extension",
+        "protocols_pooled": false
+      }
+    },
+    {
+      "id": "missing_modality_display",
+      "status": "PASS",
+      "rows_checked": 6,
+      "numeric_fields_checked": 36,
+      "mismatch_count": 0
+    },
+    {
+      "id": "additional_ablation_display",
+      "status": "PASS",
+      "rows_checked": 4,
+      "numeric_fields_checked": 36,
+      "mismatch_count": 0
+    },
+    {
+      "id": "efficiency_display",
+      "status": "PASS",
+      "rows_checked": 1,
+      "numeric_fields_checked": 10,
+      "mismatch_count": 0
+    },
+    {
+      "id": "traditional_baseline_display",
+      "status": "PASS",
+      "rows_checked": 9,
+      "numeric_fields_checked": 36,
+      "mismatch_count": 0
+    },
+    {
+      "id": "protocol_aware_lowshot_figure_pdf",
+      "status": "PASS",
+      "byte_identity": true,
+      "sha256": "1a157cd5bdc213e61a2ab44d2f83830eb0b892b0404281a52315f3cb0aa5ad21"
+    },
+    {
+      "id": "operational_thresholds",
+      "status": "PASS",
+      "criterion": "trimmed test accuracy >= 0.80 and trimmed seed SD <= 0.10",
+      "full_first_empirical_n": 3,
+      "no_caim_first_empirical_n": 5,
+      "claim_limit": "Protocol-specific empirical stability points; not universal theoretical thresholds"
+    }
+  ],
+  "totals": {
+    "checks": 8,
+    "failed_checks": 0,
+    "table_rows_checked": 135,
+    "numeric_fields_checked": 808,
+    "numeric_mismatches": 0
+  },
+  "scope_limit": "This verification is limited to the declared repository artifacts and does not claim byte-for-byte replay of unrecorded historical random-number streams."
+}

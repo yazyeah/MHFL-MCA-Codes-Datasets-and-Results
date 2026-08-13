@@ -1,8 +1,8 @@
 # MHFL-MCA Supplementary Experiments
 
-This directory is a curated, portable publication copy for the revision
+This directory is a curated, portable publication copy for the supplementary
 experiments associated with MHFL-MCA. It is deliberately isolated from the
-working reviewer suite and can be reviewed or staged as one explicit Git
+working experiment suite and can be inspected or staged as one explicit Git
 directory: `MHFL-MCA Supplementary Experiments`.
 
 ## What this package contains
@@ -13,7 +13,7 @@ directory: `MHFL-MCA Supplementary Experiments`.
 - Compact CSV/JSON/TEX/PDF/PNG/SVG results for Experiments 02--06.
 - A paper-specific four-row Table 15 export and a provenance-explicit hybrid
   low-shot bundle.
-- The current revised-manuscript workflow figure under `figures/`, bound to
+- The MHFL-MCA workflow figure under `figures/`, bound to
   the source image by SHA-256.
 - SHA-256 and publication manifests generated after validation.
 
@@ -21,8 +21,8 @@ directory: `MHFL-MCA Supplementary Experiments`.
 
 - Raw UO or KAIST data.
 - Model weights, SavedModels, caches, temporary files, and split caches.
-- Patch directories, pre-fix scripts, smoke outputs, and stale Experiment 07
-  assets.
+- Patch directories, pre-fix scripts, smoke outputs, and internal aggregate
+  build products.
 - TIFF files and other large binary duplicates.
 
 Checkpoint manifests and model-provenance records are retained, but their
@@ -37,12 +37,12 @@ research-data repository) and matched by SHA-256.
 | Experiment 02 | Source data and figures included; post-hoc analysis of three Stage-3 models. |
 | Experiment 03 | Complete isolated CPU-FLOPs/GPU-runtime profile included. |
 | Experiment 04 | Complete 5-variant source evidence included; paper Table 15 is a separate 3-control display. |
-| Experiment 05 | Controlled extension included transparently with its failed Table-5 replay gate; the paper figure/table use an explicitly documented hybrid mapping. |
+| Experiment 05 | Controlled extension and an explicitly documented protocol-aware source mapping are included. |
 | Experiment 06 | Fixed-tuning TF-SVM experiment included; manuscript reference is bound to the recorded 2026-08-10 LaTeX snapshot. |
-| Experiment 07 | Stale aggregate assets intentionally excluded; rebuild only after final manuscript gates are refreshed. |
+| Experiment 07 | Internal aggregate-builder outputs are not part of this portable package; source-specific results are published directly. |
 
-This directory is therefore a **publication evidence package**, not a claim
-that every final-manuscript gate currently passes.
+This directory is a **publication evidence package** with source-specific
+result and provenance contracts.
 
 ## Reproduction guide
 

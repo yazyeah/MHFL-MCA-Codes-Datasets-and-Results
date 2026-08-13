@@ -1,0 +1,8 @@
+name: mhfl-mca-revision
+channels:
+  - defaults
+dependencies:
+  - python=3.9.20
+  - pip=25.1
+  - pip:
+      - -r requirements-lock.txt

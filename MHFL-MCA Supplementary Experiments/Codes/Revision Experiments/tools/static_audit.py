@@ -63,9 +63,13 @@ def main() -> None:
     root = args.root.resolve()
     config_names = module_constants(root / "mhfl_review" / "config.py")
     files = sorted(path for path in root.rglob("*.py") if "__pycache__" not in path.parts)
-    reports = [audit_file(path, config_names) for path in files]
+    reports = []
+    for path in files:
+        report = audit_file(path, config_names)
+        report["file"] = path.relative_to(root).as_posix()
+        reports.append(report)
     summary = {level: sum(report["status"] == level for report in reports) for level in ("PASS", "WARN", "FAIL")}
-    payload = {"root": str(root), "python_target": "3.9", "summary": summary, "files": reports}
+    payload = {"root": ".", "python_target": "3.9", "summary": summary, "files": reports}
     output = args.json or (root / "provenance" / "static_audit.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")

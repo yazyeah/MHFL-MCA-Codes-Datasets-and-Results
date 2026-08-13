@@ -1,23 +1,3 @@
-# Python version (recommended in README): 3.9.20
-# Create env first:
-# conda create -n mhcnn-kaist python=3.9.20 -y
-# conda activate mhcnn-kaist
-
-# Core deep learning (TensorFlow/Keras)
-tensorflow==2.7.0
-keras==2.7.0
-
-# Scientific stack + plotting
-numpy<2.0
-scipy
-pandas
-matplotlib
-seaborn
-scikit-learn
-
-# KAIST motor current (.tdms)
-nptdms
-
-# Hyperparameter search (Optuna)
-optuna
-optuna-integration
+# The reproducibility lock is maintained in one place. Prefer creating the
+# Conda environment from environment.yml; pip users may install this file.
+-r requirements-lock.txt

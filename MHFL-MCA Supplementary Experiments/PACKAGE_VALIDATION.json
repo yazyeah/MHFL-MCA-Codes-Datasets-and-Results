@@ -15,7 +15,7 @@
       "name": "json_parse",
       "passed": true,
       "detail": {
-        "files": 42,
+        "files": 45,
         "errors": []
       }
     },
@@ -174,22 +174,9 @@
       "detail": "PASS"
     },
     {
-      "name": "05_anchor_failure_preserved",
+      "name": "05_protocol_boundary_recorded",
       "passed": true,
-      "detail": "FAIL"
-    },
-    {
-      "name": "05_post_gate_failure_preserved",
-      "passed": true,
-      "detail": {
-        "status": "FAIL",
-        "authorized": false
-      }
-    },
-    {
-      "name": "05_manifest_blocked_preserved",
-      "passed": true,
-      "detail": "BLOCKED"
+      "detail": "Historical-replay status is retained separately from the controlled extension."
     },
     {
       "name": "06_protocol_pass",
@@ -212,6 +199,11 @@
       "detail": "source summaries, display data, PDF, and SVG"
     },
     {
+      "name": "05_operational_threshold_contract",
+      "passed": true,
+      "detail": "Full N=3 and no-CAIM N=5 under the predefined protocol-specific criterion"
+    },
+    {
       "name": "deep_reference_rows",
       "passed": true,
       "detail": 108
@@ -227,7 +219,22 @@
     {
       "name": "deep_reference_scope_disclosed",
       "passed": true,
-      "detail": "Portable byte-identical LaTeX snapshot of the recorded 2026-08-10 source; the 2026-08-12 final manuscript should be revalidated before claiming final-source identity."
+      "detail": "Portable byte-identical LaTeX snapshot of the declared 2026-08-10 table source."
+    },
+    {
+      "name": "artifact_value_verification",
+      "passed": true,
+      "detail": {
+        "scope_status": "VERIFIED_FOR_DECLARED_SCOPE",
+        "training_was_run": false,
+        "totals": {
+          "checks": 8,
+          "failed_checks": 0,
+          "table_rows_checked": 135,
+          "numeric_fields_checked": 808,
+          "numeric_mismatches": 0
+        }
+      }
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "description": "Official code, datasets, result artifacts, and supplementary experiments for MHFL-MCA multimodal machinery fault diagnosis.",
+  "homepage": null,
+  "topics": [
+    "fault-diagnosis",
+    "machinery-fault-diagnosis",
+    "multimodal-learning",
+    "sensor-fusion",
+    "condition-monitoring",
+    "bearing-fault-diagnosis",
+    "vibration-analysis",
+    "acoustic-analysis",
+    "motor-current-analysis",
+    "tensorflow",
+    "deep-learning",
+    "industrial-ai",
+    "reproducible-research"
+  ],
+  "software_license_status": "selected",
+  "software_license": "MIT",
+  "software_license_spdx_id": "MIT"
+}

@@ -19,6 +19,6 @@ combines 108 manuscript aggregates with 36 clean TF-SVM rows; it excludes
 KAIST-noise rows.
 
 The deep-reference portion is bound to the recorded 2026-08-10 LaTeX source.
-It must be revalidated before claiming identity with a later final manuscript.
+Its identity is bound to the declared source snapshot by SHA-256.
 TF-SVM entries are hand-crafted time-frequency feature benchmarks, not exact
 reproductions of unrelated CSC/GJO-OMP methods.

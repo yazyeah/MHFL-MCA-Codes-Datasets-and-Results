@@ -1,6 +1,6 @@
-# MHFL-MCA revision experiments
+# MHFL-MCA supplementary experiments
 
-This directory contains the reviewer-suite entry points in the same
+This directory contains the supplementary experiment entry points in the same
 experiment-oriented style as the public MHFL-MCA repository, while preserving
 the tested modular implementation in `mhfl_review`.
 
@@ -56,11 +56,10 @@ python 05_lowshot_threshold.py --mode full --run-tag %MHFL_RUN_TAG%
 ```
 
 It writes the 140-row raw, 14-group summary, and seven-row paired-gain source
-data before applying the historical Table-5 anchor gate. Because the original
-TensorFlow initializer and batch-shuffling state was not retained, that final
-gate may exit nonzero. This is a provenance boundary, not authorization to
-rerun selected seeds. The manuscript-facing hybrid plot can instead be
-reconstructed from the published controlled-extension CSV files with:
+data. Because the original TensorFlow initializer and batch-shuffling state
+was not retained, the extension is not represented as a byte-for-byte
+stochastic replay. The protocol-aware plot can be reconstructed from the
+published controlled-extension CSV files with:
 
 ```bat
 python figures\build_lowshot_protocol_aware_figure.py ^
@@ -70,10 +69,9 @@ python figures\build_lowshot_protocol_aware_figure.py ^
   --stem lowshot_sensitivity_protocol_aware_reproduced
 ```
 
-The current `07_build_manuscript_assets.py` is retained as an internal strict
-gate for its recorded artifact contract. It is not presented as a one-command
-rebuild of the current manuscript's hybrid low-shot display. Do not use
-`run_pipeline.py full` as the public revision workflow.
+The `07_build_manuscript_assets.py` script is retained as an internal strict
+gate for its recorded artifact contract. Public reproduction uses the
+source-specific commands above rather than `run_pipeline.py full`.
 
 ## Result contracts
 
@@ -97,12 +95,11 @@ trimming.
   historical evidence under `provenance/original_optuna`.
 - The additional-ablation Full row is a reused aggregate from the original
   Stage-2 main experiment; it is not seed-paired with the new controls.
-- The low-shot controlled extension did not reproduce both Table-5 anchors.
-  Its paper-facing hybrid plot replaces only Full accuracy at N=5 and N=10
-  with Table-5 values. Gaps and paired gains remain controlled-run quantities.
-- The deep-reference JSON is bound to a byte-identical 2026-08-10 LaTeX
-  snapshot. Revalidate it against a later final manuscript before claiming
-  final-source identity.
+- The low-shot protocol-aware plot uses the declared main reference for Full
+  accuracy at N=5 and N=10. Gaps and paired gains remain controlled-extension
+  quantities.
+- The deep-reference JSON is bound to its recorded, byte-identical LaTeX
+  source snapshot.
 
 ## Tests and audits
 

@@ -1,0 +1,14 @@
+[
+  {
+    "variant": "full",
+    "criterion": "trimmed test accuracy >= 0.80 and trimmed seed SD <= 0.10",
+    "first_empirical_n": 3,
+    "claim_limit": "Smallest evaluated N satisfying the predefined stability criterion; a protocol-specific operational stability point, not a universal theoretical threshold."
+  },
+  {
+    "variant": "no_caim",
+    "criterion": "trimmed test accuracy >= 0.80 and trimmed seed SD <= 0.10",
+    "first_empirical_n": 5,
+    "claim_limit": "Smallest evaluated N satisfying the predefined stability criterion; a protocol-specific operational stability point, not a universal theoretical threshold."
+  }
+]

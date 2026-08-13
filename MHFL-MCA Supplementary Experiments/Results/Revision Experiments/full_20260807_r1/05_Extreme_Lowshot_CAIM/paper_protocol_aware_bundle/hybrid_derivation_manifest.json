@@ -28,6 +28,6 @@
   "controlled_paired_summary_sha256": "e156861ebcd35f95d52cc6bc2536efd72ba41518c009548a62b8730e86d759ea",
   "display_data_sha256": "34613b515ce1d7101bd86f55425c6f1111a725b72e7b515233e18810c01f9a8c",
   "figure_pdf_sha256": "1a157cd5bdc213e61a2ab44d2f83830eb0b892b0404281a52315f3cb0aa5ad21",
-  "figure_svg_sha256": "e676b17a8ee9071e64892c3711e80b982f88db0075b815fd8e678ac2b6a45aea",
+  "figure_svg_sha256": "a97309382f7a58cadfb1b339fe9f264955165e90eb8bf94dc5b4d867265272e0",
   "claim_limit": "The hybrid display is protocol-aware source presentation, not an exact replay or a pooled estimator."
 }
