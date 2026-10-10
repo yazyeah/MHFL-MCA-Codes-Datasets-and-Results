@@ -80,7 +80,7 @@ $T_m$ 和 $C_m$ 分别为特征图的时间长度和通道数。振动分支采�
 Q_i^{a\leftarrow b}&=F_i^{(a)}W_q^{a\leftarrow b},\\
 K_i^{a\leftarrow b}&=F_i^{(b)}W_k^{a\leftarrow b},\qquad
 V_i^{a\leftarrow b}=F_i^{(b)}W_v^{a\leftarrow b},\\
-G_i^{a\leftarrow b}&=\operatorname{softmax}_{\mathrm{row}}
+G_i^{a\leftarrow b}&=\mathrm{softmax}_{\mathrm{row}}
 \!\left(Q_i^{a\leftarrow b}(K_i^{a\leftarrow b})^\top\right)
 V_i^{a\leftarrow b},\qquad a\ne b.
 \end{aligned}
@@ -94,10 +94,10 @@ Softmax 沿键的时间维度计算，使每个查询位置聚合另一模态的
 
 ```math
 \begin{aligned}
-g_i^{(1)}&=\operatorname{vec}(G_i^{1\leftarrow2}),\qquad
-g_i^{(2)}=\operatorname{vec}(G_i^{2\leftarrow1}),\\
+g_i^{(1)}&=\mathrm{vec}(G_i^{1\leftarrow2}),\qquad
+g_i^{(2)}=\mathrm{vec}(G_i^{2\leftarrow1}),\\
 s_i^{(m)}&=\sigma(w_m^\top g_i^{(m)}+b_m),\\
-\boldsymbol{\alpha}_i&=\operatorname{softmax}
+\boldsymbol{\alpha}_i&=\mathrm{softmax}
 \!\left(W_s[s_i^{(1)};s_i^{(2)}]+b_s\right).
 \end{aligned}
 ```
@@ -117,8 +117,8 @@ $[\,\cdot\,;\,\cdot\,]$ 表示向量拼接，$\sigma$ 表示 Sigmoid。每个样
 
 ```math
 \begin{aligned}
-p_i&=\operatorname{softmax}\!\left(
-W_c\operatorname{LeakyReLU}(W_fz_i+b_f)+b_c\right),\\
+p_i&=\mathrm{softmax}\!\left(
+W_c\mathrm{LeakyReLU}(W_fz_i+b_f)+b_c\right),\\
 \mathcal{L}_{\mathrm{CE}}&=-\frac{1}{M}
 \sum_{i=1}^{M}\sum_{k=1}^{K}y_{ik}\log p_{ik}.
 \end{aligned}
