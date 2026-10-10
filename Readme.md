@@ -1,951 +1,308 @@
-# 📌 MHFL-MCA Codes, Datasets and Results
-
-[![Repository audit](https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/actions/workflows/repository-audit.yml/badge.svg)](https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/actions/workflows/repository-audit.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-This repository provides the MHFL-MCA implementation, datasets, result
-artifacts, provenance records and supplementary experiments for inspection
-and reproducibility assessment.
-
-Quick links: [reproducibility](REPRODUCIBILITY.md) ·
-[data access](DATA.md) · [dataset licenses](DATA_LICENSES.md) ·
-[MIT license](LICENSE) · [license scope](LICENSE_SCOPE.md) ·
-[environment](ENVIRONMENT.md) · [hardware](HARDWARE.md) ·
-[checkpoint contract](MODEL_ZOO.md) ·
-[artifact value verification](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md)
-
-Author-owned software and documentation are released under the MIT License.
-Dataset and third-party rights remain governed by
-[DATA_LICENSES.md](DATA_LICENSES.md),
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), and the exclusions in
-[LICENSE_SCOPE.md](LICENSE_SCOPE.md).
-
-This repository provides a **TensorFlow/Keras** implementation of the paper:
-
-> **MHFL-MCA: Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis with limited samples**
-
-MHFL-MCA targets **intelligent fault diagnosis (IFD)** under two practical constraints:
-
-- **Limited labeled samples** (few-shot regime)
-- **Strong measurement noise / unreliable sensors**
-
-It addresses these challenges by combining (i) **heterogeneous modality-specific encoders**, (ii) **bidirectional cross-attention**, and (iii) **sample-wise adaptive modality re-weighting** to produce robust fused representations.
+<a id="top"></a>
 
 <p align="center">
-  <img width="900" alt="MHFL-MCA architecture" src="MHFL-MCA%20Supplementary%20Experiments/figures/MHFL-MCA_architecture.jpeg" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/mhfl-mca-banner-dark-v3.png" />
+    <img src="assets/mhfl-mca-banner-v3.png" width="850" alt="MHFL-MCA" />
+  </picture>
 </p>
 
-*Overall MHFL-MCA workflow (Figure 1).*
+<p align="center">
+  <a href="https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/stargazers"><img src="https://img.shields.io/github/stars/yazyeah/MHFL-MCA-Codes-Datasets-and-Results?style=social" alt="GitHub stars" /></a>
+  <a href="LICENSE_SCOPE.md"><img src="https://img.shields.io/badge/license-MIT-green" alt="Code license: MIT" /></a>
+  <a href="https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/commits"><img src="https://img.shields.io/github/last-commit/yazyeah/MHFL-MCA-Codes-Datasets-and-Results" alt="Last commit" /></a>
+  <a href="https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/pulls"><img src="https://img.shields.io/badge/PRs-welcome-blue" alt="PRs welcome" /></a>
+  <a href="ENVIRONMENT.md"><img src="https://img.shields.io/badge/TensorFlow-2.7-orange?logo=tensorflow&logoColor=white" alt="TensorFlow 2.7" /></a>
+  <a href="https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/actions/workflows/repository-audit.yml"><img src="https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/actions/workflows/repository-audit.yml/badge.svg" alt="Repository audit" /></a>
+  <a href="https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results"><img src="https://img.shields.io/badge/DeepWiki-Ask%20DeepWiki-435b75" alt="Ask DeepWiki" /></a>
+</p>
+
+<p align="center">
+  中文 | <a href="README_en.md">English</a>
+</p>
+
+- MHFL-MCA 面向小样本、变载荷和噪声干扰条件下的多模态轴承故障诊断。
+- 仓库包含论文对应的 TensorFlow/Keras 实现、对比方法、实验结果和补充实验。
+- UO 实验使用振动与声学信号，KAIST 实验使用振动与电机电流信号；两路输入均为 2048 点的一维片段。
+- 对比实验包含五种深度学习方法；补充实验包括消融、模态缺失和极低样本分析。
+- 数据集与实验图表由 Git LFS 管理，支持按实验分别下载。
+
+> 作者自有代码和文档采用 MIT 协议，数据遵循各自的上游许可。模型权重清单和校验值已收录，权重文件尚未发布。
+
+<p align="center">
+  <a href="https://doi.org/10.1016/j.aei.2026.105277">论文</a> |
+  <a href="#method">方法框架</a> |
+  <a href="#quick-start">快速开始</a> |
+  <a href="#datasets">数据与实验</a> |
+  <a href="#results">实验结果</a> |
+  <a href="https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results">DeepWiki</a>
+</p>
 
 ---
 
-## 🏗️ 1. Model Explanation
+# 📌 项目介绍
 
-### 1.1 Problem setup and inputs
+振动、声学和电流信号的统计特征不同，采用相同的编码结构再拼接特征，可能丢失模态间的互补信息。MHFL-MCA 用模态专属卷积分支提取特征，通过双向交叉注意力完成模态间交互，并按样本调整融合权重，输出健康状态分类结果。
 
-For each sample $i$, MHFL-MCA takes **two synchronized 1-D time-domain segments**:
+网络包括模态专属异构编码器（MSHEM）、交叉注意力交互模块（CAIM）、自适应模态重加权模块（AMRM）和融合分类模块（FCB）。方法与实验设置详见论文：
 
-- **Vibration**: $x_i^{(v)} \in \mathbb{R}^{L}$
-- **Acoustic** (paper) / **Current** (KAIST scripts in this repo): $x_i^{(a)} \in \mathbb{R}^{L}$
+> [Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis of machines under complex conditions](https://doi.org/10.1016/j.aei.2026.105277)<br>
+> Yuang Zhou, Tianci Zhang, Tongyang Pan, Jingsong Xie, Jinglong Chen<br>
+> *Advanced Engineering Informatics*, 77, 105277, 2027.
 
-In the paper, the segment length is **$L=2048$** and the classification is over **$K$** health states (Case 1 $K=7$ and Case 2 $K=5$).  
-In this repository’s **KAIST Load-Shift** scripts, the **second modality is motor current (.tdms)**, but the network design and training protocol follow the same MHFL-MCA pipeline.
+<a id="method"></a>
 
----
+## 方法框架
 
-### 1.2 High-level architecture (MSHEM → CAIM → AMRM → FCB)
+框架由异构编码、双向交互、模态重加权和分类四部分组成。模态 1 为振动，模态 2 为声学（UO）或电流（KAIST）。
 
-MHFL-MCA consists of four coupled modules:
+<p align="center">
+  <img src="MHFL-MCA%20Supplementary%20Experiments/figures/MHFL-MCA_architecture.jpeg" width="800" alt="MHFL-MCA network architecture" />
+</p>
 
-1. **MSHEM — Modality-Specific Heterogeneous Encoder Module**  
-   Two 1-D CNN branches designed with **different kernel sizes, activations, and pooling** to match the statistical characteristics of each modality.
+### 1. 异构特征编码（MSHEM）
 
-2. **CAIM — Cross-Attention Interaction Module (bidirectional)**  
-   A **bidirectional** cross-attention block that exchanges information between modalities:
-   - $G^{v \leftarrow a}$: vibration features enhanced by acoustic/current  
-   - $G^{a \leftarrow v}$: acoustic/current features enhanced by vibration
+对样本 $i$，两路输入为 $\mathbf{x}_i^{(1)},\mathbf{x}_i^{(2)}\in\mathbb{R}^{2048}$。独立参数化的编码器提取模态特征：
 
-3. **AMRM — Adaptive Modality Re-Weighting Module**  
-   Computes **sample-wise reliability weights** for each modality and performs adaptive fusion so that noisy/unreliable modalities are down-weighted.
+```math
+F_i^{(m)}=E_m(\mathbf{x}_i^{(m)};\theta_m)
+\in\mathbb{R}^{T_m\times C_m},\qquad m\in\{1,2\}.
+```
 
-4. **FCB — Fusion Classification Block**  
-   A compact classifier (Dense → Softmax) that maps fused features to the final health-state probability vector.
+$T_m$ 和 $C_m$ 分别为特征图的时间长度和通道数。振动分支采用卷积核大小 16、LeakyReLU 和平均池化；声学或电流分支采用卷积核大小 8、GELU 和最大池化。
 
----
+### 2. 双向交叉注意力（CAIM）
 
-### 1.3 MSHEM details (heterogeneous encoders)
+方向 $a\leftarrow b$ 表示模态 $a$ 提供查询，模态 $b$ 提供键和值，其中 $a,b\in\{1,2\}$ 且 $a\ne b$。两个方向分别使用独立的投影参数：
 
-The core idea is **asymmetry** between modality branches:
+```math
+\begin{aligned}
+Q_i^{a\leftarrow b}&=F_i^{(a)}W_q^{a\leftarrow b},\\
+K_i^{a\leftarrow b}&=F_i^{(b)}W_k^{a\leftarrow b},\qquad
+V_i^{a\leftarrow b}=F_i^{(b)}W_v^{a\leftarrow b},\\
+G_i^{a\leftarrow b}&=\operatorname{softmax}_{\mathrm{row}}
+\!\left(Q_i^{a\leftarrow b}(K_i^{a\leftarrow b})^\top\right)
+V_i^{a\leftarrow b},\qquad a\ne b.
+\end{aligned}
+```
 
-- **Vibration branch**: larger kernels (e.g., **$k=16$**) + **Average Pooling** + **LeakyReLU**  
-  Motivation: vibration often contains periodic impulsive patterns and benefits from larger receptive fields and smoother pooling.
+Softmax 沿键的时间维度计算，使每个查询位置聚合另一模态的信息。两路交互输出 $G_i^{1\leftarrow2}$ 和 $G_i^{2\leftarrow1}$ 的形状分别为 $T_1\times D$ 和 $T_2\times D$，其中 $D$ 为注意力投影维度。
 
-- **Acoustic branch** (paper) / **Current branch** (KAIST scripts): smaller kernels (e.g., **$k=8$**) + **Max Pooling** + **GELU**  
-  Motivation: acoustic/current signals often include transient broadband components where peak-preserving pooling can be beneficial.
+### 3. 模态重加权与融合（AMRM）
 
-A representative encoder pattern is summarized below (exact tensor shapes depend on the number of blocks selected by Optuna):
+交互特征展平后，分别生成 Sigmoid 标量评分，再通过二输出全连接层和 Softmax 得到样本级模态权重：
 
-| Module | Modality | Typical block pattern |
-|---|---|---|
-| MSHEM | Vibration | Conv1D($k=16$) → LeakyReLU → AvgPool → … (stacked) |
-| MSHEM | Acoustic/Current | Conv1D($k=8$) → GELU → MaxPool → … (stacked) |
+```math
+\begin{aligned}
+g_i^{(1)}&=\operatorname{vec}(G_i^{1\leftarrow2}),\qquad
+g_i^{(2)}=\operatorname{vec}(G_i^{2\leftarrow1}),\\
+s_i^{(m)}&=\sigma(w_m^\top g_i^{(m)}+b_m),\\
+\boldsymbol{\alpha}_i&=\operatorname{softmax}
+\!\left(W_s[s_i^{(1)};s_i^{(2)}]+b_s\right).
+\end{aligned}
+```
 
----
+权重满足 $\alpha_i^{(1)}+\alpha_i^{(2)}=1$，融合向量由两路加权特征拼接而成：
 
-### 1.4 CAIM details (bidirectional cross-attention)
+```math
+z_i=[\,\alpha_i^{(1)}g_i^{(1)};\ \alpha_i^{(2)}g_i^{(2)}\,]
+\in\mathbb{R}^{(T_1+T_2)D}.
+```
 
-CAIM uses standard attention:
+$[\,\cdot\,;\,\cdot\,]$ 表示向量拼接，$\sigma$ 表示 Sigmoid。每个样本的权重由两路交互特征共同决定。
 
-$$
-\mathrm{Att}(Q,K,V)=\mathrm{softmax}\left(\frac{QK^\top}{\sqrt{d}}\right)V
-$$
+### 4. 健康状态分类（FCB）
 
-but applies it **cross-modally in both directions**:
+融合向量经过 256 维隐藏层和 LeakyReLU，再由 Softmax 输出 $K$ 类健康状态的概率。基础监督目标为交叉熵：
 
-- **$a \rightarrow v$**: $Q=\mathrm{Vib}$, $K,V=\mathrm{Aco/Cur}$
-- **$v \rightarrow a$**: $Q=\mathrm{Aco/Cur}$, $K,V=\mathrm{Vib}$
+```math
+\begin{aligned}
+p_i&=\operatorname{softmax}\!\left(
+W_c\operatorname{LeakyReLU}(W_fz_i+b_f)+b_c\right),\\
+\mathcal{L}_{\mathrm{CE}}&=-\frac{1}{M}
+\sum_{i=1}^{M}\sum_{k=1}^{K}y_{ik}\log p_{ik}.
+\end{aligned}
+```
 
-The result is a pair of **cross-enhanced** representations that preserve each modality’s identity while injecting complementary cues.
+$M$ 为批次样本数，$y_{ik}$ 为独热标签的第 $k$ 个分量，$p_{ik}$ 为预测概率。KAIST 的噪声稳定训练还包括 KL 一致性约束，训练设置见 [MHCNN_KAIST.py](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py)。上述计算对应主实现中的 `CrossAttention` 和 `create_model`：[UO](Codes/Codes%20for%20UO/MHCNN_UO.py) | [KAIST](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py)。
 
----
-
-### 1.5 AMRM details (sample-wise modality reliability)
-
-AMRM estimates **reliability weights** per sample (e.g., two scalars $w_v, w_a$ with $w_v+w_a=1$) and constructs a fused representation:
-
-$$
-z_i = [\,w_v \cdot g_i^{(v)} \,;\, w_a \cdot g_i^{(a)}\,]
-$$
-
-This helps when one sensor becomes noisy: the model can reduce its influence at inference time.
-
----
-
-### 1.6 FCB (fusion classification)
-
-The fused vector $z_i$ is passed to a compact classifier:
-
-- Dense (e.g., **256 units**) → activation
-- Dense (**$K$ units**) → Softmax
-
-yielding the posterior probability over health states.
+代码模块、数据流程和实验入口的在线索引：[DeepWiki](https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results)。
 
 ---
 
-### 1.7 Training protocol and hyperparameter selection
+<a id="quick-start"></a>
 
-- Loss: **categorical cross-entropy**
-- Optimizer: **Adamax**
-- Few-shot evaluation: repeated runs with fixed seeding; report **mean ± std** (and trimmed statistics where enabled)
-- Hyperparameters (e.g., number of CNN blocks per branch, attention embedding dimension, dropout, batch size, learning rate) are selected by an **Optuna** search.  
-  (In this repo’s KAIST scripts, Optuna searches these parameters in Stage 1, then Stage 2/3 reuse the best setting.)
+# 📌 快速开始
 
----
+代码和数据下载依赖 Git 与 [Git LFS](https://git-lfs.com/)，Python 环境由 Conda 管理。命令使用 Windows PowerShell，环境创建在 Conda PowerShell 中执行。
 
-## 📂 2. Dataset Explanation
+## 第 0 步：获取代码
 
-The paper evaluates MHFL-MCA on two public datasets. This repository supports the **KAIST Load-Shift** and **uOttawa (UO)** cases and records the supplementary experiment protocols separately.
+克隆命令跳过 LFS 自动下载，数据和历史结果可按实验单独获取。
 
-> **Important update:** In this repository, datasets **ARE included** and stored under the `Datasets/` directory (as shown in your local folder structure).  
-> Git LFS is required to resolve the tracked datasets. Prefer the selective
-> download commands in [DATA.md](DATA.md) instead of pulling every historical
-> result object.
-
----
-
-### 2.1 Case 1: UORED-VAFCLS (Vibration + Acoustic)
-
-- Collected on a University of Ottawa bearing test rig (vibration + acoustic).
-- Sampling rate: **42 kHz**, duration: **10 s** per recording, speed: **1750 RPM**.
-- After segmentation, each class contains **400 vibration** and **400 acoustic** samples, each sample with **2048 points**.
-- The paper uses **7 classes** (Healthy / Developing fault / Faulty across defect locations such as inner race, outer race, ball, cage).
-
-**Repository location (default):**
-- `Datasets/UO/` (your repo will store the uOttawa dataset here)
-
----
-
-### 2.2 Case 2: KAIST Load-Shift (Vibration `.mat` + Current `.tdms`)
-
-This repository’s reproducibility scripts implement **Load-Shift generalization**:
-
-- **Train/Val:** **0 Nm** only  
-- **Test:** **2 Nm** and **4 Nm**
-
-Two synchronized modalities are used:
-
-- **Vibration** stored as MATLAB **`.mat`**
-- **Motor current** stored as NI **`.tdms`**
-
-**Repository location (default):**
-- `Datasets/KAIST/`
-
-A common on-disk structure is:
-- `Datasets/KAIST/vibration/`  (contains `0Nm_*.mat`, `2Nm_*.mat`, `4Nm_*.mat`)
-- `Datasets/KAIST/current/`             (contains `0Nm_*.tdms`, `2Nm_*.tdms`, `4Nm_*.tdms`)
-
-> The code itself does **NOT** force a fixed structure: you can place the data anywhere and simply point the script placeholders to your folders.
-
----
-
-#### 2.2.1 Expected file naming
-
-The KAIST scripts assume the following file naming convention (per load and fault):
-
-- Vibration: `{LOAD}_{FAULT}.mat`  
-- Current: `{LOAD}_{FAULT}.tdms`
-
-Example (0 Nm, Normal):
-
-- `0Nm_Normal.mat`
-- `0Nm_Normal.tdms`
-
-The load set for this repo’s Load-Shift experiment is:
-
-- `0Nm`, `2Nm`, `4Nm`
-
-The fault labels depend on the script’s `FAULTS` list (example below is a common 5-class setup):
-
-- `Normal`
-- `BPFI_03`, `BPFI_10` (inner race, two severities)
-- `BPFO_03`, `BPFO_10` (outer race, two severities)
-
-> If your KAIST files use different names, rename them to match the above pattern (or update the `FAULTS` list and loader accordingly).
-
----
-
-#### 2.2.2 Segmentation and sampling (important for reproducibility)
-
-- Segment length: **2048 points** (time-domain)
-- Per class/per load cap: typically **400 segments**
-- Splits:
-  - Train/Val: only from **0 Nm**
-  - Test: only from **2 Nm** and **4 Nm**
-- Leakage control (recommended): a hash-based overlap check ensures train/val segments do not overlap
-
----
-
-## 🚀 3. Code Reproducibility Guide (KAIST)
-
-This section is written as a **step-by-step checklist** for reproducing the **KAIST Load-Shift** experiment on Windows.
-
-### 0) What you need
-
-- **Windows 10/11** (Windows 11 recommended)
-- (Strongly recommended) **NVIDIA GPU with ≥ 8 GB VRAM**
-- **Git** + **Git LFS** (required to resolve the tracked datasets)
-- A terminal: **Anaconda Prompt** (recommended) or **PowerShell**
-- This repository cloned locally (including `Datasets/`)
-
----
-
-### 0.1 Install Git (and Git LFS if needed)
-
-#### 0.1.1 Install Git
-
-1) Download and install Git (official):  
-https://git-scm.com/downloads
-
-2) Verify installation:
-~~~bash
-git --version
-~~~
-
-#### 0.1.2 Install Git LFS
-
-> Required for the dataset files stored by this repository.
-
-1) Install Git LFS:  
-https://git-lfs.com/
-
-2) Verify installation:
-~~~bash
-git lfs version
-~~~
-
----
-
-### 0.2 Clone the repository
-
-> Recommended: clone the repo instead of downloading ZIP.
-
-~~~bash
-git clone https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results.git
-cd MHFL-MCA-Codes-Datasets-and-Results
-~~~
-
-#### 0.2.1 Pull only the required LFS files
-
-For KAIST only:
-~~~bash
+```powershell
 git lfs install
-git lfs pull --include="Datasets/KAIST/**" --exclude=""
-~~~
-
-See [DATA.md](DATA.md) before an unrestricted LFS pull; the complete LFS
-payload is approximately 8.86 GiB.
-
----
-
-### 1) Install Python (Miniconda recommended, If suitable, Anaconda is welcomed)
-
-1) Install **Miniconda** (official):  
-https://docs.conda.io/en/latest/miniconda.html
-
-2) Verify Conda:
-~~~bash
-conda --version
-~~~
-
-> Avoid using the system Python shipped with Windows.
-
----
-
-### 2) Install NVIDIA Driver + CUDA + cuDNN (order matters)
-
-> Skip this section if you will run on CPU only (much slower for Optuna + training).
-
-#### 2.1 Install NVIDIA GPU driver
-
-1) Install driver (official):  
-https://www.nvidia.com/Download/index.aspx
-
-2) Verify:
-~~~bash
-nvidia-smi
-~~~
-
-#### 2.2 Install CUDA Toolkit
-
-1) CUDA Toolkit Archive:  
-https://developer.nvidia.com/cuda-toolkit-archive
-
-2) Install your CUDA version, then verify:
-~~~bash
-nvcc --version
-~~~
-
-#### 2.3 Install cuDNN
-
-1) cuDNN Archive:  
-https://developer.nvidia.com/rdp/cudnn-archive
-
-2) Download the cuDNN version matching your CUDA version.
-
-3) Install cuDNN by copying files into your CUDA directory  
-(example CUDA path: `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X\`)
-
-- Copy `bin\cudnn*.dll` → `...\CUDA\vXX.X\bin\`
-- Copy `include\cudnn*.h` → `...\CUDA\vXX.X\include\`
-- Copy `lib\x64\cudnn*.lib` → `...\CUDA\vXX.X\lib\x64\`
-
-> TensorFlow GPU support depends on TF/CUDA/cuDNN compatibility.  
-> If GPU is not detected later, follow TensorFlow official install notes:  
-> https://www.tensorflow.org/install
-
----
-
-### 3) Create and activate the Conda environment
-
-Recommended Python version:
-~~~bash
-conda create -n mhcnn-kaist python=3.9.20 -y
-conda activate mhcnn-kaist
-python -V
-~~~
-
----
-
-### 4) Install dependencies
-
-#### Option A: `requirements.txt`
-
-Download the `requirements.txt`:
-~~~bash
-pip install --upgrade pip
-pip install -r requirements.txt
-~~~
-
-#### Option B: install via pip commands
-
-~~~bash
-pip install --upgrade pip
-
-# Core deep learning (TensorFlow/Keras)
-pip install tensorflow==2.7.0 keras==2.7.0
-
-# Scientific stack + plotting
-pip install numpy scipy pandas matplotlib seaborn scikit-learn
-
-# KAIST motor current (.tdms)
-pip install nptdms
-
-# Hyperparameter search (Optuna)
-pip install optuna optuna-integration
-~~~
-
-**Notes**
-- `nptdms` is **required** to read KAIST current signals stored in `.tdms`.
-- `optuna-integration` may be needed for Keras pruning callbacks depending on Optuna version.
-
----
-
-### 5) Check TensorFlow GPU availability (one command)
-
-~~~bash
-python -c "import tensorflow as tf; print('TF:', tf.__version__); print('GPUs:', tf.config.list_physical_devices('GPU'))"
-~~~
-
-- If `GPUs: []`, go back to **Step 2** and check:
-  - Driver: `nvidia-smi`
-  - CUDA: `nvcc --version`
-  - cuDNN: copied to CUDA folder correctly
-  - TensorFlow GPU notes:  
-    https://www.tensorflow.org/install
-
----
-
-### 6) (Optional) Configure your IDE
-
-#### PyCharm
-- Settings → Python Interpreter → Add → Conda Env  
-- Select the interpreter from `mhcnn-kaist`
-
-#### VSCode
-- Command Palette → `Python: Select Interpreter`  
-- Choose the `mhcnn-kaist` environment
-
----
-
-### 7) Configure path placeholders (MOST IMPORTANT)
-
-Open your main KAIST script and locate placeholders such as:
-
-- `YOUR_TEMP_PATH`
-- `YOUR_VIB_MAT_DIR_0NM`, `YOUR_VIB_MAT_DIR_2NM`, `YOUR_VIB_MAT_DIR_4NM`
-- `YOUR_CUR_TDMS_DIR`
-- `YOUR_OUTPUT_DIR`
-
-Replace them with **your local absolute paths** (any location you like).
-
-#### Recommended setup if datasets are inside this repo
-
-If your repository contains:
-- `Datasets/KAIST/vibration`  (contains `0Nm_*.mat`, `2Nm_*.mat`, `4Nm_*.mat`)
-- `Datasets/KAIST/current/`   (contains `0Nm_*.tdms`, `2Nm_*.tdms`, `4Nm_*.tdms`)
-
-Then set:
-
-- `YOUR_VIB_MAT_DIR_0NM`, `YOUR_VIB_MAT_DIR_2NM`, `YOUR_VIB_MAT_DIR_4NM` →  
-  `...\<repo>\Datasets\KAIST\vibration`
-
-- `YOUR_CUR_TDMS_DIR` →  
-  `...\<repo>\Datasets\KAIST\current\`
-
-- `YOUR_OUTPUT_DIR` → any writable folder (recommended inside repo), e.g.  
-  `...\<repo>\Outputs\MHCNN_KAIST_Results\`
-
-- `YOUR_TEMP_PATH` → any writable temp folder, e.g.  
-  `D:\temp`
-
-#### Quick checklist after replacement
-
-- Vibration folder contains:
-  - `0Nm_Normal.mat`, `2Nm_Normal.mat`, `4Nm_Normal.mat`, ...
-- Current folder contains:
-  - `0Nm_Normal.tdms`, `2Nm_Normal.tdms`, `4Nm_Normal.tdms`, ...
-- `YOUR_OUTPUT_DIR` exists (or can be created) and is writable.
-
----
-
-### 8) Run the script (Terminal + IDE)
-
-#### Terminal
-~~~bash
-python your_script.py
-~~~
-
-#### IDE
-Right click → Run
-
-The KAIST benchmark script runs **three stages**:
-
-- **Stage 1 (Optuna)**: hyperparameter search (prints best params)
-- **Stage 2 (Few-shot main)**: train on 0 Nm (few-shot), test on 2 Nm & 4 Nm; repeat multiple seeds and report trimmed mean ± std
-- **Stage 3 (Noise robustness)**: FAIR “SameModel” protocol — train one model once, then evaluate multiple SNR points with repeated noise draws
-
-> First-run tip: reduce `SEARCH_TRIALS` and/or `SAMPLE_RANGE` to validate your pipeline quickly.
-
----
-
-### 9) Troubleshooting (FAQ)
-
-**(1) “Cannot find .mat / .tdms”**  
-- Naming must match `{LOAD}_{FAULT}.mat/.tdms`.  
-- Check that placeholders point to the correct folders.
-
-**(2) `ModuleNotFoundError: No module named 'nptdms'`**  
-~~~bash
-pip install nptdms
-~~~
-
-**(3) TensorFlow cannot find GPU**  
-- Re-check install order: Driver → CUDA → cuDNN.  
-- Verify:
-  - `nvidia-smi`
-  - `nvcc --version`
-  - GPU list:
-    ~~~bash
-    python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
-    ~~~
-
-**(4) Out-of-memory (OOM) on GPU**  
-- Reduce `batch_size` (or rerun Optuna with smaller batch-size search range).  
-- Reduce visualization cost (e.g., lower `TSNE_MAX_POINTS`).
-
-**(5) Permission error when writing outputs**  
-- Choose an output folder you can write to (avoid protected system folders).
-
----
-
-## 🚀 4. Code Reproducibility Guide (UO)
-
-This section provides a **step-by-step checklist** for reproducing the **uOttawa (UO, Case 1)** experiments (Vibration + Acoustic) on Windows.
-
-> **Dependencies are the same as KAIST** (TensorFlow/Keras + scientific stack).  
-> If you already created the `mhcnn-kaist` Conda environment, you can reuse it for UO directly.
-
----
-
-### 0) What you need
-
-- **Windows 10/11**
-- (Recommended) **NVIDIA GPU with ≥ 8 GB VRAM**
-- **Git** + **Git LFS**
-- A terminal: **Anaconda Prompt** (recommended) or **PowerShell**
-- This repository cloned locally (including `Datasets/` if you keep datasets inside the repo)
-
----
-
-### 1) Activate the existing Conda environment (recommended)
-
-If you already created it for KAIST:
-
-~~~bash
-conda activate mhcnn-kaist
-python -V
-~~~
-
-Otherwise, create it (same as KAIST):
-
-~~~bash
-conda create -n mhcnn-kaist python=3.9.20 -y
-conda activate mhcnn-kaist
-python -V
-~~~
-
----
-
-### 2) Install dependencies (same as KAIST)
-
- Download the `requirements.txt`:
-
-~~~bash
-pip install --upgrade pip
-pip install -r requirements.txt
-~~~
-
-Or install explicitly:
-
-~~~bash
-pip install --upgrade pip
-
-# Core deep learning (TensorFlow/Keras)
-pip install tensorflow==2.7.0 keras==2.7.0
-
-# Scientific stack + plotting
-pip install numpy scipy pandas matplotlib seaborn scikit-learn
-
-# Hyperparameter search (Optuna) - only needed if your UO script uses Optuna
-pip install optuna optuna-integration
-~~~
-
-**Notes**
-- `nptdms` is **NOT required** for UO (it is only needed for KAIST motor current `.tdms`).
-- UO scripts load `.mat` files only.
-
----
-
-### 3) Prepare the UO dataset (expected folder layout)
-
-The UO scripts expect the dataset root folder to be named exactly:
-
-- `3_MatLab_Raw_Data/`
-
-and contain subfolders like:
-
-- `1_Healthy/`
-- `2_Inner_Race_Faults/`
-- `3_Outer_Race_Faults/`
-- `4_Ball_Faults/`
-- `5_Cage_Faults/`
-
-The scripts typically load `.mat` files such as:
-
-- `H_1_0.mat`, `H_2_0.mat`
-- `I_1_1.mat`, `I_2_1.mat`, `I_1_2.mat`, `I_2_2.mat`
-- `O_6_2.mat`, `O_7_2.mat`
-- `B_11_*.mat`, `B_12_*.mat` (depending on the exact script)
-- `C_16_*.mat`, `C_17_*.mat`
-
-> If your filenames differ, either rename them to match the script convention  
-> or update the file list inside the loader.
-
----
-
-### 4) Configure path placeholders (MOST IMPORTANT)
-
-Open your UO scripts and locate placeholders such as:
-
-- `YOUR_UO_DATA_ROOT`
-- `YOUR_UO_OUTPUT_DIR`
-- (Optional) `YOUR_TEMP_DIR`
-
-Replace them with **your local absolute paths**.
-
-#### 4.1 What each placeholder means
-
-- `YOUR_UO_DATA_ROOT`  
-  Must point to the dataset folder named **`3_MatLab_Raw_Data`**.  
-  Example (dataset inside this repo):
-  - `...\<repo>\Datasets\UO\3_MatLab_Raw_Data`
-
-- `YOUR_UO_OUTPUT_DIR`  
-  Any writable directory for saving results (recommended inside repo):
-  - `...\<repo>\Outputs\UO_Results\`
-
-- `YOUR_TEMP_DIR` (Optional)  
-  Any writable temp folder (Windows), e.g. `D:\temp`.  
-  Set to empty string `""` to disable override.
-
-#### 4.2 Quick checklist after replacement
-
-- `YOUR_UO_DATA_ROOT` ends with `...\3_MatLab_Raw_Data`
-- Class subfolders exist under `3_MatLab_Raw_Data`
-- The `.mat` files referenced by the script exist
-- `YOUR_UO_OUTPUT_DIR` exists (or can be created) and is writable
-
----
-
-### 5) Run the UO scripts
-
-Run the target UO script from terminal:
-
-~~~bash
-python your_uo_script.py
-~~~
-
-Common UO scripts include:
-- The main MHFL-MCA few-shot experiment (Case 1, vibration + acoustic)
-- Ablation scripts (Exp1 ~ Exp5), where each script disables specific modules:
-  - Exp1: Single Vibration only
-  - Exp2: Single Acoustic only
-  - Exp3: No CAIM & No AMRM (naive concat)
-  - Exp4: w/o Adaptive Modality Fusion (direct concatenation variant)
-  - Exp5: With AMRM, No CAIM
-
----
-
-### 6) Troubleshooting (FAQ)
-
-**(1) “Cannot find .mat”**  
-- Verify `YOUR_UO_DATA_ROOT` points to `3_MatLab_Raw_Data`.  
-- Verify file names and subfolders match the script.
-
-**(2) TensorFlow cannot find GPU**  
-- Same as KAIST: check driver/CUDA/cuDNN installation and TF compatibility.
-
-**(3) Permission error when writing outputs**  
-- Choose a writable `YOUR_UO_OUTPUT_DIR` (avoid protected system directories).
-
-**(4) Out-of-memory (OOM)**  
-- Reduce `batch_size` and/or reduce visualization cost if applicable.
-
----
-
-## 📁 5. Generated Results Layout (What You Should See)
-
-All outputs are written under your configured output directory placeholders.
-
-- KAIST scripts write to `YOUR_OUTPUT_DIR/ ...`
-- UO scripts write to `YOUR_UO_OUTPUT_DIR/ ...`
-
----
-
-### 5.1 KAIST (Load-Shift) Results Layout
-
-All outputs are written under your configured `YOUR_OUTPUT_DIR`.
-
-A typical directory layout produced by the KAIST script is:
-
-```text
-YOUR_OUTPUT_DIR/
-├─ log.txt
-├─ Time_Summary.txt
-├─ Final_Summary_Stats_raw.csv
-├─ Final_Summary_Stats_trimmed.csv
-├─ Samples_05/
-│  ├─ Run_01/
-│  │  ├─ curves.png
-│  │  ├─ Test_2Nm/
-│  │  │  ├─ cm_2Nm.png
-│  │  │  ├─ roc_2Nm.png
-│  │  │  └─ tsne_2Nm.png
-│  │  └─ Test_4Nm/
-│  │     ├─ cm_4Nm.png
-│  │     ├─ roc_4Nm.png
-│  │     └─ tsne_4Nm.png
-│  └─ Run_02/
-│     └─ ...
-├─ Samples_06/
-│  └─ ...
-├─ ...
-└─ NoiseStudy_LoadShift_FAIR_SameModel/
-   ├─ Noise_Robustness_LoadShift_SameModel_FAIR.csv
-   ├─ radar_2Nm.png
-   ├─ radar_4Nm.png
-   └─ BaselinePlots_SNR0dB/
-      ├─ cm_2Nm.png
-      ├─ roc_2Nm.png
-      ├─ tsne_2Nm.png
-      ├─ cm_4Nm.png
-      ├─ roc_4Nm.png
-      └─ tsne_4Nm.png
+$env:GIT_LFS_SKIP_SMUDGE = '1'
+git -c core.longpaths=true clone https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results.git
+Set-Location .\MHFL-MCA-Codes-Datasets-and-Results
+git config core.longpaths true
+Remove-Item Env:GIT_LFS_SKIP_SMUDGE -ErrorAction SilentlyContinue
 ```
 
----
+## 第 1 步：创建环境
 
-### 5.2 UO (Case 1: Vibration + Acoustic) Results Layout
-
-UO scripts do **not** contain the load-specific split (no `Test_2Nm/` and `Test_4Nm/`), so the directory structure is simpler.
-
-All outputs are written under your configured `YOUR_UO_OUTPUT_DIR`.
-
-A typical directory layout produced by **UO ablation scripts (Exp1 ~ Exp5)** is:
-
-```text
-YOUR_UO_OUTPUT_DIR/
-└─ MHCNN_Ablation_Experiment/
-   ├─ Exp1_Single_Vib/
-   │  ├─ experiment_log_Exp1.txt
-   │  ├─ Final_Summary_Stats_Exp1.csv
-   │  ├─ performance_trend_exp1.png
-   │  ├─ Samples_05/
-   │  │  ├─ Run_01/
-   │  │  │  ├─ curves.png
-   │  │  │  ├─ cm.png
-   │  │  │  ├─ tsne.png
-   │  │  │  └─ roc.png
-   │  │  └─ Run_02/
-   │  │     └─ ...
-   │  ├─ Samples_06/
-   │  │  └─ ...
-   │  └─ ...
-   ├─ Exp2_Single_Aco/
-   │  ├─ experiment_log_Exp2.txt
-   │  ├─ Final_Summary_Stats_Exp2.csv
-   │  ├─ performance_trend_exp2.png
-   │  └─ Samples_05/Run_01/... (same pattern)
-   ├─ Exp3_No_CAIM_No_AMRM/
-   │  ├─ experiment_log_Exp3.txt
-   │  ├─ Final_Summary_Stats_Exp3.csv
-   │  ├─ performance_trend_exp3.png
-   │  └─ Samples_05/Run_01/... (same pattern)
-   ├─ Exp4_NoFusion/
-   │  ├─ experiment_log_Ablation4.txt
-   │  ├─ Final_Summary_Stats.csv
-   │  ├─ performance_trend_ablation4.png
-   │  └─ Samples_05/Run_01/... (same pattern)
-   └─ Exp5_With_AMRM_No_CAIM/
-      ├─ experiment_log_Exp5.txt
-      ├─ Final_Summary_Stats_Exp5.csv
-      ├─ performance_trend_exp5.png
-      └─ Samples_05/Run_01/... (same pattern)
-```
-
-A typical directory layout produced by the **UO main MHFL-MCA few-shot experiment** (the legacy output directory retains its historical filename) is:
-
-```text
-YOUR_UO_OUTPUT_DIR/
-└─ MHCNN_UO_Results/
-   ├─ log.txt (or experiment_log.txt)
-   ├─ Final_Summary_Stats_raw.csv (optional)
-   ├─ Final_Summary_Stats_trimmed.csv (optional)
-   ├─ performance_trend.png
-   ├─ Samples_05/
-   │  ├─ Run_01/
-   │  │  ├─ curves.png
-   │  │  ├─ cm.png
-   │  │  ├─ tsne.png
-   │  │  └─ roc.png
-   │  └─ Run_02/
-   │     └─ ...
-   ├─ Samples_06/
-   │  └─ ...
-   └─ ...
-```
-
----
-
-### What each item means (applies to both KAIST and UO)
-
-* `log.txt` / `experiment_log_*.txt`  
-  Full run log (stdout/stderr tee), including key parameters and per-run progress.
-
-* `Time_Summary.txt` (KAIST only)  
-  A simple time breakdown for Stage 1/2/3 and total runtime.
-
-* `Final_Summary_Stats_raw.csv` / `Final_Summary_Stats_trimmed.csv` (KAIST)  
-  Aggregated metrics over repeated runs for each `Samples = N`, typically reported as **mean ± std** (and trimmed mean ± std when enabled).
-
-* `Final_Summary_Stats_Exp*.csv` / `Final_Summary_Stats.csv` (UO ablations)  
-  Aggregated metrics over repeated runs for each `Samples = N`, typically using **trimmed mean ± std**.
-
-* `performance_trend*.png`  
-  Performance curves (Accuracy/F1 vs training samples per class).
-
-* `Samples_XX/Run_YY/`  
-  Artifacts for one run:
-
-  * `curves.png`: training curves (loss/accuracy)
-  * `cm*.png`: confusion matrix
-  * `roc*.png`: ROC curves (one-vs-rest + macro/micro depending on script)
-  * `tsne*.png`: 2D embedding visualization of learned features
-
-* `Test_2Nm/` and `Test_4Nm/` (KAIST only)  
-  Evaluation artifacts for each target load.
-
-* `NoiseStudy_LoadShift_FAIR_SameModel/` (KAIST only)  
-  Noise robustness results under the FAIR “SameModel” protocol.
-
----
-
-## 🧪 6. MHFL-MCA Supplementary Experiments
-
-The [`MHFL-MCA Supplementary Experiments`](MHFL-MCA%20Supplementary%20Experiments/README.md)
-folder contains the code, confirmed configurations, tests, provenance records,
-compact source data, and figure-generation utilities for the experiments added
-as supplementary evidence. Raw datasets, model weights, caches, and temporary files are
-not duplicated in this folder.
-
-### 6.1 Included experiment scopes
-
-| Experiment | Reproducibility scope |
-|---|---|
-| 02 | Modality-weight and missing-modality analysis: 540/36 weight raw/summary rows and 132/12 missing-modality raw/summary rows. |
-| 03 | Isolated CPU FLOPs/storage and GPU runtime profiling for the confirmed 7,380,173-parameter KAIST model. |
-| 04 | Five controlled variants, three conditions, and ten seeds: 150 raw rows and 15 summary groups. The compact paper table is a separately documented display derived from this full source evidence. |
-| 05 | Controlled UO low-shot extension: 140 raw rows, 14 summary groups, and seven paired-gain rows. The paper-facing hybrid display uses the original Table-5 Full values at N=5 and N=10; all other Full points, no-CAIM results, gaps, and paired gains come from the controlled extension. |
-| 06 | Fixed-tuning TF-SVM reference baselines: 480 raw rows, 48 summary groups, and 144 clean candidate rows. Hyperparameters are selected once at N=15 with seed 20260805 and then frozen. |
-
-Large checkpoints are intentionally excluded. Their manifests and SHA-256
-records are retained so separately released weights can be verified.
-
-### 6.2 Environment and data configuration
-
-The recorded environment uses Python 3.9 and TensorFlow/Keras 2.7. From the
-repository root, open PowerShell and run:
+实验环境使用 Python 3.9.20 和 TensorFlow/Keras 2.7.0，完整依赖见 [requirements-lock.txt](requirements-lock.txt)。
 
 ```powershell
-conda activate tensorflow
-Set-Location '.\MHFL-MCA Supplementary Experiments\Codes\Revision Experiments'
-
+conda env create -f environment.yml
+conda activate mhfl-mca-revision
+$env:PYTHONNOUSERSITE = '1'
 $env:PYTHONDONTWRITEBYTECODE = '1'
-$env:MHFL_SUITE_ROOT = (Get-Location).Path
-$runDate = Get-Date -Format 'yyyyMMdd'
-$env:MHFL_RUN_TAG = "full_${runDate}_r1"
-
-$env:MHFL_UO_DATA_ROOT = '<UO 3_MatLab_Raw_Data>'
-$env:MHFL_KAIST_VIB_DIR = '<KAIST vibration directory>'
-$env:MHFL_KAIST_CURRENT_DIR = '<KAIST TDMS current directory>'
-
-$env:MHFL_TEMP_ROOT = '<large_disk>\mhfl_temp'
-$env:TEMP = $env:MHFL_TEMP_ROOT
-$env:TMP = $env:MHFL_TEMP_ROOT
-$env:TMPDIR = $env:MHFL_TEMP_ROOT
-
-$env:MHFL_CURRENT_CHANNEL_NAME = 'cDAQ9185-1F486B5Mod2/ai0'
-$env:MHFL_KAIST_VIB_COLUMN = '0'
-Remove-Item Env:MHFL_ALLOW_CURRENT_FALLBACK -ErrorAction SilentlyContinue
-Remove-Item Env:MHFL_CURRENT_CHANNEL_REGEX -ErrorAction SilentlyContinue
+python -m pip check
+python tools\verify_repository_contract.py
 ```
 
-Inspect the confirmed UO/KAIST configuration files and their evidence hashes
-before explicitly accepting the KAIST specification:
+`verify_repository_contract.py` 检查仓库文件和实验记录，不运行模型训练。环境与 GPU 配置见 [ENVIRONMENT.md](ENVIRONMENT.md) | [HARDWARE.md](HARDWARE.md)。
+
+## 第 2 步：下载数据
+
+UO 和 KAIST 数据的下载命令分别为：
 
 ```powershell
-$env:MHFL_ACCEPT_KAIST_SPEC = '1'
-python 00_check_environment.py --strict
-python 09_model_spec_audit.py
+# UO：实验使用的 MATLAB 数据
+git lfs pull --include="Datasets/UO/3_MatLab_Raw_Data/**" --exclude=""
+
+# KAIST：振动和电流数据
+git lfs pull --include="Datasets/KAIST/**" --exclude=""
 ```
 
-The full KAIST reruns are then invoked explicitly:
+数据下载和文件核验方法见 [DATA.md](DATA.md)。几百字节的 `.mat` 或 `.tdms` 文件通常是 LFS 指针，实际数据尚未下载。
+
+## 第 3 步：运行实验
+
+主实验脚本沿用早期的 `MHCNN` 文件名，实现的方法为 MHFL-MCA。运行前需将脚本中的 `YOUR_*` 数据、输出和临时目录替换为实际路径。
 
 ```powershell
-python 01_prepare_kaist_checkpoint.py --mode full --protocol both --accept-kaist-spec
-python 02_modality_weights_and_missing.py --mode full --protocol stage3 --accept-kaist-spec
-python 03_profile_efficiency.py --mode full --protocol stage2 --device gpu --warmup 100 --repeats 1000 --accept-kaist-spec
-python 04_additional_ablation.py --mode full --accept-kaist-spec
-python tools/prepare_ablation_main_without_equal_weights.py --suite-root . --run-tag $env:MHFL_RUN_TAG
-python 06_traditional_baselines.py --mode full
+# UO 主实验
+python ".\Codes\Codes for UO\MHCNN_UO.py"
+
+# KAIST 主实验
+python ".\Codes\Codes for KAIST\MHCNN_KAIST.py"
 ```
 
-Experiment 05 is intentionally documented separately. Its controlled run is:
+补充实验采用独立配置和运行入口，具体命令见 [REPRODUCIBILITY.md](REPRODUCIBILITY.md) | [补充实验说明](MHFL-MCA%20Supplementary%20Experiments/README.md)。
+
+<details>
+<summary>KAIST 通道选择、模型权重与复现说明</summary>
+
+原始 KAIST 脚本与补充实验采用不同的通道选择规则。原始脚本在振动数组至少有 5 列时选择零基列 `1`，电流 U 相识别失败时选择最大方差通道；两种规则分别由 `_pick_vib_1d` 和 `read_current_1d_from_tdms` 实现。复现结果应按各自的实验协议比较。
+
+补充实验固定选择振动零基列 `0`，以及 TDMS `Log` 组的 `cDAQ9185-1F486B5Mod2/ai0` 电流通道。补充实验的环境变量不会控制原始脚本。
+
+权重清单、SHA-256 和训练重建方法见 [MODEL_ZOO.md](MODEL_ZOO.md)。历史初始化和随机流未完整记录，重新训练不保证得到逐字节相同的权重。
+
+网络结构图和补充图表的下载命令：
 
 ```powershell
-python 05_lowshot_threshold.py --mode full --run-tag $env:MHFL_RUN_TAG
+git lfs pull --include="MHFL-MCA Supplementary Experiments/**" --exclude=""
 ```
 
-This command generates the 140/14/7 controlled-extension data contract. The
-historical TensorFlow initializer and batch-shuffling state was not retained,
-so the extension is not represented as a byte-for-byte stochastic replay. To
-reproduce the protocol-aware figure from the published source data, run:
-
-```powershell
-$published = '..\..\Results\Revision Experiments\full_20260807_r1\05_Extreme_Lowshot_CAIM'
-python .\figures\build_lowshot_protocol_aware_figure.py `
-  --summary "$published\controlled_extension\lowshot_summary.csv" `
-  --paired "$published\controlled_extension\caim_paired_summary.csv" `
-  --output-dir "$published\paper_protocol_aware_bundle" `
-  --stem 'lowshot_sensitivity_protocol_aware_reproduced'
-```
-
-`07_build_manuscript_assets.py` remains an internal strict gate for its
-recorded artifact contract. Use the source-specific commands above for public
-reproduction rather than `run_pipeline.py full`.
-
-### 6.3 No-training validation
-
-```powershell
-python -m pytest -q -p no:cacheprovider
-python tools/static_audit.py .
-python tools/audit_additional_ablation_extension.py --run-tag $env:MHFL_RUN_TAG --phase pre
-python tools/audit_lowshot_final.py --phase pre
-python tools/audit_traditional_baselines_final.py --phase pre
-```
-
-To validate only the portable publication package from the repository root:
-
-```powershell
-python '.\MHFL-MCA Supplementary Experiments\Codes\Revision Experiments\tools\validate_publication_package.py' `
-  --package-root '.\MHFL-MCA Supplementary Experiments'
-```
-
-See the supplementary folder's README and the per-experiment README files for
-the evidence boundaries and exact output locations.
+</details>
 
 ---
 
-## Extra explanation
-The repository is indexed in DeepWiki; log in to find more details:
-https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results
+<a id="datasets"></a>
+
+# 📌 数据与实验
+
+| 数据集 | 使用的信号 | 实验设置 | 包含的文件 |
+| :--- | :--- | :--- | :--- |
+| UO / UORED-VAFCLS | 振动 + 声学 | 7 类健康状态，小样本诊断 | 60 条记录，分别提供 CSV、XLSX 和 MAT 表示。 |
+| KAIST | 振动 + 电流 | 5 类健康状态；0 Nm 训练/验证，2 和 4 Nm 测试 | 15 个振动 MAT 文件和 15 个电流 TDMS 文件。 |
+
+官方数据来源：[UO](https://data.mendeley.com/datasets/y2px5tg92h) | [KAIST v6](https://data.mendeley.com/datasets/ztmf3m7h5x/6)。KAIST 实验使用其中的选定子集；UO 文件的精确上游版本尚未确认（`UNCONFIRMED`）。数据许可和署名要求见 [DATA_LICENSES.md](DATA_LICENSES.md)。
+
+UO MATLAB 数据约 0.282 GiB，KAIST 数据约 2.027 GiB；全部 LFS 对象（含历史结果）约 8.858 GiB。
+
+```text
+Codes/                              UO、KAIST 主实验与对比方法
+Datasets/                           原始数据（Git LFS）
+Results/                            主实验结果与可视化
+MHFL-MCA Supplementary Experiments/
+├── Codes/Revision Experiments/     补充实验代码与配置
+├── Results/Revision Experiments/   补充实验结果
+├── Provenance/                     数据来源与核验记录
+└── figures/                        网络结构图
+```
+
+主实验包含 MRCFN、CFFN、CDTFAFN、MSF-DFormer 和 KDCNN-DF 五种对比方法。代码与结果：[UO](Codes/Codes%20for%20UO/) | [KAIST](Codes/Codes%20for%20KAIST/) | [Results](Results/)。
+
+| 补充实验 | 内容 |
+| :--- | :--- |
+| [02](MHFL-MCA%20Supplementary%20Experiments/Results/Revision%20Experiments/full_20260807_r1/02_Modality_Weights_and_Missing/README.md) | 模态权重与模态缺失分析 |
+| [03](MHFL-MCA%20Supplementary%20Experiments/Results/Revision%20Experiments/full_20260807_r1/03_Efficiency_Profile/README.md) | 参数量、计算量与推理效率 |
+| [04](MHFL-MCA%20Supplementary%20Experiments/Results/Revision%20Experiments/full_20260807_r1/04_Additional_Controlled_Ablation/README.md) | 控制变量消融 |
+| [05](MHFL-MCA%20Supplementary%20Experiments/Results/Revision%20Experiments/full_20260807_r1/05_Extreme_Lowshot_CAIM/README.md) | 极低样本与交叉注意力分析 |
+| [06](MHFL-MCA%20Supplementary%20Experiments/Results/Revision%20Experiments/full_20260807_r1/06_Traditional_Baselines/README.md) | 传统 TF-SVM 对比 |
+
+---
+
+<a id="results"></a>
+
+# 📈 实验结果
+
+每类 5 个训练样本（N = 5）时的主文准确率，单位为 %：
+
+| 方法 | UO | KAIST：0 → 2 Nm | KAIST：0 → 4 Nm |
+| :--- | ---: | ---: | ---: |
+| MRCFN | 65.21 ± 7.88 | 59.29 ± 4.46 | 53.84 ± 5.68 |
+| CFFN | 76.83 ± 5.79 | 58.29 ± 4.18 | 52.80 ± 5.36 |
+| CDTFAFN | 62.37 ± 7.60 | 65.32 ± 3.36 | 57.74 ± 5.08 |
+| MSF-DFormer | 72.87 ± 6.54 | 74.55 ± 4.31 | 78.62 ± 4.66 |
+| KDCNN-DF | 75.32 ± 2.82 | 64.27 ± 4.38 | 57.36 ± 5.44 |
+| **MHFL-MCA** | **92.79 ± 2.88** | **97.39 ± 1.95** | **91.56 ± 8.32** |
+
+每个指标在 10 次运行中去除最高和最低值，报告剩余 8 次的均值 ± 标准差。UO 使用原始振动与声学片段；KAIST 在 0 Nm 训练，在 2/4 Nm、0 dB 基线噪声条件下测试。
+
+结果对应主文 Tables 5/9/10：[结果与协议](MHFL-MCA%20Supplementary%20Experiments/Codes/Revision%20Experiments/configs/main_manuscript_deep_reference.json) | [数值核验](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md)。
+
+<details>
+<summary>统计口径与实验 05 的协议</summary>
+
+主文参考结果仅包含聚合值，没有逐种子记录，不能用于配对检验或统计显著性判断。
+
+实验 05 中，Full 模型在 N = 5 和 N = 10 时的准确率来自主文，其余 Full 结果及去除 CAIM 的结果来自受控扩展。两种协议的结果分别统计，不合并为一个估计。来源与协议见 [REPRODUCIBILITY.md](REPRODUCIBILITY.md)。
+
+</details>
+
+---
+
+# 🎓 引用
+
+使用该方法或实验结果时，请引用：
+
+```bibtex
+@article{zhou2027mhflmca,
+  title   = {Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis of machines under complex conditions},
+  author  = {Zhou, Yuang and Zhang, Tianci and Pan, Tongyang and Xie, Jingsong and Chen, Jinglong},
+  journal = {Advanced Engineering Informatics},
+  volume  = {77},
+  pages   = {105277},
+  year    = {2027},
+  doi     = {10.1016/j.aei.2026.105277}
+}
+```
+
+数据使用需同时引用对应数据集和数据论文，署名要求见 [DATA_LICENSES.md](DATA_LICENSES.md)。感谢 University of Ottawa 和 KAIST 数据集作者提供公开数据。
+
+---
+
+# 许可与贡献
+
+作者自有代码和文档采用 [MIT](LICENSE) 协议。数据和其他第三方材料的适用范围见 [DATA_LICENSES.md](DATA_LICENSES.md) | [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | [LICENSE_SCOPE.md](LICENSE_SCOPE.md)。
+
+复现问题可提交至 [Issue](https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/issues)，并附上环境版本、执行命令和日志。文档修正、数据加载和验证工具的改进可通过 [PR](https://github.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results/pulls) 提交。
+
+<p align="center">
+  <a href="README_en.md">English</a> | <a href="#top">回到顶部</a>
+</p>

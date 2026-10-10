@@ -110,6 +110,7 @@ def verify_publication_manifest(checks: Checks, require_resolved: bool) -> None:
 
 def full_checks(checks: Checks, require_resolved: bool) -> None:
     required = (
+        "README_en.md",
         "LICENSE",
         "LICENSE_SCOPE.md",
         "DATA.md",
@@ -203,7 +204,10 @@ def full_checks(checks: Checks, require_resolved: bool) -> None:
     ]
     checks.require(not forbidden_weights, "Model weights must not be committed: {0}".format(forbidden_weights[:5]))
 
-    readme = (ROOT / "Readme.md").read_text(encoding="utf-8")
+    readme = "\n".join(
+        (ROOT / name).read_text(encoding="utf-8")
+        for name in ("Readme.md", "README_en.md")
+    )
     checks.require("For each sample $i$, MHFL-MCA takes" in readme, "README still uses the legacy model name in the problem setup.")
     checks.require("The paper evaluates MHFL-MCA on two public datasets." in readme, "README dataset scope uses the wrong model name.")
     checks.require("respository" not in readme, "README contains the 'respository' typo.")

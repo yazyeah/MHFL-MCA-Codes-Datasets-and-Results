@@ -1,0 +1,3 @@
+mhfl-mca-banner-v3.png -filter -diff -merge -text
+mhfl-mca-banner-dark-v3.png -filter -diff -merge -text
+mhfl-mca-icon-v3.png -filter -diff -merge -text
