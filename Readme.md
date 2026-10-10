@@ -73,7 +73,7 @@ $T_m$ 和 $C_m$ 分别为特征图的时间长度和通道数。振动分支采�
 
 ### 2. 双向交叉注意力（CAIM）
 
-方向 $a\leftarrow b$ 表示模态 $a$ 提供查询，模态 $b$ 提供键和值，其中 $a,b\in\{1,2\}$ 且 $a\ne b$。两个方向分别使用独立的投影参数：
+方向 $a\leftarrow b$ 表示模态 $a$ 提供查询，模态 $b$ 提供键和值，其中 $`a,b\in\{1,2\}`$ 且 $a\ne b$。两个方向分别使用独立的投影参数：
 
 ```math
 \begin{aligned}
@@ -109,7 +109,7 @@ z_i=[\,\alpha_i^{(1)}g_i^{(1)};\ \alpha_i^{(2)}g_i^{(2)}\,]
 \in\mathbb{R}^{(T_1+T_2)D}.
 ```
 
-$[\,\cdot\,;\,\cdot\,]$ 表示向量拼接，$\sigma$ 表示 Sigmoid。每个样本的权重由两路交互特征共同决定。
+$`[\,\cdot\,;\,\cdot\,]`$ 表示向量拼接，$`\sigma`$ 表示 Sigmoid。每个样本的权重由两路交互特征共同决定。
 
 ### 4. 健康状态分类（FCB）
 
@@ -124,7 +124,7 @@ W_c\mathrm{LeakyReLU}(W_fz_i+b_f)+b_c\right),\\
 \end{aligned}
 ```
 
-$M$ 为批次样本数，$y_{ik}$ 为独热标签的第 $k$ 个分量，$p_{ik}$ 为预测概率。KAIST 的噪声稳定训练还包括 KL 一致性约束，训练设置见 [MHCNN_KAIST.py](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py)。上述计算对应主实现中的 `CrossAttention` 和 `create_model`：[UO](Codes/Codes%20for%20UO/MHCNN_UO.py) | [KAIST](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py)。
+$M$ 为批次样本数，$`y_{ik}`$ 为独热标签的第 $k$ 个分量，$`p_{ik}`$ 为预测概率。KAIST 的噪声稳定训练还包括 KL 一致性约束，训练设置见 [MHCNN_KAIST.py](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py)。上述计算对应主实现中的 `CrossAttention` 和 `create_model`：[UO](Codes/Codes%20for%20UO/MHCNN_UO.py) | [KAIST](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py)。
 
 代码模块、数据流程和实验入口的在线索引：[DeepWiki](https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results)。
 

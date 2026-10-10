@@ -75,7 +75,7 @@ $T_m$ and $C_m$ denote temporal length and channel count. The vibration branch u
 
 ### 2. Bidirectional cross-attention (CAIM)
 
-In direction $a\leftarrow b$, modality $a$ supplies the queries and modality $b$ supplies the keys and values, with $a,b\in\{1,2\}$ and $a\ne b$. Each direction has its own projection parameters:
+In direction $a\leftarrow b$, modality $a$ supplies the queries and modality $b$ supplies the keys and values, with $`a,b\in\{1,2\}`$ and $a\ne b$. Each direction has its own projection parameters:
 
 ```math
 \begin{aligned}
@@ -111,7 +111,7 @@ z_i=[\,\alpha_i^{(1)}g_i^{(1)};\ \alpha_i^{(2)}g_i^{(2)}\,]
 \in\mathbb{R}^{(T_1+T_2)D}.
 ```
 
-$[\,\cdot\,;\,\cdot\,]$ denotes vector concatenation and $\sigma$ denotes Sigmoid. Both interaction features contribute to the weight assigned to each modality.
+$`[\,\cdot\,;\,\cdot\,]`$ denotes vector concatenation and $`\sigma`$ denotes Sigmoid. Both interaction features contribute to the weight assigned to each modality.
 
 ### 4. Health-state classification (FCB)
 
@@ -126,7 +126,7 @@ W_c\mathrm{LeakyReLU}(W_fz_i+b_f)+b_c\right),\\
 \end{aligned}
 ```
 
-$M$ is the batch size, $y_{ik}$ is the $k$-th component of the one-hot label and $p_{ik}$ is the predicted probability. KAIST noise-stable training also includes a KL consistency term, as specified in [MHCNN_KAIST.py](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py). These equations describe `CrossAttention` and `create_model` in the main implementations: [UO](Codes/Codes%20for%20UO/MHCNN_UO.py) | [KAIST](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py).
+$M$ is the batch size, $`y_{ik}`$ is the $k$-th component of the one-hot label and $`p_{ik}`$ is the predicted probability. KAIST noise-stable training also includes a KL consistency term, as specified in [MHCNN_KAIST.py](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py). These equations describe `CrossAttention` and `create_model` in the main implementations: [UO](Codes/Codes%20for%20UO/MHCNN_UO.py) | [KAIST](Codes/Codes%20for%20KAIST/MHCNN_KAIST.py).
 
 [DeepWiki](https://deepwiki.com/yazyeah/MHFL-MCA-Codes-Datasets-and-Results) provides an online index of the code modules, data pipeline and experiment entry points.
 
