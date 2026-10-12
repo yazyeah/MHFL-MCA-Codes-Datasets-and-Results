@@ -180,7 +180,7 @@ git lfs pull --include="Datasets/KAIST/**" --exclude=""
 
 ## 第 3 步：运行实验
 
-主实验脚本沿用早期的 `MHCNN` 文件名，实现的方法为 MHFL-MCA。运行前需将脚本中的 `YOUR_*` 数据、输出和临时目录替换为实际路径。
+运行前需将脚本中的 `YOUR_*` 数据、输出和临时目录替换为实际路径。
 
 ```powershell
 # UO 主实验
