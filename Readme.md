@@ -176,7 +176,7 @@ git lfs pull --include="Datasets/UO/3_MatLab_Raw_Data/**" --exclude=""
 git lfs pull --include="Datasets/KAIST/**" --exclude=""
 ```
 
-数据下载和文件核验方法见 [DATA.md](DATA.md)。几百字节的 `.mat` 或 `.tdms` 文件通常是 LFS 指针，实际数据尚未下载。
+数据下载和文件核验方法见 [DATA.md](DATA.md)。
 
 ## 第 3 步：运行实验
 
