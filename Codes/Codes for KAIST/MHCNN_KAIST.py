@@ -1,11 +1,13 @@
 """
-MHCNN (Optuna) — KAIST Load-Shift Case Study
-===========================================
+MHFL-MCA (Optuna) — KAIST Load-Shift Case Study
+==============================================
 
 Overview 
 ---------------------------
-This script implements the MHCNN framework for multimodal fault diagnosis with limited samples.
-MHCNN consists of four key modules trained end-to-end with categorical cross-entropy:
+This script implements MHFL-MCA for multimodal fault diagnosis with limited samples.
+MHCNN is the earlier name of the method and is kept in file, model and output names.
+The model consists of four modules trained end-to-end; Stage 2 adds a KL consistency term
+to the categorical cross-entropy (paper Eq. (24)):
   1) MSHEM: Modality-Specific Heterogeneous Encoder Module
      - Two 1-D CNN encoders process raw vibration and current/acoustic-like time series separately.
      - Heterogeneous design: vibration branch uses LeakyReLU + AveragePooling; acoustic/current branch uses GELU + MaxPooling.
@@ -13,7 +15,7 @@ MHCNN consists of four key modules trained end-to-end with categorical cross-ent
   2) CAIM: Cross-Attention Interaction Module (bidirectional)
      - Two cross-attention blocks perform V→A and A→V interactions to obtain cross-enhanced representations.
      - Intuition: each modality attends to informative patterns in the other modality to improve robustness. (CAIM; Fig.1) [Paper]
-  3) AMRM: Adaptive Modality Re-Weighting Module
+  3) AMRM: Adaptive Modality Reweighting Module
      - Estimates sample-wise reliability weights for each modality and re-weights features before fusion. (AMRM; Fig.1) [Paper]
   4) FCB: Fusion Classification Block
      - A compact fusion head maps the fused representation to posterior probabilities over K health states. (FCB) [Paper]
@@ -21,10 +23,15 @@ MHCNN consists of four key modules trained end-to-end with categorical cross-ent
 Architecture notes
 -------------------------------------------------------------------
 - Segment length L = 2048 points per sample.
-- Vibration encoder (MSHEM-v): 4 Conv1D blocks, kernel size=16, LeakyReLU, AveragePooling, dropout≈0.422 at last block.
-- Acoustic/current encoder (MSHEM-a): 5 Conv1D blocks, kernel size=8, GELU, MaxPooling, dropout≈0.350 at last block.
-- Attention embedding dimension: 256.
-- These settings are selected via Optuna-based hyperparameter optimization in the paper. 
+- Vibration encoder (MSHEM-v): kernel size=16, LeakyReLU, AveragePooling, dropout at last block.
+- Current encoder (MSHEM-c): kernel size=8, GELU, MaxPooling, dropout at last block.
+- Block numbers, dropout rates, attention dimension, learning rate and batch size are selected by
+  Optuna on the 0Nm split (Stage 1, 30 trials). The configuration used for the reported results is
+  5 vibration blocks (dropout≈0.291), 3 current blocks (dropout≈0.393), attention dimension 256,
+  lr≈4.16e-4 and batch size 16, i.e. 7,380,173 trainable parameters (paper Tables 15-17).
+  See "MHFL-MCA Supplementary Experiments/Provenance/audits/kaist_optuna_confirmation.md".
+  A new search may select a different configuration.
+- The UO configuration (4/5 blocks, dropout 0.422/0.350) is documented in MHCNN_UO.py (paper Tables 3-4).
 
 Task: KAIST Load-Shift protocol
 ----------------------------------------

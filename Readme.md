@@ -264,7 +264,7 @@ MHFL-MCA Supplementary Experiments/
 
 每个指标在 10 次运行中去除最高和最低值，报告剩余 8 次的均值 ± 标准差。UO 使用原始振动与声学片段；KAIST 在 0 Nm 训练，在 2/4 Nm、0 dB 基线噪声条件下测试。
 
-结果对应主文 Tables 5/9/10：[结果与协议](MHFL-MCA%20Supplementary%20Experiments/Codes/Revision%20Experiments/configs/main_manuscript_deep_reference.json) | [数值核验](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md)。
+结果对应论文 Table 5、Table 10 和 Table 11：[结果与协议](MHFL-MCA%20Supplementary%20Experiments/Codes/Revision%20Experiments/configs/main_manuscript_deep_reference.json) | [数值核验](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md)。补充实验配置沿用投稿稿表号，KAIST 两表在其中记为 Table 9/10。
 
 <details>
 <summary>统计口径与实验 05 的协议</summary>

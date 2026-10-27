@@ -60,6 +60,11 @@ The CUDA value printed by `nvidia-smi` is the driver compatibility level, not
 the TensorFlow runtime. The `nvcc`, Conda and TensorFlow-build values describe
 different software layers and are intentionally reported separately.
 
+Section 3 of the published paper reports the experimental platform as an
+Intel Core i7-14650HX CPU, 16 GB RAM and an NVIDIA GeForce RTX 4060 GPU with
+8 GB memory, with Python 3.9.20 and TensorFlow 2.7.0. This is the authors'
+description; the runtime artifacts above serialize only `/GPU:0`.
+
 ## Resource planning
 
 | Scope | Approximate storage |
@@ -69,7 +74,7 @@ different software layers and are intentionally reported separately.
 | KAIST vibration + current data | 2.027 GiB |
 | UO MATLAB subset used by revision scripts | 0.282 GiB |
 
-The README recommendation of at least 8 GB VRAM is an operational
-recommendation, not a measured minimum. Peak training RAM/VRAM, total training
+The 8 GB of GPU memory reported in the paper describes the hardware that was
+used, not a measured minimum. Peak training RAM/VRAM, total training
 time, energy use and temporary-disk peak were not recorded. See
 [`DATA.md`](DATA.md) for selective downloads.

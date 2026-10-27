@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-MHCNN (Optuna) - uOttawa Vibration + Acoustic (UORED-VAFCLS) Small-Sample Study
+MHFL-MCA (Optuna) - uOttawa Vibration + Acoustic (UORED-VAFCLS) Small-Sample Study
+
+MHCNN is the earlier name of the method and is kept in file, model and output names.
+The final configuration corresponds to paper Tables 3-4 (5,111,759 trainable parameters).
 
 Purpose
 -------

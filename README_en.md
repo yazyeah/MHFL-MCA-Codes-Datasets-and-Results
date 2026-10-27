@@ -50,7 +50,7 @@ The method is described in [*Multimodal heterogeneous feature learning with moda
 
 For each sample $i$, MHFL-MCA takes two paired 1-D signal segments, each with 2048 points.
 
-The Modality-Specific Heterogeneous Encoder Module (MSHEM) extracts features with different convolution kernels, activations and pooling operations. The Cross-Attention Interaction Module (CAIM) exchanges these features in both directions. The Adaptive Modality Re-Weighting Module (AMRM) learns relative weights to combine them, and the Fusion Classification Block (FCB) predicts the health state.
+The Modality-Specific Heterogeneous Encoder Module (MSHEM) extracts features with different convolution kernels, activations and pooling operations. The Cross-Attention Interaction Module (CAIM) exchanges these features in both directions. The Adaptive Modality Reweighting Module (AMRM) learns relative weights to combine them, and the Fusion Classification Block (FCB) predicts the health state.
 
 <a id="method"></a>
 
@@ -263,7 +263,7 @@ Classification accuracy with five training samples per class (N = 5):
 
 Accuracy is in percent. For each metric, the highest and lowest values from 10 runs are removed; the remaining eight give the mean ± standard deviation. UO uses raw vibration and acoustic segments. KAIST trains at 0 Nm and tests at 2 or 4 Nm with the 0 dB baseline noise setting.
 
-Sources: main-paper Tables 5, 9 and 10 | [Reference values and protocols](MHFL-MCA%20Supplementary%20Experiments/Codes/Revision%20Experiments/configs/main_manuscript_deep_reference.json) | [Value checks](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md).
+Sources: paper Tables 5, 10 and 11 | [Reference values and protocols](MHFL-MCA%20Supplementary%20Experiments/Codes/Revision%20Experiments/configs/main_manuscript_deep_reference.json) | [Value checks](MHFL-MCA%20Supplementary%20Experiments/Provenance/audits/ARTIFACT_VALUE_VERIFICATION.md). The supplementary configuration keeps the submission table numbers, in which the two KAIST tables are Tables 9 and 10.
 
 <details>
 <summary>Statistical scope</summary>
