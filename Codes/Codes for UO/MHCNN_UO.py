@@ -26,6 +26,13 @@ Reproducibility Notes
 ---------------------
 - For each (N, run_idx), seed = 100*N + run_idx is applied to Python / NumPy / TensorFlow.
 - Full determinism on GPU is not guaranteed for TF 2.7.0, but seeds stabilize sampling and init.
+- Stage 1: each Optuna trial trains for 25 epochs (Adamax, MedianPruner) and is scored by the
+  last-epoch accuracy on the held-out part of the seed-42 split.
+- Stage 2 passes the same held-out set to Keras as validation data, and the reported metrics are
+  computed on that set (paper Section 3.1.7).
+- Every N from 5 to 30 is run; the paper tables list N = 5, 10, ..., 30.
+- LeakyReLU uses a slope of 0.2. Cross-attention uses bias-free projections and unscaled
+  dot-product scores (paper Eqs. (6)-(8)).
 
 Path Convention (IMPORTANT)
 ---------------------------

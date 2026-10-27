@@ -57,6 +57,26 @@ Robustness study (FAIR, SameModel)
     NoNoise + 0 + (-2, -4, -6, -8, -10) dB
 - For each noisy SNR point, repeat multiple noise realizations and report mean ± std.
 
+Implementation details
+----------------------
+- Stage 1 (Optuna): lr log-uniform in [1e-4, 2e-3], batch size in {16, 32}. Each trial trains for
+  30 epochs with the Stage 2 objective and is scored by the last-epoch accuracy on 50 validation
+  segments per class at 0Nm (0 dB). The UO search ranges are those in paper Table 4.
+- Adamax is used with gradient clipping (clipnorm=1.0) in all stages.
+- Stage 2 noisy view: one SNR per sample in [-10, 0] dB, drawn as -10 + 10*u**2 with u ~ U(0, 1),
+  so low SNR values are drawn more often; 8% of the samples get one modality re-corrupted at -12 dB.
+- Stage 3 adds two terms to the Stage 2 objective: noisy-view cross-entropy (weight 0.35) and a
+  fixed -10 dB view (cross-entropy weight 0.25, KL weight 0.5). It uses lambda_max=0.10, a 15-epoch
+  warm-up, 70 epochs, seed 2026 and a low-SNR exponent of 3.
+- Each SNR point is evaluated with 5 noise realizations. The no-noise and -10 dB points are also
+  written; paper Tables 12-13 list 0 to -8 dB.
+- Current channel: with CUR_MODE="U", read_current_1d_from_tdms looks for a U-phase label in the
+  channel names. The released TDMS files use names such as "cDAQ9185-1F486B5Mod2/ai0", so the
+  channel with the largest variance is used instead. The supplementary suite selects
+  "cDAQ9185-1F486B5Mod2/ai0" (U phase) explicitly.
+- Vibration column: Signal.y_values.values has four columns in the released MAT files, so
+  _pick_vib_1d returns column 0 (bearing housing A, x direction).
+
 Outputs
 -------
 - log.txt (tee terminal output)
