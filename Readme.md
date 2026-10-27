@@ -31,6 +31,7 @@
 
 <p align="center">
   <a href="https://doi.org/10.1016/j.aei.2026.105277">论文</a> |
+  <a href="https://drive.google.com/file/d/1r1KcTYrsbjvD4C3JFrXJD_qlwsguo4Lb/preview">中文译本</a> |
   <a href="#method">方法框架</a> |
   <a href="#quick-start">快速开始</a> |
   <a href="#datasets">数据与实验</a> |
@@ -49,6 +50,8 @@
 > [Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis of machines under complex conditions](https://doi.org/10.1016/j.aei.2026.105277)<br>
 > Yuang Zhou, Tianci Zhang, Tongyang Pan, Jingsong Xie, Jinglong Chen<br>
 > *Advanced Engineering Informatics*, 77, 105277, 2027.
+
+[中文译本（仅在线预览）](https://drive.google.com/file/d/1r1KcTYrsbjvD4C3JFrXJD_qlwsguo4Lb/preview)，引用和数值以英文正式版为准。
 
 <a id="method"></a>
 

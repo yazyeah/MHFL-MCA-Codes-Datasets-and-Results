@@ -31,6 +31,7 @@
 
 <p align="center">
   <a href="https://doi.org/10.1016/j.aei.2026.105277">Paper</a> |
+  <a href="https://drive.google.com/file/d/1r1KcTYrsbjvD4C3JFrXJD_qlwsguo4Lb/preview">Chinese translation</a> |
   <a href="#method">Method</a> |
   <a href="#quick-start">Quick start</a> |
   <a href="#datasets">Datasets and experiments</a> |
@@ -46,7 +47,7 @@
 
 Paired sensor signals provide complementary measurements of machine health. MHFL-MCA uses separate convolutional encoders to learn their features, bidirectional cross-attention to model interactions between modalities, and adaptive modality reweighting to combine the features for fault classification. The experiments examine limited training data and differences between training and test conditions.
 
-The method is described in [*Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis of machines under complex conditions*](https://doi.org/10.1016/j.aei.2026.105277), published in *Advanced Engineering Informatics*.
+The method is described in [*Multimodal heterogeneous feature learning with modality-cross-attention for robust fault diagnosis of machines under complex conditions*](https://doi.org/10.1016/j.aei.2026.105277), published in *Advanced Engineering Informatics*. A [Chinese translation (view only)](https://drive.google.com/file/d/1r1KcTYrsbjvD4C3JFrXJD_qlwsguo4Lb/preview) is available; the published English version is authoritative for citation and reported values.
 
 For each sample $i$, MHFL-MCA takes two paired 1-D signal segments, each with 2048 points.
 
